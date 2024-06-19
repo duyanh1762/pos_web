@@ -1,0 +1,20 @@
+<div class="container">
+  <header>
+    <h2>Chọn nhân sự</h2>
+  </header>
+  <main>
+    <ul class="account-list">
+      <li
+        class="account-item"
+        *ngFor="let staff of staffs"
+        (click)="openModalPassword(staff.id)"
+      >
+        <img src="https://via.placeholder.com/50" alt="Avatar" />
+        <span>{{ staff.name }}</span>
+      </li>
+    </ul>
+    <div class="actions">
+      <button class="btn" (click)="logout()">Đăng xuất</button>
+    </div>
+  </main>
+</div>

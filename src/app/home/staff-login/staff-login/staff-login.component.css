@@ -1,0 +1,27 @@
+.container{
+  width: 100%;
+  height: 200px;
+}
+.form{
+  padding: 20px;
+  text-align: center;
+}
+input{
+  margin-top: 20px;
+  padding-left: 10px;
+  width: 60%;
+  outline: 0;
+  height: 30px;
+}
+button{
+  margin-top: 20px;
+  width: 100px;
+  height: 30px;
+  border-radius: 3px;
+  border: 0;
+  color: white;
+  background-color: #76b852;
+}
+button:hover{
+  background-color: #43A047;
+}
