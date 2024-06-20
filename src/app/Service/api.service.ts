@@ -18,4 +18,7 @@ export class ApiService {
   public getStaff(request:DataRequest){
     return this.http.post(this.server+"staff",request);
   }
+  public getBill(request:DataRequest){
+    return this.http.post(this.server+"bill",request);
+  }
 }

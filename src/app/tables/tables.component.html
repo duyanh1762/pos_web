@@ -1,2 +1,10 @@
-<p>tables works!</p>
-<button (click)="logout()">Chon nhan su moi ?</button>
+<div class="box">
+  <div class="header">
+    <input type="text" placeholder="Nhap ban muon tim kiem">
+    <span class="header-text">Nhan su: {{staff.name }}</span>
+    <button class="header-btn" (click)="logout()" ><i class="fa-solid fa-lock"></i></button>
+  </div>
+  <div class="grid">
+    <div class="seat" *ngFor="let table of tables"  [ngClass]="{ 'occupied': table.bill != null }"><a routerLink="/tables/order/{{ table }}">{{ table.table }}</a></div>
+  </div>
+</div>

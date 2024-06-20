@@ -6,11 +6,13 @@ import { AuthGuard } from './Guard/AuthGuard/auth.guard';
 import { LoginGuard } from './Guard/LoginGuard/login.guard';
 import { TablesComponent } from './tables/tables.component';
 import { StaffGuard } from './Guard/StaffGuard/staff.guard';
+import { OrderComponent } from './tables/order/order/order.component';
 
 const routes: Routes = [
   {path:"",component:HomeComponent,canActivate:[AuthGuard]},
   {path:"login",component:LoginComponent,canActivate:[LoginGuard]},
   {path:"tables",component:TablesComponent,canActivate:[AuthGuard,StaffGuard]},
+  {path:"tables/order/:table",component:OrderComponent,canActivate:[AuthGuard,StaffGuard]},
   {path:"**",redirectTo:"",pathMatch:"full"},
 ];
 

@@ -14,6 +14,7 @@ import { ApiService } from './Service/api.service';
 import { StaffLoginComponent } from './home/staff-login/staff-login/staff-login.component';
 import { TablesComponent } from './tables/tables.component';
 import { StaffGuard } from './Guard/StaffGuard/staff.guard';
+import { OrderComponent } from './tables/order/order/order.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { StaffGuard } from './Guard/StaffGuard/staff.guard';
     HomeComponent,
     StaffLoginComponent,
     TablesComponent,
+    OrderComponent,
   ],
   imports: [
     BrowserModule,
