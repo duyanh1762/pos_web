@@ -1,0 +1,38 @@
+<div class="shopping-cart">
+  <div class="title" style="font-weight: 700; font-size: large">
+    Hoá đơn bàn {{ data.table }}
+  </div>
+  <div class="list-buy">
+    <div *ngFor="let item of listDetailLU">
+      <div class="item-buy" *ngIf="item.num > 0">
+        <div class="name-note">
+          <div class="id-i" style="display: none"></div>
+          <div class="name-i">{{ item.name }}</div>
+        </div>
+        <div class="more">
+          <div class="less">
+            <button (click)="minus(item.id)">-</button>
+          </div>
+          <div class="number" style="margin: 0 5px 0 5px">
+            {{ item.num }}
+          </div>
+          <div class="plus">
+            <button (click)="plus(item.id)">+</button>
+          </div>
+          <div class="delete">
+            <bUtton (click)="remove(item.id)">x</bUtton>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bill">
+    <div class="bill-title">Tổng tiền:{{ total }}</div>
+    <div class="money">Đồng</div>
+    <div class="confirm">
+      <button (click)="save()">Lưu</button>
+      <button>Thêm món từ menu</button>
+      <button>Thanh toán</button>
+    </div>
+  </div>
+</div>

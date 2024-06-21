@@ -21,4 +21,10 @@ export class ApiService {
   public getBill(request:DataRequest){
     return this.http.post(this.server+"bill",request);
   }
+  public getDetail(request:DataRequest){
+    return this.http.post(this.server+"bill-detail",request);
+  }
+  public getItems(request:DataRequest){
+    return this.http.post(this.server+"item",request);
+  }
 }

@@ -1,10 +1,20 @@
 <div class="box">
   <div class="header">
-    <input type="text" placeholder="Nhap ban muon tim kiem">
-    <span class="header-text">Nhan su: {{staff.name }}</span>
-    <button class="header-btn" (click)="logout()" ><i class="fa-solid fa-lock"></i></button>
+    <input type="text" placeholder="Nhập bàn muốn tìm kiếm..." />
+    <span class="header-text">Nhân sự : {{ staff.name }}</span>
+    <button class="header-btn" (click)="logout()" >
+      <i class="fa-solid fa-lock"></i>
+    </button>
   </div>
   <div class="grid">
-    <div class="seat" *ngFor="let table of tables"  [ngClass]="{ 'occupied': table.bill != null }"><a routerLink="/tables/order/{{ table }}">{{ table.table }}</a></div>
+    <div
+      class="seat"
+      *ngFor="let table of tables"
+      [ngClass]="{ occupied: table.bill != null }"
+      (click)="openEditor(table)"
+    >
+      <a routerLink="/tables/order/{{ table.table }}" *ngIf="table.bill === null">{{ table.table }}</a>
+      <a *ngIf="table.bill != null">{{ table.table }}</a>
+    </div>
   </div>
 </div>

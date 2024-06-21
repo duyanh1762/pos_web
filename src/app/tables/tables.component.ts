@@ -5,7 +5,9 @@ import { Staff } from '../Models/staff';
 import { Bill } from '../Models/bill';
 import { ApiService } from '../Service/api.service';
 import { DataRequest } from '../Interface/data_request';
-interface InforTable{
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BillEditorComponent } from './bill-editor/bill-editor/bill-editor.component';
+interface TableInfor{
   table:string;
   bill:Bill | null;
 }
@@ -17,9 +19,9 @@ interface InforTable{
 export class TablesComponent implements OnInit {
   shop:Shop;
   staff:Staff;
-  tables:Array<InforTable> = [];
+  tables:Array<TableInfor> = [];
   bills:Array<Bill> = [];
-  constructor(private router:Router , private api:ApiService) { }
+  constructor(private router:Router , private api:ApiService,private bsModal:BsModalService) { }
 
   ngOnInit(): void {
     this.load();
@@ -36,7 +38,7 @@ export class TablesComponent implements OnInit {
     this.shop = JSON.parse(localStorage.getItem("shop-infor") || '{}');
     this.staff = JSON.parse(localStorage.getItem("staff-infor") || '{}');
     for(let i = 1 ;i<=this.shop.number_table;i++){
-      let table:InforTable = {table:""+i,bill:null};
+      let table:TableInfor = {table:""+i,bill:null};
       this.tables.push(table);
     };
     await this.api.getBill(request).toPromise().then((response:any)=>{
@@ -46,14 +48,24 @@ export class TablesComponent implements OnInit {
         };
       });
     });
-    this.tables.forEach((table:InforTable)=>{
+    this.tables.forEach((table:TableInfor)=>{
       this.bills.forEach((bill:Bill)=>{
         if(bill.table === table.table){
           table.bill = bill;
         }
       });
     });
+  }
 
-    console.log(this.tables);
+  openEditor(table: TableInfor){
+    if(table.bill === null){
+      this.router.navigate(["//tables/order/"+table.table]);
+    }else{
+      this.bsModal.show(BillEditorComponent,{
+        initialState:{
+          data:table.bill,
+        }
+      });
+    }
   }
 }

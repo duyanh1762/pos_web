@@ -15,6 +15,7 @@ import { StaffLoginComponent } from './home/staff-login/staff-login/staff-login.
 import { TablesComponent } from './tables/tables.component';
 import { StaffGuard } from './Guard/StaffGuard/staff.guard';
 import { OrderComponent } from './tables/order/order/order.component';
+import { BillEditorComponent } from './tables/bill-editor/bill-editor/bill-editor.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { OrderComponent } from './tables/order/order/order.component';
     StaffLoginComponent,
     TablesComponent,
     OrderComponent,
+    BillEditorComponent,
   ],
   imports: [
     BrowserModule,
