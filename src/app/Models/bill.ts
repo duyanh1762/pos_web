@@ -1,7 +1,7 @@
 export class Bill {
   id: number;
-  date:Date;
-  table: string;
+  date:string;
+  table: string | null;
   staffID: number;
   shopID:number;
   status:string;

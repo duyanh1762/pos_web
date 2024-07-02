@@ -43,7 +43,7 @@ export class TablesComponent implements OnInit {
     };
     await this.api.getBill(request).toPromise().then((response:any)=>{
       response.forEach((bill:Bill)=>{
-        if(bill.status === "not_pay" && bill.shopID === this.shop.id){
+        if(bill.status === "not_pay" && bill.shopID === this.shop.id && this.getBillDate(bill) === this.getCurrentDate()){
           this.bills.push(bill);
         };
       });
@@ -67,5 +67,21 @@ export class TablesComponent implements OnInit {
         }
       });
     }
+  }
+  getCurrentDate(): string {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+
+    return `${year}-${month}-${day}`;
+  }
+  getBillDate(bill:Bill):string{
+    const date = new Date(bill.date);
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const year = date.getUTCFullYear();
+
+    return `${year}-${month}-${day}`;
   }
 }
