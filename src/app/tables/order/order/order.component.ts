@@ -4,7 +4,7 @@ import { BillDetail } from 'src/app/Models/bill_detail';
 import { Item } from 'src/app/Models/item';
 import { Shop } from 'src/app/Models/shop';
 import { ApiService } from 'src/app/Service/api.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { Bill } from 'src/app/Models/bill';
 import { Staff } from 'src/app/Models/staff';
@@ -28,7 +28,7 @@ export class OrderComponent implements OnInit {
   public menu: Array<Item> = [];
   public cart: Array<CartItem> = [];
   public sum = 0;
-  constructor(private api: ApiService, private activeRoute: ActivatedRoute) {}
+  constructor(private api: ApiService, private activeRoute: ActivatedRoute,private router: Router) {}
 
   ngOnInit(): void {
     this.load();
@@ -121,23 +121,38 @@ export class OrderComponent implements OnInit {
     this.sum = this.getMoneyCart();
   }
   async save() {
-    this.activeRoute.paramMap.subscribe((data)=>{
-      let t = data.get("table") ;
-      let bill:Bill = {
-        id: 0,
-        date:this.getCurrentDateTime(),
-        table: t,
-        staffID: this.staff.id,
-        shopID:this.shop.id,
-        status:'not_pay',
-        policyID:this.shop.policyID,
-      }
-      this.api.getBill({mode:"create",data:bill}).subscribe((response)=>{
-        console.log(response);
-        //.... sau khi lay duoc id bill thi lap qua cart de them chi tiet hoa don vao db
-        // ... to do here ....
-      })
-    });
+    if(this.cart.length <=0){
+      alert("Không thể lưu hoá đơn không có vật phẩm. Hãy chọn ít nhất 1 món để lưu !");
+    }else{
+      this.activeRoute.paramMap.subscribe((data)=>{
+        let t = data.get("table") ;
+        let bill:Bill = {
+          id: 0,
+          date:this.getCurrentDateTime(),
+          table: t,
+          staffID: this.staff.id,
+          shopID:this.shop.id,
+          status:'not_pay',
+          policyID:this.shop.policyID,
+        };
+        this.api.getBill({mode:"create",data:bill}).subscribe((response:any)=>{
+          response as Bill;
+          this.cart.forEach((i)=>{
+            let detail:BillDetail={
+              id: 0,
+              itemID:i.itemID,
+              num: i.num,
+              billID:response.id,
+              policyID:this.shop.policyID,
+            };
+            this.api.getDetail({mode:"create",data:detail}).subscribe((response)=>{});
+          });
+          this.cart.splice(0,this.cart.length);
+          this.sum = 0;
+          this.router.navigate(["/tables"]);
+        });
+      });
+    }
   }
   getCurrentDateTime(): string {
     const date = new Date();
