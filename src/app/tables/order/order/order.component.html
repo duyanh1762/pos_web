@@ -66,7 +66,10 @@
       <div class="bill">
         <div class="bill-title">Tổng tiền:</div>
         <div class="money">{{ sum }} Đồng</div>
-        <div class="confirm" (click)="save()">
+        <div class="confirm" *ngIf="type =='new'" (click)="saveNew()">
+          <button >Lưu</button>
+        </div>
+        <div class="confirm" *ngIf="type =='edit'" (click)="saveEdit()">
           <button >Lưu</button>
         </div>
       </div>

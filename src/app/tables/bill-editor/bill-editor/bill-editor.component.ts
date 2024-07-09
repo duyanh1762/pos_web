@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { map } from 'rxjs';
 import { DataRequest } from 'src/app/Interface/data_request';
@@ -26,10 +27,16 @@ interface DetailInfor {
 })
 export class BillEditorComponent implements OnInit {
   @Input() data: Bill;
+  @Output() closed = new EventEmitter();
   listDetail: Array<BillDetail>;
   listDetailLU: Array<DetailInfor | BillDetail | any>;
-  total:number = 0;
-  constructor(private api: ApiService, private bsModalRef: BsModalRef, private http:HttpClient) {}
+  total: number = 0;
+  constructor(
+    private api: ApiService,
+    private bsModalRef: BsModalRef,
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.load();
@@ -87,7 +94,7 @@ export class BillEditorComponent implements OnInit {
     this.listDetailLU.forEach((item: DetailInfor) => {
       if (item.id === id) {
         if (item.num >= 1) {
-          item.num = item.num -1;
+          item.num = item.num - 1;
           item.update = true;
           this.total = this.total - item.price;
         } else {
@@ -100,13 +107,14 @@ export class BillEditorComponent implements OnInit {
   remove(id: number) {
     this.listDetailLU.forEach((item: DetailInfor) => {
       if (item.id === id) {
+        this.total = this.total - item.num * item.price;
         item.num = 0;
         item.update = true;
       }
     });
   }
   save() {
-    let queryDetail: Array<BillDetail> = [];
+    let queueDetail: Array<BillDetail> = [];
     for (let i = 0; i < this.listDetail.length; i++) {
       for (let i = 0; i < this.listDetailLU.length; i++) {
         if (
@@ -115,30 +123,50 @@ export class BillEditorComponent implements OnInit {
         ) {
           this.listDetail[i].num = this.listDetailLU[i].num;
           this.listDetailLU[i].update = false;
-          queryDetail.push(this.listDetail[i]);
+          queueDetail.push(this.listDetail[i]);
         }
       }
     }
-    if (queryDetail.length <= 0) {
+    if (queueDetail.length <= 0) {
       this.bsModalRef.hide();
     } else {
-      for (let i = 0; i < queryDetail.length; i++) {
-        console.log(queryDetail[i]);
-        if (queryDetail[i].num > 0) {
-          let request: DataRequest = {
-            mode: 'update',
-            data: queryDetail[i],
-          };
-          this.api.getDetail(request).subscribe((rs)=>{});
-        } else {
-          let request: DataRequest = {
-            mode: 'delete',
-            data: queryDetail[i],
-          };
-          this.api.getDetail(request).subscribe((rs)=>{});
+      let checkNum: boolean = false;
+      this.listDetail.forEach((data) => {
+        if (data.num > 0) {
+          checkNum = true;
         }
+      });
+      if (checkNum === false) {
+        if(confirm("Bạn có chắc chắn muốn huỷ hoá đơn này ?")){
+          this.data.status="delete";
+          this.api.getBill({mode:"update",data:this.data}).subscribe((res)=>{});
+          this.closed.emit(this.data);
+          this.bsModalRef.hide();
+        }else{
+          this.bsModalRef.hide();
+        }
+      } else {
+        for (let i = 0; i < queueDetail.length; i++) {
+          if (queueDetail[i].num > 0) {
+            let request: DataRequest = {
+              mode: 'update',
+              data: queueDetail[i],
+            };
+            this.api.getDetail(request).subscribe((rs)=>{});
+          } else {
+            let request: DataRequest = {
+              mode: 'delete',
+              data: queueDetail[i],
+            };
+            this.api.getDetail(request).subscribe((rs)=>{});
+          }
+        }
+        this.bsModalRef.hide();
       }
-      this.bsModalRef.hide();
     }
+  }
+  edit(table: string | null) {
+    this.router.navigate(['/tables/order/' + table]);
+    this.bsModalRef.hide();
   }
 }

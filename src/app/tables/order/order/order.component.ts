@@ -24,18 +24,24 @@ interface CartItem {
 })
 export class OrderComponent implements OnInit {
   public shop: Shop;
-  public staff:Staff;
+  public staff: Staff;
   public menu: Array<Item> = [];
   public cart: Array<CartItem> = [];
   public sum = 0;
-  constructor(private api: ApiService, private activeRoute: ActivatedRoute,private router: Router) {}
+  public type: string = 'new';
+  public tableData: Bill;
+  constructor(
+    private api: ApiService,
+    private activeRoute: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.load();
   }
   async load() {
     this.shop = JSON.parse(localStorage.getItem('shop-infor') || '{}');
-    this.staff = JSON.parse(localStorage.getItem('staff-infor') || '{}')
+    this.staff = JSON.parse(localStorage.getItem('staff-infor') || '{}');
     let request: DataRequest = {
       mode: 'get',
       data: '',
@@ -51,6 +57,50 @@ export class OrderComponent implements OnInit {
           }
         });
       });
+    this.activeRoute.paramMap.subscribe((data) => {
+      let t = data.get('table');
+      this.api.getBill(request).subscribe((res: any) => {
+        res.forEach((bill: Bill) => {
+          if (
+            bill.table == t &&
+            this.api.getCurrentDate() == this.api.getBillDate(bill) &&
+            bill.status == 'not_pay' &&
+            bill.shopID == this.shop.id
+          ) {
+            this.tableData = bill;
+            this.type = 'edit';
+            this.api.getDetail(request).subscribe((details: any) => {
+              details.forEach(async (detail: BillDetail) => {
+                if (detail.billID === bill.id) {
+                  let name = '';
+                  let price = 0;
+                  await this.api.getNameItem(detail.itemID).then((data) => {
+                    name = data;
+                  });
+                  await this.api.getPriceItem(detail.itemID).then((data) => {
+                    price = data;
+                  });
+                  let cartItem = {
+                    id: detail.id,
+                    itemID: detail.itemID,
+                    num: detail.num,
+                    billID: detail.billID,
+                    policyID: this.shop.policyID,
+                    name: name,
+                    price: price,
+                  };
+                  (<HTMLElement>(
+                    document.querySelector(`.item${detail.itemID} button`)
+                  )).style.display = 'none';
+                  this.cart.push(cartItem);
+                  this.sum = this.getMoneyCart();
+                }
+              });
+            });
+          }
+        });
+      });
+    });
   }
   addCart(item: Item) {
     let shop: Shop = JSON.parse(localStorage.getItem('shop-infor') || '{}');
@@ -120,49 +170,81 @@ export class OrderComponent implements OnInit {
     });
     this.sum = this.getMoneyCart();
   }
-  async save() {
-    if(this.cart.length <=0){
-      alert("Không thể lưu hoá đơn không có vật phẩm. Hãy chọn ít nhất 1 món để lưu !");
-    }else{
-      this.activeRoute.paramMap.subscribe((data)=>{
-        let t = data.get("table") ;
-        let bill:Bill = {
+  async saveNew() {
+    if (this.cart.length <= 0) {
+      alert(
+        'Không thể lưu hoá đơn không có vật phẩm. Hãy chọn ít nhất 1 món để lưu !'
+      );
+    } else {
+      this.activeRoute.paramMap.subscribe((data) => {
+        let t = data.get('table');
+        let bill: Bill = {
           id: 0,
-          date:this.getCurrentDateTime(),
+          date: this.api.getCurrentDateTime(),
           table: t,
           staffID: this.staff.id,
-          shopID:this.shop.id,
-          status:'not_pay',
-          policyID:this.shop.policyID,
+          shopID: this.shop.id,
+          status: 'not_pay',
+          policyID: this.shop.policyID,
         };
-        this.api.getBill({mode:"create",data:bill}).subscribe((response:any)=>{
-          response as Bill;
-          this.cart.forEach((i)=>{
-            let detail:BillDetail={
-              id: 0,
-              itemID:i.itemID,
-              num: i.num,
-              billID:response.id,
-              policyID:this.shop.policyID,
-            };
-            this.api.getDetail({mode:"create",data:detail}).subscribe((response)=>{});
+        this.api
+          .getBill({ mode: 'create', data: bill })
+          .subscribe((response: any) => {
+            response as Bill;
+            this.cart.forEach((i) => {
+              let detail: BillDetail = {
+                id: 0,
+                itemID: i.itemID,
+                num: i.num,
+                billID: response.id,
+                policyID: this.shop.policyID,
+              };
+              this.api
+                .getDetail({ mode: 'create', data: detail })
+                .subscribe((response) => {});
+            });
+            this.cart.splice(0, this.cart.length);
+            this.sum = 0;
+            this.router.navigate(['/tables']);
           });
-          this.cart.splice(0,this.cart.length);
-          this.sum = 0;
-          this.router.navigate(["/tables"]);
-        });
       });
     }
   }
-  getCurrentDateTime(): string {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const day = ('0' + date.getDate()).slice(-2);
-    const hours = ('0' + date.getHours()).slice(-2);
-    const minutes = ('0' + date.getMinutes()).slice(-2);
-    const seconds = ('0' + date.getSeconds()).slice(-2);
-
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  async saveEdit() {
+    if (this.cart.length <= 0) {
+      if(confirm("Bạn có chắc chắn muốn huỷ đơn này ?")){
+        this.tableData.status="delete";
+        this.api.getBill({mode:"update",data:this.tableData}).subscribe((res)=>{});
+      }
+    } else {
+      this.cart.forEach((i: CartItem) => {
+        if (i.id === 0) {
+          let newDetail: BillDetail = {
+            id: 0,
+            itemID: i.itemID,
+            num: i.num,
+            billID: this.tableData.id,
+            policyID: i.policyID,
+          };
+          this.api
+            .getDetail({ mode: 'create', data: newDetail })
+            .subscribe((res) => {});
+        } else {
+          let detail: BillDetail = {
+            id: i.id,
+            itemID: i.itemID,
+            num: i.num,
+            billID: i.billID,
+            policyID: i.policyID,
+          };
+          this.api
+            .getDetail({ mode: 'update', data: detail })
+            .subscribe((res) => {});
+        }
+      });
+    }
+    this.cart.splice(0, this.cart.length);
+    this.sum = 0;
+    this.router.navigate(['/tables']);
   }
 }

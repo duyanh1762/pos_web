@@ -43,7 +43,7 @@ export class TablesComponent implements OnInit {
     };
     await this.api.getBill(request).toPromise().then((response:any)=>{
       response.forEach((bill:Bill)=>{
-        if(bill.status === "not_pay" && bill.shopID === this.shop.id && this.getBillDate(bill) === this.getCurrentDate()){
+        if(bill.status === "not_pay" && bill.shopID === this.shop.id && this.api.getBillDate(bill) === this.api.getCurrentDate()){
           this.bills.push(bill);
         };
       });
@@ -59,29 +59,21 @@ export class TablesComponent implements OnInit {
 
   openEditor(table: TableInfor){
     if(table.bill === null){
-      this.router.navigate(["//tables/order/"+table.table]);
+      this.router.navigate(["/tables/order/"+table.table]);
     }else{
       this.bsModal.show(BillEditorComponent,{
         initialState:{
           data:table.bill,
         }
+      }).content?.closed.subscribe((data)=>{
+        if(data.status === "delete"){
+          this.tables.forEach((t:TableInfor)=>{
+            if(t.table === data.table){
+              t.bill = null;
+            }
+          });
+        }
       });
     }
-  }
-  getCurrentDate(): string {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const day = ('0' + date.getDate()).slice(-2);
-
-    return `${year}-${month}-${day}`;
-  }
-  getBillDate(bill:Bill):string{
-    const date = new Date(bill.date);
-    const day = String(date.getUTCDate()).padStart(2, '0');
-    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-    const year = date.getUTCFullYear();
-
-    return `${year}-${month}-${day}`;
   }
 }
