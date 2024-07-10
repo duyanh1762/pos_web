@@ -7,6 +7,7 @@ import { ApiService } from '../Service/api.service';
 import { DataRequest } from '../Interface/data_request';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BillEditorComponent } from './bill-editor/bill-editor/bill-editor.component';
+import { InforComponent } from './infor/infor.component';
 interface TableInfor{
   table:string;
   bill:Bill | null;
@@ -75,5 +76,15 @@ export class TablesComponent implements OnInit {
         }
       });
     }
+  }
+  infor(){
+    this.bsModal.show(InforComponent,{
+      initialState:{
+        data:{
+          shop:this.shop,
+          staff:this.staff,
+        }
+      }
+    });
   }
 }

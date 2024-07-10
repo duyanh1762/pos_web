@@ -16,6 +16,7 @@ import { TablesComponent } from './tables/tables.component';
 import { StaffGuard } from './Guard/StaffGuard/staff.guard';
 import { OrderComponent } from './tables/order/order/order.component';
 import { BillEditorComponent } from './tables/bill-editor/bill-editor/bill-editor.component';
+import { InforComponent } from './tables/infor/infor.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { BillEditorComponent } from './tables/bill-editor/bill-editor/bill-edito
     TablesComponent,
     OrderComponent,
     BillEditorComponent,
+    InforComponent,
   ],
   imports: [
     BrowserModule,

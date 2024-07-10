@@ -1,0 +1,25 @@
+.container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: auto;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.store-info{
+  margin-left: 50px;
+}
+.store-info p {
+  margin: 10px 0;
+}
+
+@media (max-width: 600px) {
+  .container {
+      padding: 15px;
+      width: auto;
+  }
+}
