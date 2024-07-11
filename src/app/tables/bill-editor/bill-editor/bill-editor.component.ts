@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { emit } from 'process';
 import { map } from 'rxjs';
 import { DataRequest } from 'src/app/Interface/data_request';
 import { Bill } from 'src/app/Models/bill';
@@ -167,6 +168,16 @@ export class BillEditorComponent implements OnInit {
   }
   edit(table: string | null) {
     this.router.navigate(['/tables/order/' + table]);
+    this.bsModalRef.hide();
+  }
+  purchase(){
+    this.data.status = "pay";
+    let request = {
+      mode:"update",
+      data: this.data,
+    }
+    this.api.getBill(request).subscribe((res)=>{});
+    this.closed.emit(this.data);
     this.bsModalRef.hide();
   }
 }

@@ -141,10 +141,7 @@ export class OrderComponent implements OnInit {
       i as CartItem;
       if (i.itemID === item.itemID) {
         if (i.num <= 1) {
-          const indexR = this.cart.findIndex((r) => {
-            r === i;
-          });
-          this.cart.splice(indexR, 1);
+          i.num = 0;
           (<HTMLElement>(
             document.querySelector(`.item${item.itemID} button`)
           )).style.display = 'block';
@@ -159,19 +156,20 @@ export class OrderComponent implements OnInit {
     this.cart.forEach((i: any) => {
       i as CartItem;
       if (item.itemID === i.itemID) {
-        const indexR = this.cart.findIndex((r) => {
-          r === i;
-        });
-        this.cart.splice(indexR, 1);
+        i.num = 0;
         (<HTMLElement>(
           document.querySelector(`.item${item.itemID} button`)
         )).style.display = 'block';
       }
     });
+
     this.sum = this.getMoneyCart();
   }
   async saveNew() {
-    if (this.cart.length <= 0) {
+    let cartCondition: Array<CartItem> = this.cart.filter((ct: CartItem) => {
+      return ct.num > 0;
+    });
+    if (cartCondition.length <= 0) {
       alert(
         'Không thể lưu hoá đơn không có vật phẩm. Hãy chọn ít nhất 1 món để lưu !'
       );
@@ -192,16 +190,18 @@ export class OrderComponent implements OnInit {
           .subscribe((response: any) => {
             response as Bill;
             this.cart.forEach((i) => {
-              let detail: BillDetail = {
-                id: 0,
-                itemID: i.itemID,
-                num: i.num,
-                billID: response.id,
-                policyID: this.shop.policyID,
-              };
-              this.api
-                .getDetail({ mode: 'create', data: detail })
-                .subscribe((response) => {});
+              if (i.num > 0) {
+                let detail: BillDetail = {
+                  id: 0,
+                  itemID: i.itemID,
+                  num: i.num,
+                  billID: response.id,
+                  policyID: this.shop.policyID,
+                };
+                this.api
+                  .getDetail({ mode: 'create', data: detail })
+                  .subscribe((response) => {});
+              }
             });
             this.cart.splice(0, this.cart.length);
             this.sum = 0;
@@ -211,35 +211,55 @@ export class OrderComponent implements OnInit {
     }
   }
   async saveEdit() {
-    if (this.cart.length <= 0) {
-      if(confirm("Bạn có chắc chắn muốn huỷ đơn này ?")){
-        this.tableData.status="delete";
-        this.api.getBill({mode:"update",data:this.tableData}).subscribe((res)=>{});
+    let cartCondition: Array<CartItem> = this.cart.filter((ct: CartItem) => {
+      return ct.num > 0;
+    });
+    if (cartCondition.length <= 0) {
+      if (confirm('Bạn có chắc chắn muốn huỷ đơn này ?')) {
+        this.tableData.status = 'delete';
+        this.api
+          .getBill({ mode: 'update', data: this.tableData })
+          .subscribe((res) => {});
       }
     } else {
       this.cart.forEach((i: CartItem) => {
         if (i.id === 0) {
-          let newDetail: BillDetail = {
-            id: 0,
-            itemID: i.itemID,
-            num: i.num,
-            billID: this.tableData.id,
-            policyID: i.policyID,
-          };
-          this.api
-            .getDetail({ mode: 'create', data: newDetail })
-            .subscribe((res) => {});
+          if(i.num > 0){
+            let newDetail: BillDetail = {
+              id: 0,
+              itemID: i.itemID,
+              num: i.num,
+              billID: this.tableData.id,
+              policyID: i.policyID,
+            };
+            this.api
+              .getDetail({ mode: 'create', data: newDetail })
+              .subscribe((res) => {});
+          }
         } else {
-          let detail: BillDetail = {
-            id: i.id,
-            itemID: i.itemID,
-            num: i.num,
-            billID: i.billID,
-            policyID: i.policyID,
-          };
-          this.api
-            .getDetail({ mode: 'update', data: detail })
-            .subscribe((res) => {});
+          if (i.num > 0) {
+            let detail: BillDetail = {
+              id: i.id,
+              itemID: i.itemID,
+              num: i.num,
+              billID: i.billID,
+              policyID: i.policyID,
+            };
+            this.api
+              .getDetail({ mode: 'update', data: detail })
+              .subscribe((res) => {});
+          } else {
+            let detail: BillDetail = {
+              id: i.id,
+              itemID: i.itemID,
+              num: i.num,
+              billID: i.billID,
+              policyID: i.policyID,
+            };
+            this.api
+              .getDetail({ mode: 'delete', data: detail })
+              .subscribe((res) => {});
+          }
         }
       });
     }

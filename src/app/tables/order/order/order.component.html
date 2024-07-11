@@ -1,9 +1,7 @@
 <body>
   <div class="list-drinks-ipad">
     <div class="menu-title-ipad">
-      <div class="group">
-
-      </div>
+      <div class="group"></div>
     </div>
   </div>
   <div class="container">
@@ -12,9 +10,7 @@
         Thực đơn
       </div>
       <div class="menu-title">
-        <div class="group" >
-
-        </div>
+        <div class="group"></div>
       </div>
     </div>
     <div class="menu-choose">
@@ -22,7 +18,11 @@
         <input type="text" placeholder="Tìm món..." />
       </div>
       <div class="drinks">
-        <div class="item{{ item.id }}" style="height: 20%;" *ngFor="let item of menu" >
+        <div
+          class="item{{ item.id }}"
+          style="height: 20%"
+          *ngFor="let item of menu"
+        >
           <div class="img">
             <img src="https://api.ahacafe.vn/user/2/menu-items/14.jpg" />
           </div>
@@ -31,7 +31,7 @@
             <div class="name">{{ item.name }}</div>
             <div class="price">{{ item.price }}</div>
             <div class="button">
-              <button (click)="addCart(item)" >Thêm</button>
+              <button (click)="addCart(item)">Thêm</button>
             </div>
           </div>
         </div>
@@ -42,7 +42,7 @@
         Đơn hàng
       </div>
       <div class="list-buy">
-        <div class="item-buy" *ngFor="let i of cart" >
+        <div class="item-buy" *ngFor="let i of cart">
           <div class="name-note">
             <div class="id-i" style="display: none"></div>
             <div class="name-i">{{ i.name }}</div>
@@ -55,10 +55,10 @@
               {{ i.num }}
             </div>
             <div class="plus" (click)="plus(i)">
-              <button >+</button>
+              <button>+</button>
             </div>
             <div class="delete" (click)="delete(i)">
-              <bUtton >x</bUtton>
+              <bUtton>x</bUtton>
             </div>
           </div>
         </div>
@@ -66,11 +66,11 @@
       <div class="bill">
         <div class="bill-title">Tổng tiền:</div>
         <div class="money">{{ sum }} Đồng</div>
-        <div class="confirm" *ngIf="type =='new'" (click)="saveNew()">
-          <button >Lưu</button>
+        <div class="confirm" *ngIf="type == 'new'" (click)="saveNew()">
+          <button>Lưu</button>
         </div>
-        <div class="confirm" *ngIf="type =='edit'" (click)="saveEdit()">
-          <button >Lưu</button>
+        <div class="confirm" *ngIf="type == 'edit'" (click)="saveEdit()">
+          <button>Lưu</button>
         </div>
       </div>
     </div>
@@ -85,8 +85,8 @@
         <input type="number" name="phone" placeholder="Số điện thoại" />
       </div>
       <div class="send">
-        <button >Xác nhận</button>
-        <button >Trở lại</button>
+        <button>Xác nhận</button>
+        <button>Trở lại</button>
       </div>
     </div>
   </div>

@@ -67,7 +67,7 @@ export class TablesComponent implements OnInit {
           data:table.bill,
         }
       }).content?.closed.subscribe((data)=>{
-        if(data.status === "delete"){
+        if(data.status === "delete" || data.status === "pay"){
           this.tables.forEach((t:TableInfor)=>{
             if(t.table === data.table){
               t.bill = null;
