@@ -107,6 +107,7 @@ export class OrderComponent implements OnInit {
     (<HTMLElement>(
       document.querySelector(`.item${item.id} button`)
     )).style.display = 'none';
+    let check:boolean = false;
     let newCartI: CartItem = {
       id: 0,
       itemID: item.id,
@@ -116,7 +117,16 @@ export class OrderComponent implements OnInit {
       name: item.name,
       price: item.price,
     };
-    this.cart.push(newCartI);
+    for(let i = 0 ;i<this.cart.length;i++){
+      if((this.cart)[i].itemID === newCartI.itemID){
+        (this.cart)[i].num = 1;
+        check = true;
+        break;
+      }
+    }
+    if(!check){
+      this.cart.push(newCartI);
+    }
     this.sum = this.getMoneyCart();
   }
   getMoneyCart(): number {
