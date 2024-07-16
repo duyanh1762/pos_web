@@ -1,0 +1,76 @@
+.history {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #4CAF50;
+}
+.log h4{
+  text-align: center;
+  color: #4CAF50;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #4CAF50;
+  color: white;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+
+
+@media (max-width: 600px) {
+  .container {
+      padding: 15px;
+  }
+
+  table, thead, tbody, th, td, tr {
+      display: block;
+  }
+
+  thead tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+  }
+
+  tr {
+      margin: 0 0 1rem 0;
+  }
+
+  tr:nth-child(odd) {
+      background: #ccc;
+  }
+
+  td {
+      border: none;
+      border-bottom: 1px solid #ddd;
+      position: relative;
+      padding-left: 50%;
+  }
+
+  td:before {
+      position: absolute;
+      top: 12px;
+      left: 6px;
+      width: 45%;
+      padding-right: 10px;
+      white-space: nowrap;
+      content: attr(data-label);
+      font-weight: bold;
+  }
+}

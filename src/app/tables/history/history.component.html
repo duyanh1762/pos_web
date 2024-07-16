@@ -1,0 +1,24 @@
+<div class="history">
+  <h2>Lịch sử thanh toán bàn {{ data.table }}</h2>
+  <table *ngIf="bills.length > 0">
+      <thead>
+          <tr>
+              <th>Mã</th>
+              <th>Thời gian</th>
+              <th>Tổng</th>
+              <th>Nhân sự</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let bill of bills">
+              <td>97HC{{ bill.id }}</td>
+              <td>{{ bill.time }}</td>
+              <td>{{ bill.total }} VND</td>
+              <td>{{ bill.staff }}</td>
+          </tr>
+      </tbody>
+  </table>
+  <div class="log" *ngIf="bills.length <= 0">
+    <h4>Chưa có hoá đơn trong hôm nay !</h4>
+  </div>
+</div>

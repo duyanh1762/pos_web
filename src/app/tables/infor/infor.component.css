@@ -8,6 +8,7 @@
 
 h2 {
   text-align: center;
+  color: #4dac61;
   margin-bottom: 20px;
 }
 .store-info{
@@ -16,10 +17,15 @@ h2 {
 .store-info p {
   margin: 10px 0;
 }
-
+strong{
+  color: #4dac61;
+}
 @media (max-width: 600px) {
   .container {
       padding: 15px;
       width: auto;
+  }
+  strong{
+    color: #4dac61;
   }
 }

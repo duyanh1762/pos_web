@@ -8,6 +8,7 @@ import { DataRequest } from '../Interface/data_request';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BillEditorComponent } from './bill-editor/bill-editor/bill-editor.component';
 import { InforComponent } from './infor/infor.component';
+import { HistoryComponent } from './history/history.component';
 interface TableInfor{
   table:string;
   bill:Bill | null;
@@ -84,6 +85,13 @@ export class TablesComponent implements OnInit {
           shop:this.shop,
           staff:this.staff,
         }
+      }
+    });
+  }
+  openHistory(table:TableInfor){
+    this.bsModal.show(HistoryComponent,{
+      initialState:{
+        data:table,
       }
     });
   }

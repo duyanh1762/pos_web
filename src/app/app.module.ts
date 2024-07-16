@@ -17,6 +17,8 @@ import { StaffGuard } from './Guard/StaffGuard/staff.guard';
 import { OrderComponent } from './tables/order/order/order.component';
 import { BillEditorComponent } from './tables/bill-editor/bill-editor/bill-editor.component';
 import { InforComponent } from './tables/infor/infor.component';
+import { HistoryComponent } from './tables/history/history.component';
+import { LongClickDirective } from './Directives/long-click.directive';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { InforComponent } from './tables/infor/infor.component';
     OrderComponent,
     BillEditorComponent,
     InforComponent,
+    HistoryComponent,
+    LongClickDirective,
   ],
   imports: [
     BrowserModule,
