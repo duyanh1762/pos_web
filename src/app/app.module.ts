@@ -19,6 +19,7 @@ import { BillEditorComponent } from './tables/bill-editor/bill-editor/bill-edito
 import { InforComponent } from './tables/infor/infor.component';
 import { HistoryComponent } from './tables/history/history.component';
 import { LongClickDirective } from './Directives/long-click.directive';
+import { ManageComponent } from './manage/manage.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { LongClickDirective } from './Directives/long-click.directive';
     InforComponent,
     HistoryComponent,
     LongClickDirective,
+    ManageComponent,
   ],
   imports: [
     BrowserModule,

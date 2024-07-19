@@ -7,13 +7,16 @@ import { LoginGuard } from './Guard/LoginGuard/login.guard';
 import { TablesComponent } from './tables/tables.component';
 import { StaffGuard } from './Guard/StaffGuard/staff.guard';
 import { OrderComponent } from './tables/order/order/order.component';
+import { ManageComponent } from './manage/manage.component';
 
 const routes: Routes = [
   {path:"",component:HomeComponent,canActivate:[AuthGuard]},
   {path:"login",component:LoginComponent,canActivate:[LoginGuard]},
   {path:"tables",component:TablesComponent,canActivate:[AuthGuard,StaffGuard]},
   {path:"tables/order/:table",component:OrderComponent,canActivate:[AuthGuard,StaffGuard]},
+  {path:"manage",component:ManageComponent},
   {path:"**",redirectTo:"",pathMatch:"full"},
+
 ];
 
 @NgModule({
