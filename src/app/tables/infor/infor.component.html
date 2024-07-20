@@ -3,6 +3,9 @@
   <div class="store-info">
       <p><strong>Địa chỉ:</strong> {{ data.shop.address }}</p>
       <p><strong>Nhân sự:</strong> {{ data.staff.name }}</p>
-      <p><strong>Tổng doanh thu ngày:</strong> {{ revenue }} VND</p>
+      <p><strong>Doanh thu nhân sự :</strong> {{ revenue }} VND</p>
+  </div>
+  <div class="detail" *ngIf="staff.role === 'quan_ly'">
+    <button (click)="navigate()">Xem chi tiết</button>
   </div>
 </div>

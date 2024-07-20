@@ -19,7 +19,8 @@ import { BillEditorComponent } from './tables/bill-editor/bill-editor/bill-edito
 import { InforComponent } from './tables/infor/infor.component';
 import { HistoryComponent } from './tables/history/history.component';
 import { LongClickDirective } from './Directives/long-click.directive';
-import { ManageComponent } from './manage/manage.component';
+import { ManageModule } from './manage/manage.module';
+import { LoadManageGuard } from './Guard/LoadManage/load-manage.guard';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,6 @@ import { ManageComponent } from './manage/manage.component';
     InforComponent,
     HistoryComponent,
     LongClickDirective,
-    ManageComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,8 +41,9 @@ import { ManageComponent } from './manage/manage.component';
     FormsModule,
     HttpClientModule,
     ModalModule.forRoot(),
+    ManageModule,
   ],
-  providers: [AuthGuard,LoginGuard,ApiService,StaffGuard],
+  providers: [AuthGuard,LoginGuard,ApiService,StaffGuard,LoadManageGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

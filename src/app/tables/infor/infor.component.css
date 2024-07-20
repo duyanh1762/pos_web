@@ -4,6 +4,7 @@
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: auto;
+  font-family: Arial, sans-serif;
 }
 
 h2 {
@@ -19,6 +20,20 @@ h2 {
 }
 strong{
   color: #4dac61;
+}
+.detail{
+  text-align: center;
+}
+.detail button{
+  width: 100px;
+  height: 30px;
+  border-radius: 4px;
+  background-color: #4dac61;
+  color: white;
+  border: none;
+}
+.detail button:hover{
+  background-color: #45a049;
 }
 @media (max-width: 600px) {
   .container {

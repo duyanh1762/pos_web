@@ -15,7 +15,7 @@ export class LongClickDirective {
   onMouseDown(event: MouseEvent): void {
     this.timeClick = setTimeout(() => {
       this.longClick.emit();
-    }, 1000); // Thời gian giữ chuột để kích hoạt sự kiện (1000ms)
+    }, 1000);
   }
 
   @HostListener('mouseup')

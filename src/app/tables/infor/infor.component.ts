@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Bill } from 'src/app/Models/bill';
 import { BillDetail } from 'src/app/Models/bill_detail';
 import { Item } from 'src/app/Models/item';
+import { Staff } from 'src/app/Models/staff';
 import { ApiService } from 'src/app/Service/api.service';
 
 @Component({
@@ -12,12 +15,14 @@ import { ApiService } from 'src/app/Service/api.service';
 export class InforComponent implements OnInit {
   @Input() data: any;
   public revenue: number = 0;
-  constructor(private api: ApiService) {}
+  public staff:Staff;
+  constructor(private api: ApiService,private bsModalRef:BsModalRef,private router:Router) {}
 
   ngOnInit(): void {
     this.load();
   }
   async load() {
+    this.staff = JSON.parse(localStorage.getItem("staff-infor") || '{}');
     let request = {
       mode: 'get',
       data: '',
@@ -46,5 +51,9 @@ export class InforComponent implements OnInit {
           }
         });
       });
+  }
+  navigate(){
+    this.router.navigate(["/manage"]);
+    this.bsModalRef.hide();
   }
 }
