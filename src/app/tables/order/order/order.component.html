@@ -29,7 +29,7 @@
           <div class="infor">
             <div class="id" style="display: none">{{ item.id }}</div>
             <div class="name">{{ item.name }}</div>
-            <div class="price">{{ item.price }}</div>
+            <div class="price">{{ item.price | moneyTransform }}đ</div>
             <div class="button">
               <button (click)="addCart(item)">Thêm</button>
             </div>
@@ -67,7 +67,7 @@
       </div>
       <div class="bill">
         <div class="bill-title">Tổng tiền:</div>
-        <div class="money">{{ sum }} Đồng</div>
+        <div class="money">{{ sum | moneyTransform}}đ</div>
         <div class="confirm" *ngIf="type == 'new'" (click)="saveNew()">
           <button>Lưu</button>
         </div>

@@ -21,6 +21,7 @@ import { HistoryComponent } from './tables/history/history.component';
 import { LongClickDirective } from './Directives/long-click.directive';
 import { ManageModule } from './manage/manage.module';
 import { LoadManageGuard } from './Guard/LoadManage/load-manage.guard';
+import { MoneyTransformPipe } from './Pipes/money-transform.pipe';
 
 @NgModule({
   declarations: [

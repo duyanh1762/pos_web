@@ -1,38 +1,40 @@
 <div class="content">
   <header class="header">
-      <a routerLink="/tables" class="home-link"><i class="fas fa-home"></i> Trở về</a>
+    <a routerLink="/tables" class="home-link"
+      ><i class="fas fa-home"></i> Trở về</a
+    >
   </header>
 
   <div class="grid">
-      <div class="card large">
-          <h3>DOANH SỐ NGÀY 19-07-2024</h3>
-          <div class="revenue">
-              <div class="revenue-item green">
-                  <i class="fas fa-check"></i>
-                  <span>7,649,980đ</span>
-                  <p>ĐÃ THU</p>
-              </div>
-              <div class="revenue-item orange">
-                  <i class="fas fa-glass-martini"></i>
-                  <span>1,911,000đ</span>
-                  <p>CHƯA THU</p>
-              </div>
-              <div class="revenue-item teal">
-                  <i class="fas fa-dollar-sign"></i>
-                  <span>9,560,980đ</span>
-                  <p>TỔNG</p>
-              </div>
-          </div>
+    <div class="card large">
+      <h3>DOANH SỐ NGÀY 19-07-2024</h3>
+      <div class="revenue">
+        <div class="revenue-item green">
+          <i class="fas fa-check"></i>
+          <span>{{ paid | moneyTransform }}đ</span>
+          <p>ĐÃ THU</p>
+        </div>
+        <div class="revenue-item orange">
+          <i class="fas fa-glass-martini"></i>
+          <span>{{ unpaid | moneyTransform }}đ</span>
+          <p>CHƯA THU</p>
+        </div>
+        <div class="revenue-item teal">
+          <i class="fas fa-dollar-sign"></i>
+          <span>{{ paid + unpaid | moneyTransform}}đ</span>
+          <p>TỔNG</p>
+        </div>
       </div>
+    </div>
 
-      <div class="card">
-          <h3>HÌNH THỨC THANH TOÁN</h3>
-          <table>
-              <tr>
-                  <td>TIỀN MẶT</td>
-                  <td class="right">7,618,000</td>
-              </tr>
-              <!-- <tr>
+    <div class="card">
+      <h3>HÌNH THỨC THANH TOÁN</h3>
+      <table>
+        <tr>
+          <td>TIỀN MẶT</td>
+          <td class="right">{{ paid | moneyTransform }}đ</td>
+        </tr>
+        <!-- <tr>
                   <td>THU TIỀN MẶT</td>
                   <td class="right">31,980</td>
               </tr>
@@ -40,14 +42,14 @@
                   <td>NOW</td>
                   <td class="right">0</td>
               </tr> -->
-              <tr>
-                  <td>TỔNG</td>
-                  <td class="right">7,649,980</td>
-              </tr>
-          </table>
-      </div>
+        <tr>
+          <td>TỔNG</td>
+          <td class="right">{{ paid | moneyTransform }}đ</td>
+        </tr>
+      </table>
+    </div>
 
-      <!-- <div class="card">
+    <!-- <div class="card">
           <h3>TOP 10 MÓN <i class="fas fa-info-circle"></i></h3>
           <ul class="top-items">
               <li>Cà phê sữa pha máy <span class="right">20.48%</span></li>
@@ -59,47 +61,55 @@
           </ul>
       </div> -->
 
-      <div class="card">
-          <h3>NHÂN SỰ </h3>
-          <div class="employee">
-              <img src="https://via.placeholder.com/50" alt="Nhân sự">
-              <div>
-                  <p>Thu ngân 1</p>
-                  <p>7,649,980đ</p>
-              </div>
-          </div>
+    <div class="card">
+      <h3>NHÂN SỰ</h3>
+      <div class="employee" *ngFor="let s of staffs">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn1FyCMrZncYJLZq-sL0FF2kYzvTvzewjT0g&s"
+        />
+        <div>
+          <p>{{ s.name }}</p>
+          <p>{{ s.total | moneyTransform }}đ</p>
+        </div>
       </div>
+    </div>
 
-      <div class="card" >
-          <h3>SỐ BÀN ĐANG PHỤC VỤ</h3>
-          <p><span class="right">17</span></p>
-      </div>
-      <div class="card">
-        <h3>LỊCH SỬ HOÁ ĐƠN NGÀY 19-07-2024 </h3>
+    <div class="card">
+      <h3>SỐ BÀN ĐANG PHỤC VỤ</h3>
+      <p><span class="right">{{ tableNum }}</span></p>
+    </div>
+    <div class="card">
+      <h3>LỊCH SỬ HOÁ ĐƠN NGÀY 19-07-2024</h3>
+      <div class="bills">
         <table>
-          <thead>
-              <tr>
-                  <th>Mã</th>
-                  <th>Thời gian</th>
-                  <th>Tổng</th>
-                  <th>Nhân sự</th>
-              </tr>
+          <thead >
+            <tr>
+              <th>Bàn</th>
+              <th>Thời gian</th>
+              <th>Tổng</th>
+              <th>Nhân sự</th>
+              <th>Trạng thái</th>
+            </tr>
           </thead>
-          <tbody>
-              <!-- <tr *ngFor="let bill of bills">
+          <tbody >
+            <!-- <tr *ngFor="let bill of bills">
                   <td>97HC{{ bill.id }}</td>
                   <td>{{ bill.time }}</td>
                   <td>{{ bill.total }} VND</td>
                   <td>{{ bill.staff }}</td>
               </tr> -->
-              <tr>
-                <th>123123</th>
-                <th>123-123-1312</th>
-                <th>123123123</th>
-                <th>123123123</th>
+            <tr *ngFor="let b of bills">
+              <td>{{ b.table }}</td>
+              <td>{{ b.date}}</td>
+              <td>{{ b.total | moneyTransform }}đ</td>
+              <td>{{ b.nameStaff }}</td>
+              <td *ngIf="b.status === 'not_pay'">Chưa thanh toán</td>
+              <td *ngIf="b.status === 'pay'">Đã thanh toán</td>
             </tr>
+
           </tbody>
-      </table>
+        </table>
       </div>
+    </div>
   </div>
 </div>

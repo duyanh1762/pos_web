@@ -1,15 +1,122 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Bill } from 'src/app/Models/bill';
+import { BillDetail } from 'src/app/Models/bill_detail';
+import { Item } from 'src/app/Models/item';
+import { Shop } from 'src/app/Models/shop';
+import { Staff } from 'src/app/Models/staff';
+import { ApiService } from 'src/app/Service/api.service';
+interface BillInfor {
+  id: number;
+  date: string;
+  table: string | null;
+  staffID: number;
+  shopID: number;
+  status: string;
+  policyID: number;
+  nameStaff: string;
+  total: number;
+}
+interface StaffInfor {
+  id: number;
+  name: string;
+  total: number;
+}
 @Component({
   selector: 'app-sale',
   templateUrl: './sale.component.html',
-  styleUrls: ['./sale.component.css']
+  styleUrls: ['./sale.component.css'],
 })
 export class SaleComponent implements OnInit {
-
-  constructor() { }
+  public shop: Shop;
+  public paid: number = 0;
+  public unpaid: number = 0;
+  public staffs: Array<StaffInfor> = [];
+  public tableNum:number = 0;
+  // public sum:number=0;
+  public bills: Array<BillInfor> = [];
+  constructor(private api: ApiService) {}
 
   ngOnInit(): void {
+    this.load();
   }
-
+  async load() {
+    let items: Array<Item> = [];
+    this.shop = JSON.parse(localStorage.getItem('shop-infor') || '{}');
+    let request = {
+      mode: 'get',
+      data: '',
+    };
+    await this.api
+      .getStaff(request)
+      .toPromise()
+      .then((res: any) => {
+        res.forEach((s: Staff) => {
+          if(s.shopID === this.shop.id){
+            let si = {
+              id: s.id,
+              name: s.name,
+              total: 0,
+            };
+            this.staffs.push(si);
+          }
+        });
+      });
+    await this.api
+      .getItems(request)
+      .toPromise()
+      .then((res: any) => {
+        items = res;
+      });
+    await this.api
+      .getBill(request)
+      .toPromise()
+      .then((res: any) => {
+        res.forEach(async (i: Bill) => {
+          if (
+            i.shopID === this.shop.id &&
+            this.api.getCurrentDate() === this.api.getBillDate(i)
+          ) {
+            let n = '';
+            let t = 0;
+            await this.api
+              .getDetail({ mode: 'get', data: Number(i.id) })
+              .toPromise()
+              .then((res: any) => {
+                res.forEach((d: BillDetail) => {
+                  items.forEach((item: Item) => {
+                    if (d.itemID === item.id) {
+                      t = t + d.num * item.price;
+                    }
+                  });
+                });
+              });
+            for (let y = 0; y < this.staffs.length; y++) {
+              if (this.staffs[y].id === i.staffID) {
+                n = this.staffs[y].name;
+                break;
+              }
+            }
+            let b = {
+              ...i,
+              nameStaff: n,
+              total: t,
+            };
+           let newDate = this.api.dateTransform(b.date);
+           b.date = newDate;
+            this.bills.push(b);
+            this.staffs.forEach((si:StaffInfor)=>{
+              if(b.staffID === si.id && b.status === "pay"){
+                si.total = si.total + b.total;
+              }
+            });
+            if (i.status === 'pay') {
+              this.paid = this.paid + b.total;
+            } else if (i.status === 'not_pay') {
+              this.unpaid = this.unpaid + b.total;
+              this.tableNum = this.tableNum + 1;
+            }
+          }
+        });
+      });
+  }
 }

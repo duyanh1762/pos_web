@@ -62,7 +62,7 @@ export class HistoryComponent implements OnInit {
           });
           let billInfor:BillInfor={
             id:item.id.toString(),
-            time:date.toString(),
+            time:this.api.dateTransform(date.toString()),
             staff:name,
             total:money,
           };

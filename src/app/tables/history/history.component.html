@@ -13,7 +13,7 @@
           <tr *ngFor="let bill of bills">
               <td>97HC{{ bill.id }}</td>
               <td>{{ bill.time }}</td>
-              <td>{{ bill.total }} VND</td>
+              <td>{{ bill.total | moneyTransform }}đ</td>
               <td>{{ bill.staff }}</td>
           </tr>
       </tbody>
