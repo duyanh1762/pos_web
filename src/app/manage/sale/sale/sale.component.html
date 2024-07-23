@@ -80,6 +80,22 @@
     </div>
     <div class="card">
       <h3>LỊCH SỬ HOÁ ĐƠN NGÀY 19-07-2024</h3>
+      <div class="filter">
+        <label for="status">Trạng thái:</label>
+        <select  id="status" #selectStatus (change)="filter()">
+          <option value="all"  >Tất cả</option>
+          <option value="pay">Đã thanh toán</option>
+          <option value="not_pay">Chưa thanh toán</option>
+          <option value="delete">Đã huỷ</option>
+        </select>
+        <label for="status">Nhân sự:</label>
+        <select  id="staff" #selectStaff (change)="filter()">
+          <option value="all" >Tất cả</option>
+          <option value="{{ s.id }}" *ngFor="let s of staffs">{{ s.name }}</option>
+        </select>
+        <label for="status">Số bàn:</label>
+        <input type="text" placeholder="Nhập số bàn..." #tableN (change)="filter()">
+      </div>
       <div class="bills">
         <table>
           <thead >
@@ -98,15 +114,15 @@
                   <td>{{ bill.total }} VND</td>
                   <td>{{ bill.staff }}</td>
               </tr> -->
-            <tr *ngFor="let b of bills">
+            <tr *ngFor="let b of billsLU">
               <td>{{ b.table }}</td>
               <td>{{ b.date}}</td>
               <td>{{ b.total | moneyTransform }}đ</td>
               <td>{{ b.nameStaff }}</td>
               <td *ngIf="b.status === 'not_pay'">Chưa thanh toán</td>
               <td *ngIf="b.status === 'pay'">Đã thanh toán</td>
+              <td *ngIf="b.status === 'delete'">Đã huỷ</td>
             </tr>
-
           </tbody>
         </table>
       </div>
