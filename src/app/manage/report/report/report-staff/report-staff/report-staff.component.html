@@ -1,17 +1,66 @@
-<div>
-  <mat-form-field appearance="fill">
-    <mat-label>Ngày bắt đầu</mat-label>
-    <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate">
-    <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-    <mat-datepicker #startPicker></mat-datepicker>
-  </mat-form-field>
-
-  <mat-form-field appearance="fill">
-    <mat-label>Ngày kết thúc</mat-label>
-    <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate">
-    <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-    <mat-datepicker #endPicker></mat-datepicker>
-  </mat-form-field>
-  <button (click)="getTimeLine()">Get date</button>
+<div class="content">
+  <div class="report-header">
+    <a routerLink="/manage/report" class="back-link"><i class="fas fa-home"></i> Trở về</a>
+  </div>
+  <div class="time-content">
+    <div class="report-title">
+      <h3>CHỌN THỜI GIAN: </h3>
+    </div>
+    <div class="date-picker-form">
+      <mat-form-field appearance="fill" >
+        <mat-label>Ngày bắt đầu</mat-label>
+        <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate" />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="startPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="date-picker-form">
+      <mat-form-field appearance="fill" >
+        <mat-label>Ngày kết thúc</mat-label>
+        <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate" />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="endPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="date-picker-button">
+      <button (click)="confirmDate()" class="date-picker-button">Xác nhận</button>
+    </div>
+  </div>
+  <div class="report-content">
+    <div class="report-title">
+      <h3>KẾT QUẢ BÁO CÁO NHÂN SỰ:</h3>
+    </div>
+    <div class="table-responsive">
+      <table class="report-table">
+        <thead>
+          <tr>
+            <th>Tên thu ngân</th>
+            <th>Bán điểm <sup>(1)</sup></th>
+            <th>Hóa đơn <sup>(2)</sup></th>
+            <th>Tổng <sup>(1)+(2)</sup></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of staffs">
+            <td class="cashier-name">{{ s.name }}</td>
+            <td class="sale-point">0đ</td>
+            <td class="invoice">{{ s.total | moneyTransform }}đ</td>
+            <td class="total">{{ s.total | moneyTransform }}đ</td>
+          </tr>
+          <tr>
+            <td class="cashier-name">Tổng</td>
+            <td class="sale-point">0đ</td>
+            <td class="invoice">0đ</td>
+            <td class="total">0đ</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
-

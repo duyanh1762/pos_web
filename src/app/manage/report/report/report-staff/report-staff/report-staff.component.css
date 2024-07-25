@@ -1,0 +1,176 @@
+.content {
+  margin: 0 auto;
+  border-radius: 8px;
+  padding: 20px;
+  width: 90%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+}
+
+.time-content, .report-content {
+  width: 100%;
+}
+
+.time-content {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.time-content .date-picker-form{
+  margin-left: 20px;
+}
+.time-content .date-picker-button button{
+  height: 40px;
+  width: 100px;
+  color: #fff;
+  background-color: #4CAF50;
+  border-radius: 5px;
+  text-decoration: none;
+  outline: none;
+  transition: background-color 0.2s;
+  margin-left: 20px;
+  margin-bottom: 16px;
+  border:none
+}
+.time-content .date-picker-button button:hover{
+  background-color: #198754;
+}
+.date-picker {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.date-picker label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.btn-filter {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+.btn-filter:hover {
+  background-color: #0056b3;
+}
+
+.report-content {
+  width: 100%;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.report-header {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.back-link {
+  color: black;
+  text-decoration: none;
+  font-size: 1.2em;
+  font-weight: 400;
+}
+
+.date-indicator {
+  font-size: 14px;
+  color: #555;
+}
+
+.report-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.report-title h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.result-count {
+  color: #888;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.report-table th,
+.report-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.report-table th {
+  background-color: #f9f9f9;
+}
+
+.cashier-name {
+  color: #ff5722;
+  font-weight: bold;
+}
+
+.total {
+  font-weight: bold;
+  color: #007bff;
+}
+h3{
+  font-weight: 500;
+}
+/* Responsive Styling */
+@media (max-width: 600px) {
+  .time-content {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .btn-filter {
+      margin-top: 10px;
+      width: 100%;
+  }
+
+  .report-title h2 {
+      font-size: 18px;
+  }
+
+  .report-table th,
+  .report-table td {
+      padding: 8px;
+  }
+
+  .report-header, .report-title {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .back-link, .date-indicator {
+      margin-bottom: 10px;
+  }
+}
