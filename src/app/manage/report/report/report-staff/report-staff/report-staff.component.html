@@ -9,7 +9,7 @@
     <div class="date-picker-form">
       <mat-form-field appearance="fill" >
         <mat-label>Ngày bắt đầu</mat-label>
-        <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate" />
+        <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate" (dateChange)="onStartDateChange($event.value)"/>
         <mat-datepicker-toggle
           matSuffix
           [for]="startPicker"
@@ -20,7 +20,7 @@
     <div class="date-picker-form">
       <mat-form-field appearance="fill" >
         <mat-label>Ngày kết thúc</mat-label>
-        <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate" />
+        <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate" (dateChange)="onEndDateChange($event.value)" />
         <mat-datepicker-toggle
           matSuffix
           [for]="endPicker"
@@ -56,8 +56,8 @@
           <tr>
             <td class="cashier-name">Tổng</td>
             <td class="sale-point">0đ</td>
-            <td class="invoice">0đ</td>
-            <td class="total">0đ</td>
+            <td class="invoice">{{ renuvalue | moneyTransform }}đ</td>
+            <td class="total">{{ renuvalue | moneyTransform }}đ</td>
           </tr>
         </tbody>
       </table>
