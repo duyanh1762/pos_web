@@ -11,16 +11,17 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { ReportStaffComponent } from './report/report/report-staff/report-staff/report-staff.component';
+import { ReportBillComponent } from './report/report/report-bill/report-bill/report-bill.component';
 
 let routes:Routes = [
   {path:"",component:ManageComponent},
   {path:"sale",component:SaleComponent},
   {path:"report",component:ReportComponent},
-  {path:"report/staff",component:ReportStaffComponent}
-
+  {path:"report/staff",component:ReportStaffComponent},
+  {path:'report/bill',component:ReportBillComponent},
 ]
 @NgModule({
-  declarations: [ManageComponent,SaleComponent,MoneyTransformPipe, ReportComponent, ReportStaffComponent],
+  declarations: [ManageComponent,SaleComponent,MoneyTransformPipe, ReportComponent, ReportStaffComponent, ReportBillComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

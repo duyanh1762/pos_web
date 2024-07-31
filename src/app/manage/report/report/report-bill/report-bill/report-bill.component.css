@@ -10,7 +10,7 @@
   /* align-items: center; */
 }
 
-.time-content, .report-content {
+.time-content {
   width: 100%;
 }
 
@@ -75,7 +75,6 @@
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
 }
 
 .report-header {
@@ -112,11 +111,7 @@
   color: #888;
 }
 
-.table-responsive {
-  overflow-x: auto;
-}
-
-.report-table {
+port-table {
   width: 100%;
   border-collapse: collapse;
   text-align: center;
@@ -144,6 +139,150 @@
 h3{
   font-weight: 600;
 }
+.report-content {
+  width: 100%;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.header .home-link {
+  color: black;
+  text-decoration: none;
+  font-size: 1.2em;
+  font-weight: 400;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  flex: 1 1 calc(33.333% - 20px);
+  box-sizing: border-box;
+}
+
+.card.large {
+  flex: 1 1 100%;
+}
+
+.card h3 {
+  color: #333;
+  margin: 0;
+  font-size: 1.2em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.card p {
+  color: #666;
+  margin: 10px 0;
+}
+
+.table,
+.bills table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.table td,
+.bills table td,
+th {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.table .right {
+  text-align: right;
+}
+
+.top-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.top-items li {
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+}
+.bills table tbody {
+  display: block;
+  max-height: 400px;
+  overflow-y: auto;
+}
+.bills table thead {
+  display: block;
+  width: 100%;
+}
+.bills table tbody tr,
+.bills table thead tr {
+  display: table;
+  width: 100%;
+  height: 50px;
+  table-layout: fixed;
+}
+.employee div p {
+  margin: 0;
+}
+tbody::-webkit-scrollbar {
+  width: 2px; /* Change this value to adjust scrollbar width */
+}
+
+tbody::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px; /* Rounded corners */
+}
+
+tbody::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+tbody::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+  border-radius: 4px;
+}
+.filter {
+  display: flex;
+  align-items: center;
+}
+
+label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+select,.card input ,button{
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 16px;
+  color: #333;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+}
+
 /* Responsive Styling */
 @media (max-width: 600px) {
   .time-content {
