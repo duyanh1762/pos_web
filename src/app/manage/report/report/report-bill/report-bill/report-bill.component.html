@@ -37,19 +37,19 @@
           <h3>KẾT QUẢ BÁO CÁO HOÁ ĐƠN BÁN HÀNG</h3>
           <div class="filter">
             <label for="status">Trạng thái:</label>
-            <select  id="status" #selectStatus >
+            <select  id="status" #selectStatus (change)="filter()">
               <option value="all"  >Tất cả</option>
               <option value="pay">Đã thanh toán</option>
               <option value="not_pay">Chưa thanh toán</option>
               <option value="delete">Đã huỷ</option>
             </select>
             <label for="status">Nhân sự:</label>
-            <select  id="staff" #selectStaff>
+            <select  id="staff" #selectStaff (change)="filter()">
               <option value="all" >Tất cả</option>
-              <option  ></option>
+              <option value="{{ s.id }}" *ngFor="let s of staffs">{{ s.name }}</option>
             </select>
             <label for="status">Số bàn:</label>
-            <input type="text" placeholder="Nhập số bàn..." #tableN >
+            <input type="text" placeholder="Nhập số bàn..." #tableN (change)="filter()">
           </div>
           <div class="bills">
             <table>
@@ -63,14 +63,14 @@
                 </tr>
               </thead>
               <tbody >
-                <!-- <tr *ngFor="let bill of bills">
-                      <td>97HC{{ bill.id }}</td>
-                      <td>{{ bill.time }}</td>
-                      <td>{{ bill.total }} VND</td>
-                      <td>{{ bill.staff }}</td>
-                  </tr> -->
-                <tr >
-
+                <tr *ngFor="let b of billsLU">
+                  <td>{{ b.table }}</td>
+                  <td>{{ b.date}}</td>
+                  <td>{{ b.total | moneyTransform }}đ</td>
+                  <td>{{ b.nameStaff }}</td>
+                  <td *ngIf="b.status === 'not_pay'">Chưa thanh toán</td>
+                  <td *ngIf="b.status === 'pay'">Đã thanh toán</td>
+                  <td *ngIf="b.status === 'delete'">Đã huỷ</td>
                 </tr>
               </tbody>
             </table>
