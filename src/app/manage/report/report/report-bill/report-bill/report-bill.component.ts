@@ -164,4 +164,7 @@ export class ReportBillComponent implements OnInit {
       });
     }
   }
+  datePipe(date:string | any){
+    return this.api.dateTransform(date);
+  }
 }

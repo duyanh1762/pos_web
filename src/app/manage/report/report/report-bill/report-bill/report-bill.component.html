@@ -65,7 +65,7 @@
               <tbody >
                 <tr *ngFor="let b of billsLU">
                   <td>{{ b.table }}</td>
-                  <td>{{ b.date}}</td>
+                  <td>{{ datePipe(b.date)}}</td>
                   <td>{{ b.total | moneyTransform }}đ</td>
                   <td>{{ b.nameStaff }}</td>
                   <td *ngIf="b.status === 'not_pay'">Chưa thanh toán</td>
