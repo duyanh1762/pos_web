@@ -1,0 +1,24 @@
+<div class="shopping-cart">
+  <div class="title" style="font-weight: 700; font-size: large">
+    Hoá đơn {{ data }}
+  </div>
+  <div class="list-buy">
+    <div *ngFor="let i of listItem">
+      <div class="item-buy" >
+        <div class="name-note">
+          <div class="id-i" style="display: none"></div>
+          <div class="name-i">{{ i.name }}</div>
+        </div>
+        <div class="more">
+          <div class="number" style="margin: 0 5px 0 5px">
+            x {{ i.num }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bill">
+    <div class="bill-title">Tổng tiền:</div>
+    <div class="money">{{ sum | moneyTransform }}đ</div>
+  </div>
+</div>

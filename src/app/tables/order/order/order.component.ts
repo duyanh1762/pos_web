@@ -47,7 +47,7 @@ export class OrderComponent implements OnInit {
       data: '',
     };
     await this.api
-      .getItems(request)
+      .item(request)
       .toPromise()
       .then((items: any) => {
         items.forEach((item: any) => {
@@ -59,17 +59,17 @@ export class OrderComponent implements OnInit {
       });
     this.activeRoute.paramMap.subscribe((data) => {
       let t = data.get('table');
-      this.api.getBill(request).subscribe((res: any) => {
+      this.api.bill(request).subscribe((res: any) => {
         res.forEach((bill: Bill) => {
           if (
             bill.table == t &&
-            this.api.getCurrentDate() == this.api.getBillDate(bill) &&
+            this.api.getCurrentDate() == this.api.billDate(bill) &&
             bill.status == 'not_pay' &&
             bill.shopID == this.shop.id
           ) {
             this.tableData = bill;
             this.type = 'edit';
-            this.api.getDetail(request).subscribe((details: any) => {
+            this.api.details(request).subscribe((details: any) => {
               details.forEach(async (detail: BillDetail) => {
                 if (detail.billID === bill.id) {
                   let name = '';
@@ -196,7 +196,7 @@ export class OrderComponent implements OnInit {
           policyID: this.shop.policyID,
         };
         this.api
-          .getBill({ mode: 'create', data: bill })
+          .bill({ mode: 'create', data: bill })
           .subscribe((response: any) => {
             response as Bill;
             this.cart.forEach((i) => {
@@ -209,7 +209,7 @@ export class OrderComponent implements OnInit {
                   policyID: this.shop.policyID,
                 };
                 this.api
-                  .getDetail({ mode: 'create', data: detail })
+                  .details({ mode: 'create', data: detail })
                   .subscribe((response) => {});
               }
             });
@@ -228,7 +228,7 @@ export class OrderComponent implements OnInit {
       if (confirm('Bạn có chắc chắn muốn huỷ đơn này ?')) {
         this.tableData.status = 'delete';
         this.api
-          .getBill({ mode: 'update', data: this.tableData })
+          .bill({ mode: 'update', data: this.tableData })
           .subscribe((res) => {});
       }
     } else {
@@ -243,7 +243,7 @@ export class OrderComponent implements OnInit {
               policyID: i.policyID,
             };
             this.api
-              .getDetail({ mode: 'create', data: newDetail })
+              .details({ mode: 'create', data: newDetail })
               .subscribe((res) => {});
           }
         } else {
@@ -256,7 +256,7 @@ export class OrderComponent implements OnInit {
               policyID: i.policyID,
             };
             this.api
-              .getDetail({ mode: 'update', data: detail })
+              .details({ mode: 'update', data: detail })
               .subscribe((res) => {});
           } else {
             let detail: BillDetail = {
@@ -267,7 +267,7 @@ export class OrderComponent implements OnInit {
               policyID: i.policyID,
             };
             this.api
-              .getDetail({ mode: 'delete', data: detail })
+              .details({ mode: 'delete', data: detail })
               .subscribe((res) => {});
           }
         }

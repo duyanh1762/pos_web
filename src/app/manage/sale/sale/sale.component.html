@@ -123,7 +123,7 @@
               <td *ngIf="b.status === 'not_pay'">Chưa thanh toán</td>
               <td *ngIf="b.status === 'pay'">Đã thanh toán</td>
               <td *ngIf="b.status === 'delete'">Đã huỷ</td>
-              <td><button>Xem</button></td>
+              <td><button (click)="showDetails(b.id)">Xem</button></td>
             </tr>
           </tbody>
         </table>

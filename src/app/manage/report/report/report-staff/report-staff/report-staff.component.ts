@@ -50,13 +50,13 @@ export class ReportStaffComponent implements OnInit {
       data: '',
     };
     await this.api
-      .getItems(request)
+      .item(request)
       .toPromise()
       .then((res: any) => {
         this.items = res;
       });
     await this.api
-      .getBill(request)
+      .bill(request)
       .toPromise()
       .then((res: any) => {
         res.forEach((b: Bill) => {
@@ -66,7 +66,7 @@ export class ReportStaffComponent implements OnInit {
         });
       });
     await this.api
-      .getStaff(request)
+      .staff(request)
       .toPromise()
       .then((res: any) => {
         res.forEach((s: Staff) => {
@@ -95,7 +95,7 @@ export class ReportStaffComponent implements OnInit {
           this.staffs.forEach(async (si: SatffInfor) => {
             if (si.id === b.staffID) {
               await this.api
-                .getDetail({ mode: 'get', data: Number(b.id) })
+                .details({ mode: 'get', data: Number(b.id) })
                 .toPromise()
                 .then((res: any) => {
                   res.forEach((bd: BillDetail) => {

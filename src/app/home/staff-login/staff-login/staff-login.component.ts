@@ -31,7 +31,7 @@ export class StaffLoginComponent implements OnInit {
       status: '',
     };
     await this.api
-      .getStaff(request)
+      .staff(request)
       .toPromise()
       .then((data: any) => {
         data.forEach((staff: Staff) => {

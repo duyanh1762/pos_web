@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { ReportStaffComponent } from './report/report/report-staff/report-staff/report-staff.component';
 import { ReportBillComponent } from './report/report/report-bill/report-bill/report-bill.component';
+import { DetailComponent } from './sale/sale/detail/detail.component';
 
 let routes:Routes = [
   {path:"",component:ManageComponent},
@@ -21,7 +22,7 @@ let routes:Routes = [
   {path:'report/bill',component:ReportBillComponent},
 ]
 @NgModule({
-  declarations: [ManageComponent,SaleComponent,MoneyTransformPipe, ReportComponent, ReportStaffComponent, ReportBillComponent],
+  declarations: [ManageComponent,SaleComponent,MoneyTransformPipe, ReportComponent, ReportStaffComponent, ReportBillComponent, DetailComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

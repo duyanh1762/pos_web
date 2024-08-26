@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
       mode:"get",
       data:"",
     }
-    this.api.getStaff(request).subscribe((response:any)=>{
+    this.api.staff(request).subscribe((response:any)=>{
       response.forEach((staff:any)=>{
         if(staff.shopID == shop.id){
           this.staffs.push(staff);

@@ -5,12 +5,14 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { Bill } from 'src/app/Models/bill';
 import { BillDetail } from 'src/app/Models/bill_detail';
 import { Item } from 'src/app/Models/item';
 import { Shop } from 'src/app/Models/shop';
 import { Staff } from 'src/app/Models/staff';
 import { ApiService } from 'src/app/Service/api.service';
+import { DetailComponent } from './detail/detail.component';
 interface BillInfor {
   id: number;
   date: string;
@@ -47,7 +49,7 @@ export class SaleComponent implements OnInit {
   public bills: Array<BillInfor> = [];
   public billsLU: Array<BillInfor> = [];
   public lastFilter: Array<BillInfor> = [];
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService,private bsModal:BsModalService) {}
 
   ngOnInit(): void {
     this.load();
@@ -60,7 +62,7 @@ export class SaleComponent implements OnInit {
       data: '',
     };
     await this.api
-      .getStaff(request)
+      .staff(request)
       .toPromise()
       .then((res: any) => {
         res.forEach((s: Staff) => {
@@ -75,24 +77,24 @@ export class SaleComponent implements OnInit {
         });
       });
     await this.api
-      .getItems(request)
+      .item(request)
       .toPromise()
       .then((res: any) => {
         items = res;
       });
     await this.api
-      .getBill(request)
+      .bill(request)
       .toPromise()
       .then((res: any) => {
         res.forEach(async (i: Bill) => {
           if (
             i.shopID === this.shop.id &&
-            this.api.getCurrentDate() === this.api.getBillDate(i)
+            this.api.getCurrentDate() === this.api.billDate(i)
           ) {
             let n = '';
             let t = 0;
             await this.api
-              .getDetail({ mode: 'get', data: Number(i.id) })
+              .details({ mode: 'get', data: Number(i.id) })
               .toPromise()
               .then((res: any) => {
                 res.forEach((d: BillDetail) => {
@@ -169,5 +171,11 @@ export class SaleComponent implements OnInit {
       });
     }
   }
-
+  showDetails(id:number){
+    this.bsModal.show(DetailComponent,{
+      initialState:{
+        data:id,
+      }
+    });
+  }
 }

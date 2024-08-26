@@ -43,9 +43,9 @@ export class TablesComponent implements OnInit {
       let table:TableInfor = {table:""+i,bill:null};
       this.tables.push(table);
     };
-    await this.api.getBill(request).toPromise().then((response:any)=>{
+    await this.api.bill(request).toPromise().then((response:any)=>{
       response.forEach((bill:Bill)=>{
-        if(bill.status === "not_pay" && bill.shopID === this.shop.id && this.api.getBillDate(bill) === this.api.getCurrentDate()){
+        if(bill.status === "not_pay" && bill.shopID === this.shop.id && this.api.billDate(bill) === this.api.getCurrentDate()){
           this.bills.push(bill);
         };
       });

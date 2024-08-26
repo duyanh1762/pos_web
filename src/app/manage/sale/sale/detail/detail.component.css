@@ -83,20 +83,4 @@
   text-decoration: underline;
   cursor: pointer;
 }
-.confirm {
-  width: 100%;
-  height: 120px;
-  text-align: center;
-}
-.confirm button{
-  background-color: white;
-  border: #4dac61 solid 1px ;
-  width: 80%;
-  border-radius:4px;
-  margin-top: 10px;
-}
-.confirm button:hover{
-  cursor: pointer;
-  background-color: #4dac61;
-  color: white;
-}
+

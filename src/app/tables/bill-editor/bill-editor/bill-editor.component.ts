@@ -51,13 +51,13 @@ export class BillEditorComponent implements OnInit {
     let responseDetail: Array<BillDetail> = [];
     let responseItem: Array<Item> = [];
     await this.api
-      .getDetail(request)
+      .details(request)
       .toPromise()
       .then((response: any) => {
         responseDetail = response;
       });
     await this.api
-      .getItems(request)
+      .item(request)
       .toPromise()
       .then((response: any) => {
         responseItem = response;
@@ -140,7 +140,7 @@ export class BillEditorComponent implements OnInit {
       if (checkNum === false) {
         if(confirm("Bạn có chắc chắn muốn huỷ hoá đơn này ?")){
           this.data.status="delete";
-          this.api.getBill({mode:"update",data:this.data}).subscribe((res)=>{});
+          this.api.bill({mode:"update",data:this.data}).subscribe((res)=>{});
           this.closed.emit(this.data);
           this.bsModalRef.hide();
         }else{
@@ -153,13 +153,13 @@ export class BillEditorComponent implements OnInit {
               mode: 'update',
               data: queueDetail[i],
             };
-            this.api.getDetail(request).subscribe((rs)=>{});
+            this.api.details(request).subscribe((rs)=>{});
           } else {
             let request: DataRequest = {
               mode: 'delete',
               data: queueDetail[i],
             };
-            this.api.getDetail(request).subscribe((rs)=>{});
+            this.api.details(request).subscribe((rs)=>{});
           }
         }
         this.bsModalRef.hide();
@@ -176,7 +176,7 @@ export class BillEditorComponent implements OnInit {
       mode:"update",
       data: this.data,
     }
-    this.api.getBill(request).subscribe((res)=>{});
+    this.api.bill(request).subscribe((res)=>{});
     this.closed.emit(this.data);
     this.bsModalRef.hide();
   }

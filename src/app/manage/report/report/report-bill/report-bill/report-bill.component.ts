@@ -69,13 +69,13 @@ export class ReportBillComponent implements OnInit {
       data: '',
     };
     await this.api
-      .getItems(request)
+      .item(request)
       .toPromise()
       .then((res: any) => {
         this.items = res;
       });
     await this.api
-      .getStaff(request)
+      .staff(request)
       .toPromise()
       .then((res: any) => {
         res.forEach((s: Staff) => {
@@ -85,7 +85,7 @@ export class ReportBillComponent implements OnInit {
         });
       });
     await this.api
-      .getBill(request)
+      .bill(request)
       .toPromise()
       .then((res: any) => {
         res.forEach(async (b: Bill) => {
@@ -98,7 +98,7 @@ export class ReportBillComponent implements OnInit {
               total: 0,
             };
             await this.api
-              .getDetail({ mode: 'get', data: Number(b.id) })
+              .details({ mode: 'get', data: Number(b.id) })
               .toPromise()
               .then((res: any) => {
                 res.forEach((d: BillDetail) => {

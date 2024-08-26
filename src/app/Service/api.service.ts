@@ -15,16 +15,16 @@ export class ApiService {
   public login(request: LoginReQuest) {
     return this.http.post(this.server + 'login-authen', request);
   }
-  public getStaff(request: DataRequest) {
+  public staff(request: DataRequest) {
     return this.http.post(this.server + 'staff', request);
   }
-  public getBill(request: DataRequest) {
+  public bill(request: DataRequest) {
     return this.http.post(this.server + 'bill', request);
   }
-  public getDetail(request: DataRequest) {
+  public details(request: DataRequest) {
     return this.http.post(this.server + 'bill-detail', request);
   }
-  public getItems(request: DataRequest) {
+  public item(request: DataRequest) {
     return this.http.post(this.server + 'item', request);
   }
   getCurrentDate(): string {
@@ -35,7 +35,7 @@ export class ApiService {
 
     return `${year}-${month}-${day}`;
   }
-  getBillDate(bill: Bill): string {
+  billDate(bill: Bill): string {
     const date = new Date(bill.date);
     const day = String(date.getUTCDate()).padStart(2, '0');
     const month = String(date.getUTCMonth() + 1).padStart(2, '0');
@@ -61,7 +61,7 @@ export class ApiService {
       data: '',
     };
     let name: string = '';
-    await this.getItems(request)
+    await this.item(request)
       .toPromise()
       .then((items: any) => {
         items.forEach((item: Item) => {
@@ -78,7 +78,7 @@ export class ApiService {
       data: '',
     };
     let price: number = 0;
-    await this.getItems(request)
+    await this.item(request)
       .toPromise()
       .then((items: any) => {
         items.forEach((item: Item) => {

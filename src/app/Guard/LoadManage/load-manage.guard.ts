@@ -12,7 +12,8 @@ export class LoadManageGuard implements CanLoad {
     route: Route,
     segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       let staff:Staff = JSON.parse(localStorage.getItem("staff-infor") || '{}')
-      if(staff.role === 'quan_ly'){
+      let login = localStorage.getItem("login-status");
+      if(staff.role === 'quan_ly' && login === "true"){
         return true;
       }
       this.router.navigate(["/tables"]);

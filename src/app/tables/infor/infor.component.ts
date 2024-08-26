@@ -29,17 +29,17 @@ export class InforComponent implements OnInit {
     };
     let bills: Array<Bill> = [];
     let items :Array<Item> = [];
-    await this.api.getItems({mode:"get",data:""}).toPromise().then((res:any)=>{
+    await this.api.item({mode:"get",data:""}).toPromise().then((res:any)=>{
       items = res;
     });
     await this.api
-      .getBill(request)
+      .bill(request)
       .toPromise()
       .then((response: any) => {
         bills = response;
         bills.forEach(async(bill:Bill)=>{
-          if(this.api.getBillDate(bill) === this.api.getCurrentDate() && bill.shopID === this.data.shop.id && bill.staffID === this.data.staff.id && bill.status === "pay"){
-            await this.api.getDetail({mode:"get",data:Number(bill.id)}).toPromise().then((res:any)=>{
+          if(this.api.billDate(bill) === this.api.getCurrentDate() && bill.shopID === this.data.shop.id && bill.staffID === this.data.staff.id && bill.status === "pay"){
+            await this.api.details({mode:"get",data:Number(bill.id)}).toPromise().then((res:any)=>{
               res.forEach((d:BillDetail)=>{
                 items.forEach((i:Item)=>{
                   if(d.itemID === i.id){
