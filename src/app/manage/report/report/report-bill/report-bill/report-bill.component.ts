@@ -1,4 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { DetailComponent } from 'src/app/manage/sale/sale/detail/detail.component';
 import { Bill } from 'src/app/Models/bill';
 import { BillDetail } from 'src/app/Models/bill_detail';
 import { Item } from 'src/app/Models/item';
@@ -34,7 +36,7 @@ export class ReportBillComponent implements OnInit {
   bills: Array<BillInfor> = [];
   billsLU: Array<BillInfor> = [];
   items: Array<Item> = [];
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService, private bsModal:BsModalService) {}
 
   ngOnInit(): void {
     this.load();
@@ -166,5 +168,12 @@ export class ReportBillComponent implements OnInit {
   }
   datePipe(date:string | any){
     return this.api.dateTransform(date);
+  }
+  showDetail(id:number){
+    this.bsModal.show(DetailComponent,{
+      initialState:{
+        data:id
+      }
+    });
   }
 }

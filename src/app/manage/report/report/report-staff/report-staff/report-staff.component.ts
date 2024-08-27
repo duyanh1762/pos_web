@@ -33,14 +33,14 @@ export class ReportStaffComponent implements OnInit {
   onStartDateChange(event: any): void {
     if (event) {
       this.startDate = new Date(event);
-      this.startDate.setHours(0, 0, 0, 0); // Thiết lập thời gian 00:00:00
+      this.startDate.setHours(0, 0, 0, 0);
     }
   }
 
   onEndDateChange(event: any): void {
     if (event) {
       this.endDate = new Date(event);
-      this.endDate.setHours(23, 59, 59, 999); // Thiết lập thời gian 23:59:59
+      this.endDate.setHours(23, 59, 59, 999);
     }
   }
   async load() {
