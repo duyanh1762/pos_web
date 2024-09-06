@@ -3,4 +3,5 @@ export class Item {
   policyID:number;
   name:string
   price:number;
+  groupID:number;
 }
