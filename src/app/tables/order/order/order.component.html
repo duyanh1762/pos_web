@@ -37,7 +37,7 @@
             <div class="name">{{ item.name }}</div>
             <div class="price">{{ item.price | moneyTransform }}đ</div>
             <div class="button">
-              <button (click)="addCart(item)">Thêm</button>
+              <button *ngIf="item.status != 'order' " (click)="addCart(item)">Thêm</button>
             </div>
           </div>
         </div>

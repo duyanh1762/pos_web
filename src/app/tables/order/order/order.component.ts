@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { DataRequest } from 'src/app/Interface/data_request';
 import { BillDetail } from 'src/app/Models/bill_detail';
 import { Item } from 'src/app/Models/item';
@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Bill } from 'src/app/Models/bill';
 import { Staff } from 'src/app/Models/staff';
 import { Group } from 'src/app/Models/group';
+import { Renderer2 } from '@angular/core';
 interface CartItem {
   id: number;
   itemID: number;
@@ -17,25 +18,34 @@ interface CartItem {
   name: string;
   price: number;
 }
+interface mItem {
+  id: number;
+  policyID: number;
+  name: string;
+  price: number;
+  groupID: number;
+  status: string;
+}
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.css'],
 })
-export class OrderComponent implements OnInit {
+export class OrderComponent implements OnInit{
   public shop: Shop;
   public staff: Staff;
-  public menu: Array<Item> = [];
-  public menuLU : Array<Item> = [];
+  public menu: Array<mItem> = [];
+  public menuLU: Array<mItem> = [];
   public cart: Array<CartItem> = [];
   public sum = 0;
   public type: string = 'new';
   public tableData: Bill;
-  public groups:Array<Group> = [];
+  public groups: Array<Group> = [];
   constructor(
     private api: ApiService,
     private activeRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit(): void {
@@ -48,18 +58,25 @@ export class OrderComponent implements OnInit {
       mode: 'get',
       data: '',
     };
-    await this.api.group(request).toPromise().then((res:any)=>{
-      this.groups = res;
-    });
+    await this.api
+      .group(request)
+      .toPromise()
+      .then((res: any) => {
+        this.groups = res;
+      });
     await this.api
       .item(request)
       .toPromise()
       .then((items: any) => {
         items.forEach((item: any) => {
           item as Item;
-          if (item.policyID === this.shop.policyID) {
-            this.menu.push(item);
-            this.menuLU.push(item);
+          let mItem: mItem = {
+            ...item,
+            status: 'not_order',
+          };
+          if (mItem.policyID === this.shop.policyID) {
+            this.menu.push(mItem);
+            this.menuLU.push(mItem);
           }
         });
       });
@@ -95,9 +112,15 @@ export class OrderComponent implements OnInit {
                     name: name,
                     price: price,
                   };
-                  (<HTMLElement>(
-                    document.querySelector(`.item${detail.itemID} button`)
-                  )).style.display = 'none';
+                  // (<HTMLElement>(
+                  //   document.querySelector(`.item${detail.itemID} button`)
+                  // )).style.display = 'none';
+                  this.menu.forEach((i:mItem)=>{
+                    if(i.id === detail.itemID){
+                      i.status = "order";
+                    }
+                  });
+                  this.menuLU = this.menu;
                   this.cart.push(cartItem);
                   this.sum = this.getMoneyCart();
                 }
@@ -108,12 +131,24 @@ export class OrderComponent implements OnInit {
       });
     });
   }
-  addCart(item: Item) {
+  addCart(item: mItem) {
     let shop: Shop = JSON.parse(localStorage.getItem('shop-infor') || '{}');
-    (<HTMLElement>(
-      document.querySelector(`.item${item.id} button`)
-    )).style.display = 'none';
-    let check:boolean = false;
+    // (<HTMLElement>(
+    //   document.querySelector(`.item${item.id} button`)
+    // )).style.display = 'none';
+    this.menuLU.forEach((iLU: mItem) => {
+      if (item.id === iLU.id) {
+        iLU.status = "order";
+      }
+    });
+    this.menu.forEach((iM:mItem)=>{
+      this.menuLU.forEach((iLU:mItem)=>{
+        if(iM.id === iLU.id){
+          iM.status = iLU.status;
+        }
+      });
+    });
+    let check: boolean = false;
     let newCartI: CartItem = {
       id: 0,
       itemID: item.id,
@@ -123,14 +158,14 @@ export class OrderComponent implements OnInit {
       name: item.name,
       price: item.price,
     };
-    for(let i = 0 ;i<this.cart.length;i++){
-      if((this.cart)[i].itemID === newCartI.itemID){
-        (this.cart)[i].num = 1;
+    for (let i = 0; i < this.cart.length; i++) {
+      if (this.cart[i].itemID === newCartI.itemID) {
+        this.cart[i].num = 1;
         check = true;
         break;
       }
     }
-    if(!check){
+    if (!check) {
       this.cart.push(newCartI);
     }
     this.sum = this.getMoneyCart();
@@ -158,9 +193,21 @@ export class OrderComponent implements OnInit {
       if (i.itemID === item.itemID) {
         if (i.num <= 1) {
           i.num = 0;
-          (<HTMLElement>(
-            document.querySelector(`.item${item.itemID} button`)
-          )).style.display = 'block';
+          // (<HTMLElement>(
+          //   document.querySelector(`.item${item.itemID} button`)
+          // )).style.display = 'block';
+          this.menuLU.forEach((iLU: mItem) => {
+            if (item.itemID === iLU.id) {
+              iLU.status = "none";
+            }
+          });
+          this.menu.forEach((iM:mItem)=>{
+            this.menuLU.forEach((iLU:mItem)=>{
+              if(iM.id === iLU.id){
+                iM.status = iLU.status;
+              }
+            });
+          });
         } else {
           i.num = i.num - 1;
         }
@@ -173,9 +220,21 @@ export class OrderComponent implements OnInit {
       i as CartItem;
       if (item.itemID === i.itemID) {
         i.num = 0;
-        (<HTMLElement>(
-          document.querySelector(`.item${item.itemID} button`)
-        )).style.display = 'block';
+        // (<HTMLElement>(
+        //   document.querySelector(`.item${item.itemID} button`)
+        // )).style.display = 'block';
+        this.menuLU.forEach((iLU: mItem) => {
+          if (item.itemID === iLU.id) {
+            iLU.status = "none";
+          }
+        });
+        this.menu.forEach((iM:mItem)=>{
+          this.menuLU.forEach((iLU:mItem)=>{
+            if(iM.id === iLU.id){
+              iM.status = iLU.status;
+            }
+          });
+        });
       }
     });
 
@@ -240,7 +299,7 @@ export class OrderComponent implements OnInit {
     } else {
       this.cart.forEach((i: CartItem) => {
         if (i.id === 0) {
-          if(i.num > 0){
+          if (i.num > 0) {
             let newDetail: BillDetail = {
               id: 0,
               itemID: i.itemID,
@@ -283,16 +342,33 @@ export class OrderComponent implements OnInit {
     this.sum = 0;
     this.router.navigate(['/tables']);
   }
-  getItem(idG:number){
+  getItem(idG: number) {
     this.menu = [];
-    this.menuLU.forEach((i:Item)=>{
-      if(i.groupID === idG){
+    this.menuLU.forEach((i: mItem) => {
+      if (i.groupID === idG) {
         this.menu.push(i);
       }
     });
+    this.cart.forEach((ci: CartItem) => {
+      this.menu.forEach((i: mItem) => {
+        if (ci.itemID === i.id && ci.num > 0) {
+          i.status = "order";
+        }
+      });
+    });
   }
-  getAllMenu(){
-    console.log(this.menuLU);
-    this.menu = this.menuLU;
+  getAllMenu() {
+    this.menu = [];
+    this.menuLU.forEach((i:mItem)=>{
+      this.menu.push(i);
+    });
+    this.cart.forEach((ci: CartItem) => {
+      this.menu.forEach((i: mItem) => {
+        if (ci.itemID === i.id && ci.num > 0) {
+          i.status = "order";
+        }
+      });
+    });
   }
+
 }
