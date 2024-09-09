@@ -27,6 +27,9 @@ export class ApiService {
   public item(request: DataRequest) {
     return this.http.post(this.server + 'item', request);
   }
+  public group(request: DataRequest){
+    return this.http.post(this.server + 'group', request);
+  }
   getCurrentDate(): string {
     const date = new Date();
     const year = date.getFullYear();

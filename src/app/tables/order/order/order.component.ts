@@ -5,9 +5,9 @@ import { Item } from 'src/app/Models/item';
 import { Shop } from 'src/app/Models/shop';
 import { ApiService } from 'src/app/Service/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs';
 import { Bill } from 'src/app/Models/bill';
 import { Staff } from 'src/app/Models/staff';
+import { Group } from 'src/app/Models/group';
 interface CartItem {
   id: number;
   itemID: number;
@@ -26,10 +26,12 @@ export class OrderComponent implements OnInit {
   public shop: Shop;
   public staff: Staff;
   public menu: Array<Item> = [];
+  public menuLU : Array<Item> = [];
   public cart: Array<CartItem> = [];
   public sum = 0;
   public type: string = 'new';
   public tableData: Bill;
+  public groups:Array<Group> = [];
   constructor(
     private api: ApiService,
     private activeRoute: ActivatedRoute,
@@ -46,6 +48,9 @@ export class OrderComponent implements OnInit {
       mode: 'get',
       data: '',
     };
+    await this.api.group(request).toPromise().then((res:any)=>{
+      this.groups = res;
+    });
     await this.api
       .item(request)
       .toPromise()
@@ -54,6 +59,7 @@ export class OrderComponent implements OnInit {
           item as Item;
           if (item.policyID === this.shop.policyID) {
             this.menu.push(item);
+            this.menuLU.push(item);
           }
         });
       });
@@ -276,5 +282,17 @@ export class OrderComponent implements OnInit {
     this.cart.splice(0, this.cart.length);
     this.sum = 0;
     this.router.navigate(['/tables']);
+  }
+  getItem(idG:number){
+    this.menu = [];
+    this.menuLU.forEach((i:Item)=>{
+      if(i.groupID === idG){
+        this.menu.push(i);
+      }
+    });
+  }
+  getAllMenu(){
+    console.log(this.menuLU);
+    this.menu = this.menuLU;
   }
 }

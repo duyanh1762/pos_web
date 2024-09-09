@@ -1,7 +1,10 @@
 <body>
   <div class="list-drinks-ipad">
     <div class="menu-title-ipad">
-      <div class="group"></div>
+      <div class="group" (click)="getAllMenu()">Tất cả</div>
+      <div class="group" *ngFor="let g of groups" (click)="getItem(g.id)">
+        {{ g.name }}
+      </div>
     </div>
   </div>
   <div class="container">
@@ -10,7 +13,10 @@
         Thực đơn
       </div>
       <div class="menu-title">
-        <div class="group"></div>
+        <div class="group" (click)="getAllMenu()">Tất cả</div>
+        <div class="group" *ngFor="let g of groups" (click)="getItem(g.id)">
+          {{ g.name }}
+        </div>
       </div>
     </div>
     <div class="menu-choose">
