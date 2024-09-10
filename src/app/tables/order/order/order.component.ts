@@ -112,9 +112,6 @@ export class OrderComponent implements OnInit{
                     name: name,
                     price: price,
                   };
-                  // (<HTMLElement>(
-                  //   document.querySelector(`.item${detail.itemID} button`)
-                  // )).style.display = 'none';
                   this.menu.forEach((i:mItem)=>{
                     if(i.id === detail.itemID){
                       i.status = "order";
@@ -133,9 +130,6 @@ export class OrderComponent implements OnInit{
   }
   addCart(item: mItem) {
     let shop: Shop = JSON.parse(localStorage.getItem('shop-infor') || '{}');
-    // (<HTMLElement>(
-    //   document.querySelector(`.item${item.id} button`)
-    // )).style.display = 'none';
     this.menuLU.forEach((iLU: mItem) => {
       if (item.id === iLU.id) {
         iLU.status = "order";
@@ -193,21 +187,7 @@ export class OrderComponent implements OnInit{
       if (i.itemID === item.itemID) {
         if (i.num <= 1) {
           i.num = 0;
-          // (<HTMLElement>(
-          //   document.querySelector(`.item${item.itemID} button`)
-          // )).style.display = 'block';
-          this.menuLU.forEach((iLU: mItem) => {
-            if (item.itemID === iLU.id) {
-              iLU.status = "none";
-            }
-          });
-          this.menu.forEach((iM:mItem)=>{
-            this.menuLU.forEach((iLU:mItem)=>{
-              if(iM.id === iLU.id){
-                iM.status = iLU.status;
-              }
-            });
-          });
+          this.changeStatus(item,"none");
         } else {
           i.num = i.num - 1;
         }
@@ -220,21 +200,7 @@ export class OrderComponent implements OnInit{
       i as CartItem;
       if (item.itemID === i.itemID) {
         i.num = 0;
-        // (<HTMLElement>(
-        //   document.querySelector(`.item${item.itemID} button`)
-        // )).style.display = 'block';
-        this.menuLU.forEach((iLU: mItem) => {
-          if (item.itemID === iLU.id) {
-            iLU.status = "none";
-          }
-        });
-        this.menu.forEach((iM:mItem)=>{
-          this.menuLU.forEach((iLU:mItem)=>{
-            if(iM.id === iLU.id){
-              iM.status = iLU.status;
-            }
-          });
-        });
+        this.changeStatus(item,"none");
       }
     });
 
@@ -370,5 +336,16 @@ export class OrderComponent implements OnInit{
       });
     });
   }
-
+  changeStatus(obj:CartItem , status:string){
+    this.menuLU.forEach((i:mItem)=>{
+      if(obj.itemID === i.id ){
+        i.status = status;
+      }
+      this.menu.forEach((item:mItem)=>{
+        if(item.id === i.id){
+          item.status = i.status;
+        }
+      });
+    });
+  }
 }
