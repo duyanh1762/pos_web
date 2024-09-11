@@ -18,17 +18,29 @@ interface BillInfor {
   nameStaff: string;
   total: number;
 }
+interface DetailItem{
+  id: number;
+  itemID: number;
+  num: number;
+  billID:number;
+  policyID:number;
+  name:string,
+  total:number,
+  status:string, // value: isCount | notCount
+}
 @Component({
   selector: 'app-report-bill',
   templateUrl: './report-bill.component.html',
   styleUrls: ['./report-bill.component.css'],
 })
 export class ReportBillComponent implements OnInit {
+
   @ViewChild('selectStaff', { read: ElementRef, static: false })
   selectStaff: ElementRef;
   @ViewChild('selectStatus', { read: ElementRef, static: false })
   selectStatus: ElementRef;
   @ViewChild('tableN', { read: ElementRef, static: false }) tableN: ElementRef;
+
   startDate: Date | null = null;
   endDate: Date | null = null;
   shop: Shop;
@@ -36,6 +48,7 @@ export class ReportBillComponent implements OnInit {
   bills: Array<BillInfor> = [];
   billsLU: Array<BillInfor> = [];
   items: Array<Item> = [];
+  detailItems:Array<DetailItem> = [];
   constructor(private api: ApiService, private bsModal:BsModalService) {}
 
   ngOnInit(): void {
@@ -54,11 +67,50 @@ export class ReportBillComponent implements OnInit {
       this.endDate.setHours(23, 59, 59, 999);
     }
   }
-  confirmDate() {
+ async confirmDate() {
     this.billsLU.splice(0, this.billsLU.length);
+    this.detailItems.splice(0,this.detailItems.length);
     if (this.startDate != null && this.endDate != null) {
       this.billsLU = this.bills.filter((b:BillInfor)=>{
         return new Date(b.date) >= this.startDate! &&  new Date(b.date) <= this.endDate!;
+      });
+      for (let bi of this.billsLU){
+        const res: any = await this.api.details({ mode: "get", data: bi.id }).toPromise();
+
+        for (const d of res) {
+          let n: string = "";
+          let t: number = 0;
+
+          const item = this.items.find((i: Item) => i.id === d.itemID);
+          if (item) {
+            t = d.num * item.price;
+            n = item.name;
+          }
+          const detailItem: DetailItem = {
+            ...d,
+            total: t,
+            name: n,
+            status: "notCount",
+          };
+
+          this.detailItems.push(detailItem);
+        }
+      };
+      for(let i = 0; i < this.detailItems.length;i++){
+        if(this.detailItems[i].status === "notCount"){
+          for(let j = i + 1; j < this.detailItems.length;j++){
+            if(this.detailItems[i].itemID === this.detailItems[j].itemID){
+              this.detailItems[i].num = this.detailItems[i].num + this.detailItems[j].num;
+              this.detailItems[i].total = this.detailItems[i].total + this.detailItems[j].total;
+              this.detailItems[j].status = "isCount";
+            }
+          }
+        }else{
+          continue;
+        }
+      }
+      this.detailItems = this.detailItems.filter((di:DetailItem)=>{
+        return di.status === "notCount";
       });
     } else {
       alert('Hãy chọn khoảng thời gian bạn muốn xem báo cáo !');
@@ -103,7 +155,7 @@ export class ReportBillComponent implements OnInit {
               .details({ mode: 'get', data: Number(b.id) })
               .toPromise()
               .then((res: any) => {
-                res.forEach((d: BillDetail) => {
+                res.forEach(async (d: BillDetail) => {
                   this.items.forEach((i: Item) => {
                     if (d.itemID === i.id) {
                       total = total + d.num * i.price;
@@ -175,5 +227,20 @@ export class ReportBillComponent implements OnInit {
         data:id
       }
     });
+  }
+  test():Array<DetailItem>{
+    for(let i = 0; i < this.detailItems.length;i++){
+      if(this.detailItems[i].status === "notCount"){
+        for(let j = i + 1; j < this.detailItems.length;j++){
+          if(this.detailItems[i].itemID === this.detailItems[j].itemID){
+            this.detailItems[i].num = this.detailItems[i].num + this.detailItems[j].num;
+            this.detailItems[j].status = "isCount";
+          }
+        }
+      }else{
+        continue;
+      }
+    }
+    return this.detailItems;
   }
 }

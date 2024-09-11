@@ -1,15 +1,22 @@
 <div class="content">
   <div class="report-header">
-    <a routerLink="/manage/report" class="back-link"><i class="fas fa-home"></i> Trở về</a>
+    <a routerLink="/manage/report" class="back-link"
+      ><i class="fas fa-home"></i> Trở về</a
+    >
   </div>
   <div class="time-content">
     <div class="report-title">
-      <h3>CHỌN THỜI GIAN: </h3>
+      <h3>CHỌN THỜI GIAN:</h3>
     </div>
     <div class="date-picker-form">
-      <mat-form-field appearance="fill" >
+      <mat-form-field appearance="fill">
         <mat-label>Ngày bắt đầu</mat-label>
-        <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate" (dateChange)="onStartDateChange($event.value)"/>
+        <input
+          matInput
+          [matDatepicker]="startPicker"
+          [(ngModel)]="startDate"
+          (dateChange)="onStartDateChange($event.value)"
+        />
         <mat-datepicker-toggle
           matSuffix
           [for]="startPicker"
@@ -18,9 +25,14 @@
       </mat-form-field>
     </div>
     <div class="date-picker-form">
-      <mat-form-field appearance="fill" >
+      <mat-form-field appearance="fill">
         <mat-label>Ngày kết thúc</mat-label>
-        <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate" (dateChange)="onEndDateChange($event.value)" />
+        <input
+          matInput
+          [matDatepicker]="endPicker"
+          [(ngModel)]="endDate"
+          (dateChange)="onEndDateChange($event.value)"
+        />
         <mat-datepicker-toggle
           matSuffix
           [for]="endPicker"
@@ -29,54 +41,88 @@
       </mat-form-field>
     </div>
     <div class="date-picker-button">
-      <button (click)="confirmDate()" class="date-picker-button">Xác nhận</button>
+      <button (click)="confirmDate()" class="date-picker-button">
+        Xác nhận
+      </button>
     </div>
   </div>
   <div class="report-content">
-        <div class="card">
-          <h3>KẾT QUẢ BÁO CÁO HOÁ ĐƠN BÁN HÀNG</h3>
-          <div class="filter">
-            <label for="status">Trạng thái:</label>
-            <select  id="status" #selectStatus (change)="filter()">
-              <option value="all"  >Tất cả</option>
-              <option value="pay">Đã thanh toán</option>
-              <option value="not_pay">Chưa thanh toán</option>
-              <option value="delete">Đã huỷ</option>
-            </select>
-            <label for="status">Nhân sự:</label>
-            <select  id="staff" #selectStaff (change)="filter()">
-              <option value="all" >Tất cả</option>
-              <option value="{{ s.id }}" *ngFor="let s of staffs">{{ s.name }}</option>
-            </select>
-            <label for="status">Số bàn:</label>
-            <input type="text" placeholder="Nhập số bàn..." #tableN (change)="filter()">
-          </div>
-          <div class="bills">
-            <table>
-              <thead >
-                <tr>
-                  <th>Bàn</th>
-                  <th>Thời gian</th>
-                  <th>Tổng</th>
-                  <th>Nhân sự</th>
-                  <th>Trạng thái</th>
-                  <th>Chi tiết</th>
-                </tr>
-              </thead>
-              <tbody >
-                <tr *ngFor="let b of billsLU">
-                  <td>{{ b.table }}</td>
-                  <td>{{ datePipe(b.date)}}</td>
-                  <td>{{ b.total | moneyTransform }}đ</td>
-                  <td>{{ b.nameStaff }}</td>
-                  <td *ngIf="b.status === 'not_pay'">Chưa thanh toán</td>
-                  <td *ngIf="b.status === 'pay'">Đã thanh toán</td>
-                  <td *ngIf="b.status === 'delete'">Đã huỷ</td>
-                  <td><button (click)="showDetail(b.id)">Xem</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+    <div class="card">
+      <h3>KẾT QUẢ BÁO CÁO HOÁ ĐƠN BÁN HÀNG</h3>
+      <div class="filter">
+        <label for="status">Trạng thái:</label>
+        <select id="status" #selectStatus (change)="filter()">
+          <option value="all">Tất cả</option>
+          <option value="pay">Đã thanh toán</option>
+          <option value="not_pay">Chưa thanh toán</option>
+          <option value="delete">Đã huỷ</option>
+        </select>
+        <label for="status">Nhân sự:</label>
+        <select id="staff" #selectStaff (change)="filter()">
+          <option value="all">Tất cả</option>
+          <option value="{{ s.id }}" *ngFor="let s of staffs">
+            {{ s.name }}
+          </option>
+        </select>
+        <label for="status">Số bàn:</label>
+        <input
+          type="text"
+          placeholder="Nhập số bàn..."
+          #tableN
+          (change)="filter()"
+        />
       </div>
+      <div class="bills">
+        <table>
+          <thead>
+            <tr>
+              <th>Bàn</th>
+              <th>Thời gian</th>
+              <th>Tổng</th>
+              <th>Nhân sự</th>
+              <th>Trạng thái</th>
+              <th>Chi tiết</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let b of billsLU">
+              <td>{{ b.table }}</td>
+              <td>{{ datePipe(b.date) }}</td>
+              <td>{{ b.total | moneyTransform }}đ</td>
+              <td>{{ b.nameStaff }}</td>
+              <td *ngIf="b.status === 'not_pay'">Chưa thanh toán</td>
+              <td *ngIf="b.status === 'pay'">Đã thanh toán</td>
+              <td *ngIf="b.status === 'delete'">Đã huỷ</td>
+              <td><button (click)="showDetail(b.id)">Xem</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="report-content">
+    <div class="card">
+      <h3>Số lượng món bán</h3>
+      <div class="bills">
+        <table>
+          <thead>
+            <tr>
+              <th>Tên món</th>
+              <th>Số lượng</th>
+              <th>Tổng tiền</th>
+              <th>%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let b of detailItems">
+              <td>{{ b.name }}</td>
+              <td>{{ b.num }}</td>
+              <td>{{ b.total | moneyTransform }}đ</td>
+              <td>{{ b.status }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
