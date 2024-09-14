@@ -27,6 +27,7 @@ interface DetailItem{
   name:string,
   total:number,
   status:string, // value: isCount | notCount
+  percent:number,
 }
 @Component({
   selector: 'app-report-bill',
@@ -91,6 +92,7 @@ export class ReportBillComponent implements OnInit {
             total: t,
             name: n,
             status: "notCount",
+            percent:0,
           };
 
           this.detailItems.push(detailItem);
@@ -109,8 +111,15 @@ export class ReportBillComponent implements OnInit {
           continue;
         }
       }
+      let totalItems:number = 0;
       this.detailItems = this.detailItems.filter((di:DetailItem)=>{
+        if(di.status === "notCount"){
+          totalItems = totalItems + di.num;
+        }
         return di.status === "notCount";
+      });
+      this.detailItems.forEach((di:DetailItem)=>{
+        di.percent =  Number(((di.num / totalItems)*100).toFixed(1));
       });
     } else {
       alert('Hãy chọn khoảng thời gian bạn muốn xem báo cáo !');
