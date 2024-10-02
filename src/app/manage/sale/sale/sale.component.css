@@ -34,7 +34,7 @@
 }
 
 .card.large {
-  flex: 1 1 100%;
+  flex: 1 0 100%;
 }
 
 .card h3 {
@@ -57,16 +57,18 @@
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
 .revenue-item {
   text-align: center;
-  flex: 1;
+  flex:1;
   padding: 10px;
   border-radius: 5px;
   margin: 0 10px;
   color: white;
-  font-size: 1.1em;
+  font-size: 16px;
 }
 
 .green {
@@ -83,7 +85,7 @@
 
 .revenue-item span {
   display: block;
-  font-size: 1.5em;
+  font-size: 16px;
   margin-top: 10px;
 }
 
@@ -168,6 +170,7 @@ tbody::-webkit-scrollbar-track {
 .filter {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 label {
@@ -225,5 +228,21 @@ select::-ms-expand {
   select {
     margin-bottom: 10px;
     width: 100%;
+  }
+  .filter{
+    max-width: 100px;
+  }
+  .bills .table thead{
+    font-size: 10px;
+  }
+  .col3 ,.col4,.col5{
+    display: none;
+  }
+  .revenue-item p , .revenue-item span{
+    font-size: 10px;
+  }
+  .revenue-item{
+    min-width: 80%;
+    margin-top: 10px;
   }
 }

@@ -116,8 +116,8 @@ export class SaleComponent implements OnInit {
               nameStaff: n,
               total: t,
             };
-            let newDate = this.api.dateTransform(b.date);
-            b.date = newDate;
+            let newDate = this.api.dateTransform(b.date).split(" ");
+            b.date = newDate[1];
             this.bills.push(b);
             this.billsLU.push(b);
             this.staffs.forEach((si: StaffInfor) => {

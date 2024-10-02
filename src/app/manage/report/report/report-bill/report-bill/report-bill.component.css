@@ -263,6 +263,7 @@ tbody::-webkit-scrollbar-track {
 .filter {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 label {
@@ -303,6 +304,7 @@ select,.card input ,button{
   .report-table th,
   .report-table td {
       padding: 8px;
+      font-size: 10px;
   }
 
   .report-header, .report-title {
@@ -312,5 +314,8 @@ select,.card input ,button{
 
   .back-link, .date-indicator {
       margin-bottom: 10px;
+  }
+  .filter{
+    max-width: 100px;
   }
 }
