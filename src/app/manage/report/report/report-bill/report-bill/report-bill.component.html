@@ -76,24 +76,24 @@
         <table>
           <thead>
             <tr>
-              <th>Bàn</th>
-              <th>Thời gian</th>
-              <th>Tổng</th>
-              <th>Nhân sự</th>
-              <th>Trạng thái</th>
-              <th>Chi tiết</th>
+              <th class = "col1">Số bàn</th>
+              <th class = "col2">Thời gian</th>
+              <th class = "col3">Tổng</th>
+              <th class = "col4">Nhân sự</th>
+              <th class = "col5">Trạng thái</th>
+              <th class = "col6">Chi tiết</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let b of billsLU">
-              <td>{{ b.table }}</td>
-              <td>{{ datePipe(b.date) }}</td>
-              <td>{{ b.total | moneyTransform }}đ</td>
-              <td>{{ b.nameStaff }}</td>
-              <td *ngIf="b.status === 'not_pay'">Chưa thanh toán</td>
-              <td *ngIf="b.status === 'pay'">Đã thanh toán</td>
-              <td *ngIf="b.status === 'delete'">Đã huỷ</td>
-              <td><button (click)="showDetail(b.id)">Xem</button></td>
+              <td class = "col1">{{ b.table }}</td>
+              <td class = "col2">{{ datePipe(b.date) }}</td>
+              <td class = "col3">{{ b.total | moneyTransform }}đ</td>
+              <td class = "col4">{{ b.nameStaff }}</td>
+              <td *ngIf="b.status === 'not_pay'" class = "col5">Chưa thanh toán</td>
+              <td *ngIf="b.status === 'pay'" class = "col5">Đã thanh toán</td>
+              <td *ngIf="b.status === 'delete'" class = "col5">Đã huỷ</td>
+              <td class = "col6"><button (click)="showDetail(b.id)">Xem</button></td>
             </tr>
           </tbody>
         </table>
@@ -107,18 +107,18 @@
         <table>
           <thead>
             <tr>
-              <th>Tên món</th>
-              <th>Số lượng</th>
-              <th>Tổng tiền</th>
-              <th>%</th>
+              <th class="cl1">Tên món</th>
+              <th class="cl2">Số lượng</th>
+              <th class="cl3">Tổng tiền</th>
+              <th class="cl4">%</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let b of detailItems">
-              <td>{{ b.name }}</td>
-              <td>{{ b.num }}</td>
-              <td>{{ b.total | moneyTransform }}đ</td>
-              <td>{{ b.percent }}%</td>
+              <td class="cl1">{{ b.name }}</td>
+              <td class="cl2">{{ b.num }}</td>
+              <td class="cl3">{{ b.total | moneyTransform }}đ</td>
+              <td class="cl4">{{ b.percent }}%</td>
             </tr>
           </tbody>
         </table>

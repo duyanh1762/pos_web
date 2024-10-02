@@ -318,4 +318,7 @@ select,.card input ,button{
   .filter{
     max-width: 100px;
   }
+  .col3 , .col4 , .col5,.cl4{
+    display: none;
+  }
 }

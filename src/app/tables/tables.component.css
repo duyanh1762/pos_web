@@ -38,6 +38,7 @@ body, html {
   color: white;
   cursor: pointer;
   border-radius: 4px;
+  height: 70%;
 }
 .header-btn:hover{
   background-color: #af2a0b;
@@ -49,6 +50,9 @@ body, html {
   padding: 10px 20px;
   color: white;
   border-radius: 4px;
+  height: 70%;
+  text-align: center;
+  text-overflow: ellipsis;
 }
 .header-text:hover{
   cursor: pointer;
@@ -90,8 +94,8 @@ a, .num{
 }
 @media (max-width: 600px) {
   .seat {
-    width: 40px;
-    height: 40px;
+    width: 90px;
+    height: 90px;
     font-size: 10px;
   }
 }
