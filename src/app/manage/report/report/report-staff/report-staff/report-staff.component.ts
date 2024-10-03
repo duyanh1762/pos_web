@@ -5,6 +5,9 @@ import { Item } from 'src/app/Models/item';
 import { Shop } from 'src/app/Models/shop';
 import { Staff } from 'src/app/Models/staff';
 import { ApiService } from 'src/app/Service/api.service';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+
 interface SatffInfor {
   id: number;
   shopID: number;
@@ -112,5 +115,18 @@ export class ReportStaffComponent implements OnInit {
         }
       }
     });
+  }
+  // test funtion export xlsx
+  exportExcel() {
+    let fileName = "bao_cao_ns_test";
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.staffs); // 'customers' chứa dữ liệu cần xuất
+    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    this.saveAsExcelFile(excelBuffer,fileName);
+  }
+
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + '.xlsx');
   }
 }
