@@ -1,79 +1,84 @@
-*{
+* {
   box-sizing: border-box;
 }
-body{
-  width:100vw;
-  height:100vh;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
+body {
+  width: 100vw;
+  height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   position: relative;
 }
-button{
+button {
   outline: none;
 }
-.list-drinks, .menu-choose, .shopping-cart{
+.list-drinks,
+.menu-choose,
+.shopping-cart {
   background-color: white;
-  box-shadow:  0 0 5px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
 }
-.list-drinks{
-  width:15%;
+.list-drinks {
+  width: 15%;
   height: 60%;
-  margin:3% 0 0 16% ;
+  margin: 3% 0 0 16%;
 }
-.menu-choose{
+.menu-choose {
   width: 35%;
-  margin: 3% ;
+  margin: 3%;
   margin-bottom: 0;
 }
-.menu-choose .search{
+.menu-choose .search {
   width: 100%;
   height: 90px;
-  background-color:white;
+  background-color: white;
 }
-input{
+input {
   width: 90%;
   height: 40%;
   margin: 5%;
   border: #4dac61 solid 1px;
   border-radius: 4px;
   box-sizing: border-box;
-  padding-left:4%;
+  padding-left: 4%;
   outline: none;
   z-index: 99;
 }
-.menu-choose .drinks{
+.menu-choose .drinks {
   width: 100%;
   height: calc(100% - 90px);
   overflow-y: auto;
 }
-.drinks>div{
+.drinks > div {
   width: 100%;
   height: 13%;
   display: flex;
-  background-color:white;
+  background-color: white;
 }
-.name{
-  font-weight:700;
+.name {
+  font-weight: 700;
   font-size: small;
 }
-.price{
-  font-weight:700;
+.price {
+  font-weight: 700;
   font-size: small;
-  color:  #4dac61;
+  color: #4dac61;
 }
-.drinks>div .img{
-  width: 20%;
-  height: 100%;
+.drinks > div {
+  height: 20%;
 }
-.drinks>div .img img{
+.drinks > div .img {
+  width: 24%;
+  height: 90%;
+}
+.drinks > div .img img {
   width: 60%;
-  height:80%;
+  height: 80%;
   margin: 5px;
   margin-left: 24%;
 }
-.drinks>div .infor{
+.drinks > div .infor {
   margin-top: 5px;
 }
-.drinks>div button{
+.drinks > div button {
   width: 60px;
   height: 30px;
   border: #4dac61 solid 1px;
@@ -81,18 +86,18 @@ input{
   background-color: white;
   margin-top: 5px;
 }
-.drinks>div button:hover{
-  background-color:#4dac61 ;
+.drinks > div button:hover {
+  background-color: #4dac61;
   cursor: pointer;
   color: white;
 }
-.shopping-cart{
-  width:25%;
+.shopping-cart {
+  width: 25%;
   height: 60%;
   margin-top: 3%;
   padding: 10px;
 }
-.title{
+.title {
   width: 100%;
   height: 50px;
   font-weight: 700;
@@ -102,95 +107,96 @@ input{
   margin-top: 20px;
   margin-bottom: 20px;
 }
-.list-buy{
+.list-buy {
   width: 100%;
   height: calc(100% - 200px);
   overflow-y: auto;
 }
-.list-buy .item-buy .item{
+.list-buy .item-buy .item {
   display: flex;
   width: 100%;
   height: 60px;
   justify-content: space-between;
   box-sizing: border-box;
   padding: 5px;
-  background-color:white;
-  border-top:grey solid 1px;
+  background-color: white;
+  border-top: grey solid 1px;
   /* border-bottom:grey solid 1px; */
-
 }
-.name-note{
+.name-note {
   padding-top: 8px;
 }
-.more{
+.more {
   display: flex;
   margin-top: 4%;
 }
-.more button{
+.more button {
   width: 20px;
   /* height: 20px; */
   border: #4dac61 solid 1px;
   border-radius: 4px;
   box-sizing: border-box;
-
 }
-.more button:hover{
+.more button:hover {
   background-color: #4dac61;
   cursor: pointer;
   color: white;
 }
-.bill{
-  width:100%;
+.bill {
+  width: 100%;
   height: 18%;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.bill-title{
+.bill-title {
   font-weight: 700;
   font-size: medium;
   color: #4dac61;
-  font-style:italic
+  font-style: italic;
 }
-.money{
+.money {
   font-weight: 700;
   font-style: italic;
 }
-.menu-title,.menu-all{
-  width:100%;
+.menu-title,
+.menu-all {
+  width: 100%;
   box-sizing: border-box;
   padding-left: 10px;
   text-align: left;
 }
-.menu-title>div,.menu-all{
+.menu-title > div,
+.menu-all {
   padding-bottom: 16px;
   font-weight: 500;
   font-size: small;
 }
-.menu-title>div:hover,
-.menu-all:hover{
-  color:#4dac61;
+.menu-title > div:hover,
+.menu-all:hover {
+  color: #4dac61;
   text-decoration: underline;
   cursor: pointer;
 }
 .confirm {
   width: 100%;
   text-align: center;
+  padding-top: 20px;
 }
-.confirm button{
+.confirm button {
   background-color: white;
-  border: #4dac61 solid 1px ;
+  border: #4dac61 solid 1px;
   width: 80%;
-  height: 80%;
-  border-radius:8px;
+  height: 40px;
+  border-radius: 8px;
 }
-.confirm button:hover{
+.confirm button:hover {
   cursor: pointer;
   background-color: #4dac61;
   color: white;
 }
-.fake-class{
+.fake-class {
   width: 100%;
   height: 100%;
   background-color: grey;
@@ -198,56 +204,56 @@ input{
   opacity: 0.7;
   display: none;
 }
-.box{
+.box {
   width: 30%;
   height: 30%;
   background-color: white;
   position: absolute;
   left: 36%;
-  top:30%;
+  top: 30%;
   border-radius: 10px;
-  box-shadow:  0 0 5px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
   display: none;
 }
 .box .name,
 .box .phone,
-.box .address{
-  width:100%;
+.box .address {
+  width: 100%;
   height: 20%;
 }
-.box .send{
+.box .send {
   width: 100%;
   height: 40%;
   box-sizing: border-box;
   padding-top: 8%;
-  padding-left:30%;
+  padding-left: 30%;
 }
-.box>div input{
+.box > div input {
   height: 90%;
 }
-.box .send button{
+.box .send button {
   width: 30%;
   padding: 10px;
   border: #4dac61 solid 1px;
   background-color: white;
   border-radius: 4px;
 }
-.box .send button:hover{
+.box .send button:hover {
   background-color: #4dac61;
   color: white;
   cursor: pointer;
 }
-.header{
-  width :100%;
-  height:70px;
-  background-color:black;
+.header {
+  width: 100%;
+  height: 70px;
+  background-color: black;
   display: flex;
 }
 .header .home,
 .header .login,
 .header .menu,
-.header .order{
-  width:10%;
+.header .order {
+  width: 10%;
   height: 100%;
   text-align: center;
   box-sizing: border-box;
@@ -256,120 +262,168 @@ input{
 .header .home a,
 .header .login a,
 .header .menu a,
-.header .order a{
+.header .order a {
   color: white;
   text-decoration: none;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin-top: 50px;
 }
 .header .home:hover,
 .header .login:hover,
 .header .menu:hover,
-.header .order:hover{
+.header .order:hover {
   background-color: grey;
 }
-.container{
+.containers {
   display: flex;
-  width:100vw;
-  height:calc(100vh - 70px);
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
+  width: 100vw;
+  height: calc(100vh - 70px);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
-.list-drinks-ipad{
-display: none;
-}
-@media only screen and (max-width:739px){
-.header .home,
-.header .menu,
-.header .order,
-.header .login{
-  width:25%;
-}
-.container .list-drinks{
+.list-drinks-ipad {
   display: none;
 }
-.container .menu-choose,
-.container .shopping-cart{
-  width: 45%;
-  font-size: 12px;
+@media only screen and (max-width: 739px) {
+  .header .home,
+  .header .menu,
+  .header .order,
+  .header .login {
+    width: 25%;
+  }
+  .containers {
+    display: block;
+  }
+  .containers .list-drinks {
+    display: none;
+  }
+  .containers .menu-choose,
+  .containers .shopping-cart {
+    width: 94%;
+    margin: 3%;
+    font-size: 12px;
+    margin-top: 15px;
+  }
+  .drinks > div .img {
+    width: 30%;
+    height: 90%;
+    padding-left: 20px;
+  }
+  .drinks > div .img img {
+    width: 70%;
+    height: 80%;
+    margin: 5px;
+  }
+  .drinks > div button {
+    height: 30px;
+    width: 60px;
+  }
+  .drinks > div .infor .name {
+    font-size: 12px;
+  }
+  .drinks > div {
+    height: 100px;
+  }
+  .list-drinks-ipad {
+    background-color: white;
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
+    width: 94%;
+    margin: 3%;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    display: block;
+    overflow-x: auto;
+  }
+  .list-drinks-ipad .menu-title-ipad {
+    display: flex;
+    justify-content: space-around;
+    font-size: 12px;
+    box-sizing: border-box;
+    padding-top: 10px;
+  }
+  .list-drinks-ipad .menu-title-ipad > div {
+    box-sizing: border-box;
+    text-align: center;
+  }
+  .list-drinks-ipad .menu-title-ipad > div:hover {
+    cursor: pointer;
+    color: #4dac61;
+    text-decoration: underline;
+  }
+  .box {
+    width: 90%;
+    position: absolute;
+    left: 5%;
+    top: 30%;
+    font-size: 16px;
+  }
 }
- .drinks>div .img {
-  width:30% ;
-  height: 90%;
-}
-.drinks>div .img img{
-  width: 80%;
-  height:80%;
-  margin: 5px;
-}
-.drinks>div button{
-  height:30px;
-  width: 60px;
-}
-.drinks>div .infor .name{
-  font-size: 12px;
-}
-.list-drinks-ipad{
-  background-color: white;
-  box-shadow:  0 0 5px 5px rgba(0, 0, 0, 0.5);
-  width: 93%;
-  margin: 3% ;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-  display: block;
-  overflow-x: auto;
-}
-.list-drinks-ipad .menu-title-ipad{
-  display: flex;
-  justify-content: space-around;
-  font-size: 12px;
-  box-sizing: border-box;
-  padding-top: 10px;
-}
-.list-drinks-ipad .menu-title-ipad>div {
-  box-sizing: border-box;
-  text-align: center;
-}
-.list-drinks-ipad .menu-title-ipad>div:hover{
-  cursor: pointer;
-  color: #4dac61;
-  text-decoration:underline;
-}
-.box{
-  width: 90%;
-  position: absolute;
-  left:5%;
-  top:30%;
-  font-size: 16px;
-}
-}
-@media only screen and (min-width:739px) and (max-width:1024px){
-.list-drinks{
-  width: 20%;
-  height: 50%;
-  margin:3% 0 0 5%;
-  font-size: 16px;
-}
-.menu-choose{
-  width: 40%;
-}
-.shopping-cart{
-  width: 30%;
-  height: 50%;
-}
-.box{
-  width: 50%;
-  height: 20%;
-  position:absolute;
-  top:12%;
-  left:26%;
-}
-.drinks>div .img {
-  width:30% ;
-  height: 90%;
-}
-.drinks>div .img img{
-  width: 80%;
-  height:80%;
-  margin: 5px;
-}
+@media only screen and (min-width: 740px) and (max-width: 1024px) {
+  .containers{
+    width: 97%;
+    margin: 0;
+  }
+  .containers .list-drinks {
+    display: none;
+  }
+  .list-drinks-ipad {
+    background-color: white;
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
+    width: 94%;
+    margin: 3%;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    display: block;
+    overflow-x: auto;
+  }
+  .list-drinks-ipad .menu-title-ipad {
+    display: flex;
+    justify-content: space-around;
+    font-size: 12px;
+    box-sizing: border-box;
+    padding-top: 10px;
+  }
+  .list-drinks-ipad .menu-title-ipad > div {
+    box-sizing: border-box;
+    text-align: center;
+  }
+  .list-drinks-ipad .menu-title-ipad > div:hover {
+    cursor: pointer;
+    color: #4dac61;
+    text-decoration: underline;
+  }
+  .box {
+    width: 90%;
+    position: absolute;
+    left: 5%;
+    top: 30%;
+    font-size: 16px;
+  }
+  .menu-choose {
+    width: 100%;
+    height: 90%;
+  }
+  .shopping-cart {
+    width: 90%;
+    height: 50%;
+  }
+  .box {
+    width: 50%;
+    height: 20%;
+    position: absolute;
+    top: 12%;
+    left: 26%;
+  }
+  .drinks>div{
+    height: 100px;
+    margin-left: 20px;
+  }
+  .drinks > div .img {
+    width: 20%;
+    height: 90%;
+  }
+  .drinks > div .img img {
+    width: 80%;
+    height: 80%;
+    margin: 5px;
+  }
 }
