@@ -31,7 +31,6 @@
     </div>
     <div class="date-picker-button">
       <button (click)="confirmDate()" class="date-picker-button">Xác nhận</button>
-      <button (click)="exportExcel()">Export excel</button>
     </div>
   </div>
   <div class="report-content">
@@ -63,6 +62,9 @@
           </tr>
         </tbody>
       </table>
+    </div>
+    <div class="export">
+      <button *ngIf="export === true" (click)="exportStaff()">Xuất báo cáo</button>
     </div>
   </div>
 </div>

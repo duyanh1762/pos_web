@@ -4,7 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { DataRequest } from '../Interface/data_request';
 import { Bill } from '../Models/bill';
 import { Item } from '../Models/item';
-
+import * as xlsx from 'xlsx';
+import * as fs from 'file-saver';
 @Injectable({
   providedIn: 'root',
 })
@@ -107,4 +108,17 @@ export class ApiService {
 
     return `${formattedDate} ${formattedTime}`;
   }
+
+  exportExcel(fileName:string,dataE:Array<any>,sheetName:string) {
+    const worksheet: xlsx.WorkSheet = xlsx.utils.json_to_sheet(dataE);
+    const workbook: xlsx.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: [sheetName] };
+    const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+    this.saveAsExcelFile(excelBuffer,fileName);
+  }
+
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    fs.saveAs(data, fileName + '_export_' + new Date().getTime() + '.xlsx');
+  }
+
 }

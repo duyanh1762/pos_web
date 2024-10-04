@@ -8,7 +8,7 @@ import { ApiService } from 'src/app/Service/api.service';
 import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
 
-interface SatffInfor {
+interface StaffInfor {
   id: number;
   shopID: number;
   name: string;
@@ -24,10 +24,11 @@ export class ReportStaffComponent implements OnInit {
   startDate: Date | null = null;
   endDate: Date | null = null;
   items: Array<Item> = [];
-  staffs: Array<SatffInfor> = [];
+  staffs: Array<StaffInfor> = [];
   shop: Shop;
   bills: Array<Bill> = [];
   renuvalue:number=0;
+  export:boolean = false;
   constructor(private api: ApiService) {}
 
   ngOnInit(): void {
@@ -87,7 +88,7 @@ export class ReportStaffComponent implements OnInit {
       });
   }
   confirmDate() {
-    this.staffs.forEach((si:SatffInfor)=>{
+    this.staffs.forEach((si:StaffInfor)=>{
       si.total = 0;
     });
     this.renuvalue = 0;
@@ -95,7 +96,8 @@ export class ReportStaffComponent implements OnInit {
       let billDate = new Date(b.date);
       if (this.startDate != null && this.endDate != null) {
         if (billDate >= this.startDate && billDate <= this.endDate) {
-          this.staffs.forEach(async (si: SatffInfor) => {
+          this.export = true;
+          this.staffs.forEach(async (si: StaffInfor) => {
             if (si.id === b.staffID) {
               await this.api
                 .details({ mode: 'get', data: Number(b.id) })
@@ -116,17 +118,20 @@ export class ReportStaffComponent implements OnInit {
       }
     });
   }
-  // test funtion export xlsx
-  exportExcel() {
-    let fileName = "bao_cao_ns_test";
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.staffs); // 'customers' chứa dữ liệu cần xuất
-    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
-    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    this.saveAsExcelFile(excelBuffer,fileName);
-  }
 
-  private saveAsExcelFile(buffer: any, fileName: string): void {
-    const data: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + '.xlsx');
+  exportStaff(){
+    let start:string  = this.api.dateTransform(this.startDate?.toString() || '').split(" ")[0];
+    let end:string = this.api.dateTransform(this.endDate?.toString() || '').split(" ")[0];
+    let fileName = "bao_cao_nhan_su_"+start+"_"+end;
+    let exportData:Array<any> = this.staffs.map((si:StaffInfor)=>{
+      return {
+        "Mã":si.id,
+        "Mã cửa hàng":si.shopID,
+        "Tên":si.name,
+        "Trạng thái":si.status,
+        "Tổng DT":si.total.toString() + "đ"
+      }
+    });
+    this.api.exportExcel(fileName,exportData,'data');
   }
 }
