@@ -28,7 +28,7 @@
 .time-content .date-picker-form{
   margin-left: 20px;
 }
-.time-content .date-picker-button button{
+.time-content .date-picker-button button , .export button{
   height: 40px;
   width: 100px;
   color: #fff;
@@ -41,8 +41,16 @@
   margin-bottom: 16px;
   border:none
 }
-.time-content .date-picker-button button:hover{
+.time-content .date-picker-button button:hover, .export button:hover{
   background-color: #198754;
+}
+.export{
+  text-align: center;
+  margin-top: 30px;
+}
+.export button{
+  width:100px;
+  font-size: 13px;
 }
 .date-picker {
   display: flex;

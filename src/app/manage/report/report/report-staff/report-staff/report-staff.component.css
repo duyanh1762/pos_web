@@ -49,6 +49,7 @@
 }
 .export button{
   margin-top: 30px;
+  font-size: 13px;
 }
 .date-picker {
   display: flex;

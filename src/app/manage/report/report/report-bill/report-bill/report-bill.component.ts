@@ -42,6 +42,7 @@ export class ReportBillComponent implements OnInit {
   selectStatus: ElementRef;
   @ViewChild('tableN', { read: ElementRef, static: false }) tableN: ElementRef;
 
+  export:boolean = false;
   startDate: Date | null = null;
   endDate: Date | null = null;
   shop: Shop;
@@ -75,6 +76,9 @@ export class ReportBillComponent implements OnInit {
       this.billsLU = this.bills.filter((b:BillInfor)=>{
         return new Date(b.date) >= this.startDate! &&  new Date(b.date) <= this.endDate!;
       });
+      if(this.billsLU.length > 0){
+        this.export = true;
+      };
       for (let bi of this.billsLU){
         const res: any = await this.api.details({ mode: "get", data: bi.id }).toPromise();
 
@@ -237,19 +241,44 @@ export class ReportBillComponent implements OnInit {
       }
     });
   }
-  test():Array<DetailItem>{
-    for(let i = 0; i < this.detailItems.length;i++){
-      if(this.detailItems[i].status === "notCount"){
-        for(let j = i + 1; j < this.detailItems.length;j++){
-          if(this.detailItems[i].itemID === this.detailItems[j].itemID){
-            this.detailItems[i].num = this.detailItems[i].num + this.detailItems[j].num;
-            this.detailItems[j].status = "isCount";
-          }
+  exportReport(type:string){ // type: bills | items
+    let start:string  = this.api.dateTransform(this.startDate?.toString() || "").split(" ")[0];
+    let end:string  = this.api.dateTransform(this.endDate?.toString() || "").split(" ")[0];
+    if(type === "bills"){
+      let fileName = "bao_cao_hoa_don_"+start+"_"+end;
+      let exportBills:Array<any> = this.billsLU.map((b:BillInfor)=>{
+        if(b.status === "delete"){
+          b.status = "Đã huỷ";
+        }else if(b.status === "pay"){
+          b.status = "Đã thanh toán";
+        }else if(b.status === "not_pay"){
+          b.status = "Chưa thanh toán";
         }
-      }else{
-        continue;
-      }
+        return {
+          "Mã hoá đơn":b.id,
+          "Mã cửa hàng":b.shopID,
+          "Ngày":this.api.dateTransform(b.date).split(" ")[0],
+          "Thời gian":this.api.dateTransform(b.date).split(" ")[1],
+          "Bàn":b.table,
+          "Nhân viên":b.nameStaff,
+          "Giá trị":b.total.toString() + "đ",
+          "Trạng thái":b.status
+        }
+      });
+      this.api.exportExcel(fileName,exportBills,"data");
+    }else{
+      let fileName = "bao_cao_sl_mon_ban_"+start+ "_"+end;
+      let exportItems = this.detailItems.map((di:DetailItem)=>{
+        return {
+          "Mã món":di.itemID,
+          "Mã chính sách":di.policyID,
+          "Tên món":di.name,
+          "Số lượng":di.num,
+          "Tổng tiền":di.total.toString() + "đ",
+          "%":di.percent.toString() + "%",
+        }
+      });
+      this.api.exportExcel(fileName,exportItems,"data");
     }
-    return this.detailItems;
   }
 }

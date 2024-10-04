@@ -51,8 +51,11 @@ body, html {
   color: white;
   border-radius: 4px;
   height: 70%;
+  width: 200px;
   text-align: center;
   text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .header-text:hover{
   cursor: pointer;
@@ -97,5 +100,8 @@ a, .num{
     width: 90px;
     height: 90px;
     font-size: 10px;
+  }
+  .header-text{
+    width: 150px;
   }
 }

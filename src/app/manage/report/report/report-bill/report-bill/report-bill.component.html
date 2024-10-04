@@ -97,6 +97,9 @@
             </tr>
           </tbody>
         </table>
+        <div class="export">
+          <button *ngIf="export === true" (click)="exportReport('bills')">Xuất báo cáo</button>
+        </div>
       </div>
     </div>
   </div>
@@ -122,6 +125,9 @@
             </tr>
           </tbody>
         </table>
+        <div class="export">
+          <button *ngIf="export === true" (click)="exportReport('items')">Xuất báo cáo</button>
+        </div>
       </div>
     </div>
   </div>
