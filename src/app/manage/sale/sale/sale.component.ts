@@ -40,15 +40,17 @@ export class SaleComponent implements OnInit {
   @ViewChild('selectStatus', { read: ElementRef, static: false })
   selectStatus: ElementRef;
   @ViewChild('tableN', { read: ElementRef, static: false }) tableN: ElementRef;
+
   public shop: Shop;
   public paid: number = 0;
   public unpaid: number = 0;
   public staffs: Array<StaffInfor> = [];
   public tableNum: number = 0;
-  // public sum:number=0;
   public bills: Array<BillInfor> = [];
   public billsLU: Array<BillInfor> = [];
   public lastFilter: Array<BillInfor> = [];
+  public sortType :string = "up"; // up | down
+
   constructor(private api: ApiService,private bsModal:BsModalService) {}
 
   ngOnInit(): void {
@@ -177,5 +179,58 @@ export class SaleComponent implements OnInit {
         data:id,
       }
     });
+  }
+  sort(data:string){
+    if(this.sortType === "up"){
+      if(data === "table" || data === "total"){
+        for(let i = 0;i < this.billsLU.length;i++){
+          for(let j = i + 1; j< this.billsLU.length;j++){
+            if(Number(this.billsLU[i][data]) > Number(this.billsLU[j][data])){
+              let temp = this.billsLU[i];
+              this.billsLU[i]=this.billsLU[j];
+              this.billsLU[j]=temp
+            }
+          }
+        }
+      }else{
+        for(let i = 0;i < this.billsLU.length;i++){
+          for(let j = i + 1; j< this.billsLU.length;j++){
+            let eI = new Date(`1970-01-01T${this.billsLU[i].date}`);
+            let eJ = new Date(`1970-01-01T${this.billsLU[j].date}`);
+            if(eI > eJ){
+              let temp = this.billsLU[i];
+              this.billsLU[i] = this.billsLU[j];
+              this.billsLU[j] = temp;
+            }
+          }
+        }
+      }
+      this.sortType = "down";
+    }else{
+      if(data === "table" || data === "total"){
+        for(let i = 0;i<this.billsLU.length;i++){
+          for(let j = i + 1;j<this.billsLU.length;j++){
+            if(Number(this.billsLU[i][data]) < Number(this.billsLU[j][data])){
+              let temp = this.billsLU[i];
+              this.billsLU[i] = this.billsLU[j];
+              this.billsLU[j] = temp;
+            }
+          }
+        }
+      }else{
+        for(let i = 0;i < this.billsLU.length;i++){
+          for(let j = i + 1; j< this.billsLU.length;j++){
+            let eI = new Date(`1970-01-01T${this.billsLU[i].date}`);
+            let eJ = new Date(`1970-01-01T${this.billsLU[j].date}`);
+            if(eI < eJ){
+              let temp = this.billsLU[i];
+              this.billsLU[i] = this.billsLU[j];
+              this.billsLU[j] = temp;
+            }
+          }
+        }
+      }
+      this.sortType = "up";
+    }
   }
 }

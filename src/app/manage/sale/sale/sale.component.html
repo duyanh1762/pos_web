@@ -100,10 +100,10 @@
         <table>
           <thead >
             <tr>
-              <th class="col1">Số bàn</th>
-              <th class="col2">Thời gian</th>
-              <th class="col3">Tổng</th>
-              <th class="col4">Nhân sự</th>
+              <th class="col1" (click)="sort('table')">Số bàn <i class="fa-solid fa-sort"></i></th>
+              <th class="col2" (click)="sort('date')">Thời gian <i class="fa-solid fa-sort"></i></th>
+              <th class="col3" (click)="sort('total')">Tổng <i class="fa-solid fa-sort"></i></th>
+              <th class="col4" >Nhân sự</th>
               <th class="col5">Trạng thái</th>
               <th class="col6">Chi tiết</th>
             </tr>

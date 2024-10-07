@@ -63,7 +63,7 @@
 
 .revenue-item {
   text-align: center;
-  flex:1;
+  flex: 1;
   padding: 10px;
   border-radius: 5px;
   margin: 0 10px;
@@ -167,6 +167,14 @@ tbody::-webkit-scrollbar-track {
   background-color: #f1f1f1;
   border-radius: 4px;
 }
+
+.col1:hover,
+.col2:hover,
+.col3:hover {
+  cursor: pointer;
+  color: gray;
+}
+
 .filter {
   display: flex;
   align-items: center;
@@ -178,7 +186,9 @@ label {
   margin-right: 10px;
 }
 
-select,input ,button{
+select,
+input,
+button {
   padding: 8px;
   margin-right: 10px;
   border: 1px solid #ccc;
@@ -211,7 +221,7 @@ select::after {
 select::-ms-expand {
   display: none;
 }
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .grid {
     flex-direction: column;
     align-items: center;
@@ -229,19 +239,25 @@ select::-ms-expand {
     margin-bottom: 10px;
     width: 100%;
   }
-  .filter{
+  .filter {
     max-width: 100px;
   }
-  .bills .table thead{
+  .bills .table thead {
     font-size: 10px;
   }
-  .col3 ,.col4,.col5{
+  .col3,
+  .col4,
+  .col5 {
     display: none;
   }
-  .revenue-item p , .revenue-item span{
+  .col2 {
+    width: 100px;
+  }
+  .revenue-item p,
+  .revenue-item span {
     font-size: 16px;
   }
-  .revenue-item{
+  .revenue-item {
     min-width: 80%;
     margin-top: 20px;
   }
