@@ -168,9 +168,9 @@ tbody::-webkit-scrollbar-track {
   border-radius: 4px;
 }
 
-.col1:hover,
-.col2:hover,
-.col3:hover {
+thead .col1:hover,
+thead  .col2:hover,
+thead .col3:hover {
   cursor: pointer;
   color: gray;
 }

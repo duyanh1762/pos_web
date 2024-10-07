@@ -51,6 +51,9 @@ export class ReportBillComponent implements OnInit {
   billsLU: Array<BillInfor> = [];
   items: Array<Item> = [];
   detailItems:Array<DetailItem> = [];
+  billsExport:Array<BillInfor>= [];
+  sortType:string = "up"; //up | down;
+
   constructor(private api: ApiService, private bsModal:BsModalService) {}
 
   ngOnInit(): void {
@@ -102,6 +105,7 @@ export class ReportBillComponent implements OnInit {
           this.detailItems.push(detailItem);
         }
       };
+      this.billsExport = JSON.parse(JSON.stringify(this.billsLU));
       for(let i = 0; i < this.detailItems.length;i++){
         if(this.detailItems[i].status === "notCount"){
           for(let j = i + 1; j < this.detailItems.length;j++){
@@ -246,7 +250,7 @@ export class ReportBillComponent implements OnInit {
     let end:string  = this.api.dateTransform(this.endDate?.toString() || "").split(" ")[0];
     if(type === "bills"){
       let fileName = "bao_cao_hoa_don_"+start+"_"+end;
-      let exportBills:Array<any> = this.billsLU.map((b:BillInfor)=>{
+      let exportBills:Array<any> = this.billsExport.map((b:BillInfor)=>{
         if(b.status === "delete"){
           b.status = "Đã huỷ";
         }else if(b.status === "pay"){
@@ -279,6 +283,88 @@ export class ReportBillComponent implements OnInit {
         }
       });
       this.api.exportExcel(fileName,exportItems,"data");
+    }
+  }
+  sortBills(data:string){
+    if(this.sortType === "up"){
+      if(data === "total" || data === "table"){
+        for(let i = 0;i<this.billsLU.length;i++){
+          for(let j = i+1;j<this.billsLU.length;j++){
+            if(Number(this.billsLU[i][data]) > Number(this.billsLU[j][data])){
+              let temp = this.billsLU[i];
+              this.billsLU[i] = this.billsLU[j];
+              this.billsLU[j] = temp;
+            }
+          }
+        }
+      }else{
+        for(let i = 0;i<this.billsLU.length;i++){
+          for(let j = i+1;j<this.billsLU.length;j++){
+            let eI = new Date(this.billsLU[i].date);
+            let eJ = new Date(this.billsLU[j].date);
+            if(eI > eJ){
+              let temp = this.billsLU[i];
+              this.billsLU[i] = this.billsLU[j];
+              this.billsLU[j] = temp;
+            }
+          }
+        }
+      }
+      this.sortType = "down";
+    }else{
+      if(data === "total" || data === "table"){
+        for(let i = 0;i<this.billsLU.length;i++){
+          for(let j = i+1;j<this.billsLU.length;j++){
+            if(Number(this.billsLU[i][data]) < Number(this.billsLU[j][data])){
+              let temp = this.billsLU[i];
+              this.billsLU[i] = this.billsLU[j];
+              this.billsLU[j] = temp;
+            }
+          }
+        }
+      }else{
+        for(let i = 0;i<this.billsLU.length;i++){
+          for(let j = i+1;j<this.billsLU.length;j++){
+            let eI = new Date(this.billsLU[i].date);
+            let eJ = new Date(this.billsLU[j].date);
+            if(eI < eJ){
+              let temp = this.billsLU[i];
+              this.billsLU[i] = this.billsLU[j];
+              this.billsLU[j] = temp;
+            }
+          }
+        }
+      }
+      this.sortType = "up";
+    }
+  }
+  sortItems(data:string){
+    if(this.sortType === "up"){
+      if(data === "num" || data ==="total" || data ==="percent"){
+        for(let i = 0;i<this.detailItems.length;i++){
+          for(let j = i+1;j<this.detailItems.length;j++){
+            if(Number(this.detailItems[i][data]) > Number(this.detailItems[j][data])){
+              let temp = this.detailItems[i];
+              this.detailItems[i] = this.detailItems[j];
+              this.detailItems[j] = temp;
+            }
+          }
+        }
+      }
+      this.sortType = "down";
+    }else{
+      if(data === "num" || data ==="total" || data ==="percent"){
+        for(let i = 0;i<this.detailItems.length;i++){
+          for(let j = i+1;j<this.detailItems.length;j++){
+            if(Number(this.detailItems[i][data]) < Number(this.detailItems[j][data])){
+              let temp = this.detailItems[i];
+              this.detailItems[i] = this.detailItems[j];
+              this.detailItems[j] = temp;
+            }
+          }
+        }
+      }
+      this.sortType = "up";
     }
   }
 }

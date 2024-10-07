@@ -76,9 +76,9 @@
         <table>
           <thead>
             <tr>
-              <th class = "col1">Số bàn</th>
-              <th class = "col2">Thời gian</th>
-              <th class = "col3">Tổng</th>
+              <th class = "col1" (click)="sortBills('table')">Số bàn <i class="fa-solid fa-sort"></i></th>
+              <th class = "col2" (click)="sortBills('date')">Thời gian <i class="fa-solid fa-sort"></i></th>
+              <th class = "col3" (click)="sortBills('total')">Tổng <i class="fa-solid fa-sort"></i></th>
               <th class = "col4">Nhân sự</th>
               <th class = "col5">Trạng thái</th>
               <th class = "col6">Chi tiết</th>
@@ -90,9 +90,9 @@
               <td class = "col2">{{ datePipe(b.date) }}</td>
               <td class = "col3">{{ b.total | moneyTransform }}đ</td>
               <td class = "col4">{{ b.nameStaff }}</td>
-              <td *ngIf="b.status === 'not_pay'" class = "col5">Chưa thanh toán</td>
-              <td *ngIf="b.status === 'pay'" class = "col5">Đã thanh toán</td>
-              <td *ngIf="b.status === 'delete'" class = "col5">Đã huỷ</td>
+              <td *ngIf="b.status === 'not_pay' || b.status === 'Chưa thanh toán'" class = "col5">Chưa thanh toán</td>
+              <td *ngIf="b.status === 'pay' || b.status === 'Đã thanh toán'" class = "col5">Đã thanh toán</td>
+              <td *ngIf="b.status === 'delete' || b.status === 'Đã huỷ'" class = "col5">Đã huỷ</td>
               <td class = "col6"><button (click)="showDetail(b.id)">Xem</button></td>
             </tr>
           </tbody>
@@ -111,9 +111,9 @@
           <thead>
             <tr>
               <th class="cl1">Tên món</th>
-              <th class="cl2">Số lượng</th>
-              <th class="cl3">Tổng tiền</th>
-              <th class="cl4">%</th>
+              <th class="cl2" (click)="sortItems('num')">Số lượng <i class="fa-solid fa-sort"></i></th>
+              <th class="cl3" (click)="sortItems('total')">Tổng tiền <i class="fa-solid fa-sort"></i></th>
+              <th class="cl4" (click)="sortItems('percent')">% <i class="fa-solid fa-sort"></i></th>
             </tr>
           </thead>
           <tbody>

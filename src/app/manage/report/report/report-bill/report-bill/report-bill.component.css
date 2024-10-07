@@ -292,7 +292,10 @@ select,.card input ,button{
   -moz-appearance: none;
   outline: none;
 }
-
+thead .col1:hover,thead .col2:hover,thead .col3:hover,thead .cl2:hover,thead .cl3:hover,thead .cl4:hover{
+  cursor: pointer;
+  color: gray;
+}
 /* Responsive Styling */
 @media (max-width: 600px) {
   .time-content {

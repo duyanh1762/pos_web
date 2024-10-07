@@ -188,7 +188,7 @@ export class SaleComponent implements OnInit {
             if(Number(this.billsLU[i][data]) > Number(this.billsLU[j][data])){
               let temp = this.billsLU[i];
               this.billsLU[i]=this.billsLU[j];
-              this.billsLU[j]=temp
+              this.billsLU[j]=temp;
             }
           }
         }
