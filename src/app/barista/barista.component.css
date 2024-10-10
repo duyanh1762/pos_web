@@ -58,7 +58,17 @@
   flex-direction: column;
   justify-content: space-between;
 }
-
+.order-card .btn button{
+  outline: none;
+  border: none;
+  border-radius:2px ;
+  margin-bottom: 5px;
+  background-color: #28a745;
+  color: white;
+}
+.order-card .btn button:hover{
+  background-color: #198754;
+}
 .header {
   background-color: #28a745;
   color: white;
@@ -94,7 +104,6 @@
 
 @media (max-width: 480px) {
   .order-tab {
-    flex-direction: column;
     align-items: flex-start;
   }
 

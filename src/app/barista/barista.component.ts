@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../Service/api.service';
-
+interface ItemOrder{
+  id: number,
+  itemID:number,
+  num: number,
+  billID: number,
+  name:string,
+  table:string,
+  status:string; // confirm | not_confirm
+}
 @Component({
   selector: 'app-barista',
   templateUrl: './barista.component.html',
@@ -8,11 +16,30 @@ import { ApiService } from '../Service/api.service';
 })
 export class BaristaComponent implements OnInit {
   ws: WebSocket;
+  itemsOrder:Array<ItemOrder> = [];
+  itemsOrderLU : Array<ItemOrder> = [];
 
   constructor(private api: ApiService) {}
 
   ngOnInit(): void {
+    this.loadWS();
   }
+
+  loadWS(){
+    if(localStorage.getItem("order_item")){
+      this.itemsOrderLU = JSON.parse(localStorage.getItem("order_item") || "[]");
+      this.api.onOrderUpdate((data:ItemOrder)=>{
+        this.itemsOrderLU.push(data);
+        localStorage.setItem("order_item",JSON.stringify(this.itemsOrderLU));
+        this.itemsOrder = this.itemsOrderLU.filter((i:ItemOrder)=>{
+          return i.status === "not_confirm";
+        });
+      });
+    }else{
+      localStorage.setItem("order_item",JSON.stringify([]));
+    }
+  }
+
   testWS(){
    // Kết nối WebSocket
     this.ws = new WebSocket('ws://localhost:56001');
@@ -47,5 +74,29 @@ export class BaristaComponent implements OnInit {
         }
       }
     };
+  }
+
+  confirm(item:ItemOrder){
+    this.itemsOrderLU.forEach((i:ItemOrder)=>{
+      if(item.id === i.id){
+        i.status = "confirm";
+      }
+    });
+    localStorage.setItem("order_item",JSON.stringify(this.itemsOrderLU));
+    this.itemsOrder = this.itemsOrderLU.filter((i:ItemOrder)=>{
+      return i.status === "not_confirm";
+    });
+    console.log(localStorage.getItem("order_item"))
+  }
+
+  getItems(type:string){
+    this.itemsOrder = [];
+    this.itemsOrder = this.itemsOrderLU.filter((item:ItemOrder)=>{
+      return item.status === type;
+    });
+  }
+
+  resetStorage(){
+    localStorage.removeItem("order_item");
   }
 }

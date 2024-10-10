@@ -1,43 +1,26 @@
 <div class="order-board">
   <div class="order-tab">
-    <button class="tab-button active">Các phiếu cần giao</button>
-    <button class="tab-button">Các phiếu đã giao</button>
+    <button class="tab-button active" (click)="getItems('not_confirm')">Các phiếu cần giao</button>
+    <button class="tab-button active" (click)="getItems('confirm')">Các phiếu đã giao</button>
   </div>
 
-  <div class="order-cards">
+  <div class="order-cards" >
 
-    <div class="order-card">
+    <div class="order-card" *ngFor="let i of itemsOrder">
       <div class="header">
-        <div class="table-id">B05</div>
-        <div class="time">1ph</div>
+        <div class="table-id">Bàn {{ i.table }}</div>
       </div>
       <div class="body">
         <div class="item">
-          <span>Bạc hà sôcôla</span>
-          <span>x1</span>
-        </div>
-        <div class="item">
-          <span>Trà Đào Đá</span>
-          <span>x1</span>
+          <span>{{ i.name }}</span>
+          <span>x{{ i.num }}</span>
         </div>
       </div>
-    </div>
-
-
-    <div class="order-card">
-      <div class="header">
-        <div class="table-id">B05</div>
-        <div class="time">1ph</div>
+      <div class="btn" *ngIf="i.status === 'not_confirm'">
+        <button (click)="confirm(i)" >Xong</button>
       </div>
-      <div class="body">
-        <div class="item">
-          <span>Bạc hà sôcôla</span>
-          <span>x1</span>
-        </div>
-        <div class="item">
-          <span>Trà Đào Đá</span>
-          <span>x1</span>
-        </div>
+      <div class="btn" *ngIf="i.status === 'confirm'">
+        <button>Đã hoàn thành</button>
       </div>
     </div>
 

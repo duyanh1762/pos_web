@@ -26,6 +26,15 @@ interface mItem {
   groupID: number;
   status: string;
 }
+interface ItemOrder{
+  id: number;
+  itemID:number;
+  num: number,
+  billID: number;
+  name:string;
+  table:string;
+  status:string; // confirm | not_confirm
+}
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
@@ -233,7 +242,7 @@ export class OrderComponent implements OnInit{
           .bill({ mode: 'create', data: bill })
           .subscribe((response: any) => {
             response as Bill;
-            this.cart.forEach((i) => {
+            this.cart.forEach((i:CartItem) => {
               if (i.num > 0) {
                 let detail: BillDetail = {
                   id: 0,
@@ -244,7 +253,18 @@ export class OrderComponent implements OnInit{
                 };
                 this.api
                   .details({ mode: 'create', data: detail })
-                  .subscribe((response) => {});
+                  .subscribe((res:any) => {
+                    let newOrder:ItemOrder = {
+                      id: res.id,
+                      itemID: i.itemID,
+                      num: i.num,
+                      billID: response.id,
+                      name:i.name,
+                      table:response.table,
+                      status:"not_confirm"
+                    };
+                    this.api.sendOrder(newOrder);
+                  });
               }
             });
             this.cart.splice(0, this.cart.length);

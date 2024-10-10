@@ -148,7 +148,7 @@ export class ApiService {
   //   this.socket.send(data);
   // }
 
-  public socket = io('http://localhost:3000'); // URL của WebSocket server (NestJS)
+  private socket = io('http://localhost:3000'); // URL của WebSocket server (NestJS)
 
   sendOrder(order: any) {
     this.socket.emit('ws_order', order); // Gửi thông điệp lên server
