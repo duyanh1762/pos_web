@@ -6,12 +6,15 @@ import { Bill } from '../Models/bill';
 import { Item } from '../Models/item';
 import * as xlsx from 'xlsx';
 import * as fs from 'file-saver';
+import { io } from 'socket.io-client';
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
   server: string = 'http://localhost:3000/';
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    // this.connect();
+  }
 
   public login(request: LoginReQuest) {
     return this.http.post(this.server + 'login-authen', request);
@@ -121,4 +124,37 @@ export class ApiService {
     fs.saveAs(data, fileName + '_export_' + new Date().getTime() + '.xlsx');
   }
 
+  //Web socket service test
+
+  // public socket: WebSocket;
+
+  // private connect() {
+  //   this.socket = new WebSocket('ws://localhost:56002/ws_order');
+
+  //   this.socket.onopen = () => {
+  //     console.log('Connected to WebSocket server');
+  //   };
+
+  //   this.socket.onmessage = (event) => {
+  //     console.log('Message from server: ', event.data);
+  //   };
+
+  //   this.socket.onclose = () => {
+  //     console.log('WebSocket connection closed');
+  //   };
+  // }
+
+  // public sendData(data:any) {
+  //   this.socket.send(data);
+  // }
+
+  public socket = io('http://localhost:3000'); // URL của WebSocket server (NestJS)
+
+  sendOrder(order: any) {
+    this.socket.emit('ws_order', order); // Gửi thông điệp lên server
+  }
+
+  onOrderUpdate(callback: (data: any) => void) {
+    this.socket.on('orderUpdate', callback); // Lắng nghe các cập nhật từ server
+  }
 }

@@ -25,6 +25,7 @@ import { LoadManageGuard } from './Guard/LoadManage/load-manage.guard';
 import { ApiService } from './Service/api.service';
 
 import { LongClickDirective } from './Directives/long-click.directive';
+import { BaristaComponent } from './barista/barista.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { LongClickDirective } from './Directives/long-click.directive';
     InforComponent,
     HistoryComponent,
     LongClickDirective,
+    BaristaComponent,
   ],
   imports: [
     BrowserModule,

@@ -41,6 +41,9 @@ export class OrderComponent implements OnInit{
   public type: string = 'new';
   public tableData: Bill;
   public groups: Array<Group> = [];
+
+  // ws: WebSocket;
+
   constructor(
     private api: ApiService,
     private activeRoute: ActivatedRoute,

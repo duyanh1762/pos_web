@@ -9,6 +9,7 @@ import { StaffGuard } from './Guard/StaffGuard/staff.guard';
 import { OrderComponent } from './tables/order/order/order.component';
 import { ManageComponent } from './manage/manage.component';
 import { LoadManageGuard } from './Guard/LoadManage/load-manage.guard';
+import { BaristaComponent } from './barista/barista.component';
 
 const routes: Routes = [
   {path:"",component:HomeComponent,canActivate:[AuthGuard]},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path:"tables",component:TablesComponent,canActivate:[AuthGuard,StaffGuard]},
   {path:"tables/order/:table",component:OrderComponent,canActivate:[AuthGuard,StaffGuard]},
   {path:"manage",loadChildren: ()=>import("./manage/manage.module").then((m)=> m.ManageModule),canLoad:[LoadManageGuard]},
+  {path:"barista",component:BaristaComponent},
   {path:"**",redirectTo:"",pathMatch:"full"},
 
 ];
