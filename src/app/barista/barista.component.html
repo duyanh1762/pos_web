@@ -16,7 +16,8 @@
       <div class="body">
         <div class="item">
           <span>{{ i.name }}</span>
-          <span>x{{ i.num }}</span>
+          <span *ngIf="i.num > 0">x {{ i.num }}</span>
+          <span *ngIf="i.num < 0">x {{ i.num * -1 }}</span>
         </div>
       </div>
       <div class="btn" *ngIf="i.status === 'not_confirm'">

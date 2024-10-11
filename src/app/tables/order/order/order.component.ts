@@ -326,7 +326,7 @@ export class OrderComponent implements OnInit{
               .details({ mode: 'create', data: newDetail })
               .subscribe((res:any) => {
                 let newOrder:ItemOrder = {
-                  id: i.id,
+                  id: res.id,
                   itemID: i.itemID,
                   num: i.num,
                   billID: this.tableData.id,
@@ -337,7 +337,6 @@ export class OrderComponent implements OnInit{
                 this.api.sendOrder(newOrder);
               });
           }
-          this.cartLU.push(i);
         } else {
           if (i.num > 0) {
             let detail: BillDetail = {
