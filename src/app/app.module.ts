@@ -26,6 +26,7 @@ import { ApiService } from './Service/api.service';
 
 import { LongClickDirective } from './Directives/long-click.directive';
 import { BaristaComponent } from './barista/barista.component';
+import { RoleGuard } from './Guard/RoleGuard/role.guard';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,7 @@ import { BaristaComponent } from './barista/barista.component';
     BrowserAnimationsModule,
     FormsModule
   ],
-  providers: [AuthGuard,LoginGuard,ApiService,StaffGuard,LoadManageGuard],
+  providers: [AuthGuard,LoginGuard,ApiService,StaffGuard,LoadManageGuard,RoleGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

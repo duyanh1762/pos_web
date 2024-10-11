@@ -43,7 +43,11 @@ export class StaffLoginComponent implements OnInit {
     if (this.password === staffG.password) {
       this.bsModelRef.hide();
       localStorage.setItem("staff-infor",JSON.stringify(staffG));
-      this.router.navigate(["/tables"]);
+      if(staffG.role === "thu_ngan" || staffG.role === "quan_ly"){
+        this.router.navigate(["/tables"]);
+      }else{
+        this.router.navigate(["/barista"]);
+      }
     } else {
       localStorage.removeItem("staff-infor");
       alert('Sai mat khau !');

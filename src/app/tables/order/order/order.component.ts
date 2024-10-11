@@ -9,6 +9,7 @@ import { Bill } from 'src/app/Models/bill';
 import { Staff } from 'src/app/Models/staff';
 import { Group } from 'src/app/Models/group';
 import { Renderer2 } from '@angular/core';
+
 interface CartItem {
   id: number;
   itemID: number;
@@ -18,6 +19,7 @@ interface CartItem {
   name: string;
   price: number;
 }
+
 interface mItem {
   id: number;
   policyID: number;
@@ -26,26 +28,30 @@ interface mItem {
   groupID: number;
   status: string;
 }
+
 interface ItemOrder{
   id: number;
   itemID:number;
   num: number,
   billID: number;
   name:string;
-  table:string;
+  table:string | undefined;
   status:string; // confirm | not_confirm
 }
+
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.css'],
 })
 export class OrderComponent implements OnInit{
+
   public shop: Shop;
   public staff: Staff;
   public menu: Array<mItem> = [];
   public menuLU: Array<mItem> = [];
   public cart: Array<CartItem> = [];
+  public cartLU:Array<CartItem> = [];
   public sum = 0;
   public type: string = 'new';
   public tableData: Bill;
@@ -131,6 +137,7 @@ export class OrderComponent implements OnInit{
                   });
                   this.menuLU = this.menu;
                   this.cart.push(cartItem);
+                  this.cartLU.push({...cartItem});
                   this.sum = this.getMoneyCart();
                 }
               });
@@ -140,6 +147,7 @@ export class OrderComponent implements OnInit{
       });
     });
   }
+
   addCart(item: mItem) {
     let shop: Shop = JSON.parse(localStorage.getItem('shop-infor') || '{}');
     this.menuLU.forEach((iLU: mItem) => {
@@ -176,6 +184,7 @@ export class OrderComponent implements OnInit{
     }
     this.sum = this.getMoneyCart();
   }
+
   getMoneyCart(): number {
     let money: number = 0;
     this.cart.forEach((item: any) => {
@@ -184,6 +193,7 @@ export class OrderComponent implements OnInit{
     });
     return money;
   }
+
   plus(item: CartItem) {
     this.cart.forEach((i: any) => {
       i as CartItem;
@@ -193,6 +203,7 @@ export class OrderComponent implements OnInit{
     });
     this.sum = this.getMoneyCart();
   }
+
   minus(item: CartItem) {
     this.cart.forEach((i: any) => {
       i as CartItem;
@@ -207,6 +218,7 @@ export class OrderComponent implements OnInit{
     });
     this.sum = this.getMoneyCart();
   }
+
   delete(item: CartItem) {
     this.cart.forEach((i: any) => {
       i as CartItem;
@@ -218,6 +230,7 @@ export class OrderComponent implements OnInit{
 
     this.sum = this.getMoneyCart();
   }
+
   async saveNew() {
     let cartCondition: Array<CartItem> = this.cart.filter((ct: CartItem) => {
       return ct.num > 0;
@@ -274,6 +287,7 @@ export class OrderComponent implements OnInit{
       });
     }
   }
+
   async saveEdit() {
     let cartCondition: Array<CartItem> = this.cart.filter((ct: CartItem) => {
       return ct.num > 0;
@@ -284,6 +298,18 @@ export class OrderComponent implements OnInit{
         this.api
           .bill({ mode: 'update', data: this.tableData })
           .subscribe((res) => {});
+        this.cartLU.forEach((i:CartItem)=>{
+          let newOrder:ItemOrder = {
+            id: i.id,
+            itemID: i.itemID,
+            num: i.num,
+            billID: this.tableData.id,
+            name:i.name + " (Huỷ)",
+            table:this.tableData.table?.toString(),
+            status:"not_confirm"
+          };
+          this.api.sendOrder(newOrder);
+        });
       }
     } else {
       this.cart.forEach((i: CartItem) => {
@@ -298,8 +324,20 @@ export class OrderComponent implements OnInit{
             };
             this.api
               .details({ mode: 'create', data: newDetail })
-              .subscribe((res) => {});
+              .subscribe((res:any) => {
+                let newOrder:ItemOrder = {
+                  id: i.id,
+                  itemID: i.itemID,
+                  num: i.num,
+                  billID: this.tableData.id,
+                  name:i.name,
+                  table:this.tableData.table?.toString(),
+                  status:"not_confirm"
+                };
+                this.api.sendOrder(newOrder);
+              });
           }
+          this.cartLU.push(i);
         } else {
           if (i.num > 0) {
             let detail: BillDetail = {
@@ -324,6 +362,34 @@ export class OrderComponent implements OnInit{
               .details({ mode: 'delete', data: detail })
               .subscribe((res) => {});
           }
+          this.cartLU.forEach((iLU:CartItem)=>{
+            if(iLU.id === i.id){
+              let n:number = i.num - iLU.num;
+              if(n > 0){
+                let newOrder:ItemOrder = {
+                  id: i.id,
+                  itemID: i.itemID,
+                  num: n,
+                  billID: this.tableData.id,
+                  name:i.name,
+                  table:this.tableData.table?.toString(),
+                  status:"not_confirm"
+                };
+                this.api.sendOrder(newOrder);
+              }else if(n < 0){
+                let newOrder:ItemOrder = {
+                  id: i.id,
+                  itemID: i.itemID,
+                  num: n,
+                  billID: this.tableData.id,
+                  name:i.name + " (Huỷ)",
+                  table:this.tableData.table?.toString(),
+                  status:"not_confirm"
+                };
+                this.api.sendOrder(newOrder);
+              }
+            }
+          });
         }
       });
     }
@@ -331,6 +397,7 @@ export class OrderComponent implements OnInit{
     this.sum = 0;
     this.router.navigate(['/tables']);
   }
+
   getItem(idG: number) {
     this.menu = [];
     this.menuLU.forEach((i: mItem) => {
@@ -346,6 +413,7 @@ export class OrderComponent implements OnInit{
       });
     });
   }
+
   getAllMenu() {
     this.menu = [];
     this.menuLU.forEach((i:mItem)=>{
@@ -359,6 +427,7 @@ export class OrderComponent implements OnInit{
       });
     });
   }
+
   changeStatus(obj:CartItem , status:string){
     this.menuLU.forEach((i:mItem)=>{
       if(obj.itemID === i.id ){

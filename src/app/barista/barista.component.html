@@ -7,7 +7,10 @@
   <div class="order-cards" >
 
     <div class="order-card" *ngFor="let i of itemsOrder">
-      <div class="header">
+      <div class="header" style=" background-color: #28a745;" *ngIf="i.name.indexOf('Huỷ') === -1">
+        <div class="table-id">Bàn {{ i.table }}</div>
+      </div>
+      <div class="header" style=" background-color: #f24920;" *ngIf="i.name.indexOf('Huỷ') != -1">
         <div class="table-id">Bàn {{ i.table }}</div>
       </div>
       <div class="body">

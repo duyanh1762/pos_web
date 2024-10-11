@@ -10,14 +10,15 @@ import { OrderComponent } from './tables/order/order/order.component';
 import { ManageComponent } from './manage/manage.component';
 import { LoadManageGuard } from './Guard/LoadManage/load-manage.guard';
 import { BaristaComponent } from './barista/barista.component';
+import { RoleGuard } from './Guard/RoleGuard/role.guard';
 
 const routes: Routes = [
   {path:"",component:HomeComponent,canActivate:[AuthGuard]},
   {path:"login",component:LoginComponent,canActivate:[LoginGuard]},
-  {path:"tables",component:TablesComponent,canActivate:[AuthGuard,StaffGuard]},
-  {path:"tables/order/:table",component:OrderComponent,canActivate:[AuthGuard,StaffGuard]},
+  {path:"tables",component:TablesComponent,canActivate:[AuthGuard,StaffGuard,RoleGuard]},
+  {path:"tables/order/:table",component:OrderComponent,canActivate:[AuthGuard,StaffGuard,RoleGuard]},
   {path:"manage",loadChildren: ()=>import("./manage/manage.module").then((m)=> m.ManageModule),canLoad:[LoadManageGuard]},
-  {path:"barista",component:BaristaComponent},
+  {path:"barista",component:BaristaComponent,canActivate:[AuthGuard,StaffGuard]},
   {path:"**",redirectTo:"",pathMatch:"full"},
 
 ];
