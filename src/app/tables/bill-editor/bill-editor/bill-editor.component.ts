@@ -8,8 +8,8 @@ import { DataRequest } from 'src/app/Interface/data_request';
 import { Bill } from 'src/app/Models/bill';
 import { BillDetail } from 'src/app/Models/bill_detail';
 import { Item } from 'src/app/Models/item';
-import { Policy } from 'src/app/Models/policy';
 import { ApiService } from 'src/app/Service/api.service';
+
 interface DetailInfor {
   id: number;
   itemID: number;
@@ -21,6 +21,16 @@ interface DetailInfor {
   total: number;
   update: boolean;
 }
+interface ItemOrder{
+  id: number;
+  itemID:number;
+  num: number,
+  billID: number;
+  name:string;
+  table:string | undefined;
+  status:string; // confirm | not_confirm
+}
+
 @Component({
   selector: 'app-bill-editor',
   templateUrl: './bill-editor.component.html',
@@ -29,9 +39,12 @@ interface DetailInfor {
 export class BillEditorComponent implements OnInit {
   @Input() data: Bill;
   @Output() closed = new EventEmitter();
+
   listDetail: Array<BillDetail>;
   listDetailLU: Array<DetailInfor | BillDetail | any>;
+  dataCompare:Array<DetailInfor> = [];
   total: number = 0;
+
   constructor(
     private api: ApiService,
     private bsModalRef: BsModalRef,
@@ -81,6 +94,7 @@ export class BillEditorComponent implements OnInit {
         update: false,
       };
     });
+    this.dataCompare = JSON.parse(JSON.stringify(this.listDetailLU));
   }
   plus(id: number) {
     this.listDetailLU.forEach((item: DetailInfor) => {
@@ -143,6 +157,18 @@ export class BillEditorComponent implements OnInit {
           this.api.bill({mode:"update",data:this.data}).subscribe((res)=>{});
           this.closed.emit(this.data);
           this.bsModalRef.hide();
+          this.dataCompare.forEach((d:DetailInfor)=>{
+            let newOrder:ItemOrder = {
+              id: d.id,
+              itemID: d.itemID,
+              num: d.num,
+              billID: this.data.id,
+              name:d.name+" ( Huỷ)",
+              table:this.data.table?.toString(),
+              status:"not_confirm"
+            };
+            this.api.sendOrder(newOrder);
+          });
         }else{
           this.bsModalRef.hide();
         }
@@ -161,6 +187,34 @@ export class BillEditorComponent implements OnInit {
             };
             this.api.details(request).subscribe((rs)=>{});
           }
+          this.dataCompare.forEach((d:DetailInfor)=>{
+            if(d.id === queueDetail[i].id){
+              let n:number = queueDetail[i].num - d.num;
+              if(n > 0){
+                let newOrder:ItemOrder = {
+                  id: d.id,
+                  itemID: d.itemID,
+                  num: n,
+                  billID: this.data.id,
+                  name: d.name,
+                  table: this.data.table?.toString(),
+                  status: "not_confirm"
+                };
+                this.api.sendOrder(newOrder);
+              }else if(n < 0){
+                let newOrder:ItemOrder = {
+                  id: d.id,
+                  itemID: d.itemID,
+                  num: n,
+                  billID: this.data.id,
+                  name: d.name + " (Huỷ)",
+                  table: this.data.table?.toString(),
+                  status: "not_confirm"
+                };
+                this.api.sendOrder(newOrder);
+              }
+            }
+          });
         }
         this.bsModalRef.hide();
       }
