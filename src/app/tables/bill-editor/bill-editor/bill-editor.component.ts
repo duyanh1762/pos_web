@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { emit } from 'process';
 import { map } from 'rxjs';
 import { DataRequest } from 'src/app/Interface/data_request';
@@ -9,6 +9,7 @@ import { Bill } from 'src/app/Models/bill';
 import { BillDetail } from 'src/app/Models/bill_detail';
 import { Item } from 'src/app/Models/item';
 import { ApiService } from 'src/app/Service/api.service';
+import { PurchaseInforComponent } from '../../purchase-infor/purchase-infor.component';
 
 interface DetailInfor {
   id: number;
@@ -49,7 +50,8 @@ export class BillEditorComponent implements OnInit {
     private api: ApiService,
     private bsModalRef: BsModalRef,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private bsMS: BsModalService
   ) {}
 
   ngOnInit(): void {
@@ -233,5 +235,10 @@ export class BillEditorComponent implements OnInit {
     this.api.bill(request).subscribe((res)=>{});
     this.closed.emit(this.data);
     this.bsModalRef.hide();
+    this.bsMS.show(PurchaseInforComponent,{
+      initialState:{
+        data:this.data
+      }
+    });
   }
 }

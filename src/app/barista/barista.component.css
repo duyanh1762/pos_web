@@ -61,10 +61,11 @@
 .order-card .btn button{
   outline: none;
   border: none;
-  border-radius:2px ;
+  border-radius:3px ;
   margin-bottom: 5px;
   background-color: #28a745;
   color: white;
+  padding: 5px;
 }
 .order-card .btn button:hover{
   background-color: #198754;
@@ -94,7 +95,6 @@
   justify-content: space-between;
   margin-bottom: 8px;
 }
-
 @media (max-width: 768px) {
   .order-cards {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));

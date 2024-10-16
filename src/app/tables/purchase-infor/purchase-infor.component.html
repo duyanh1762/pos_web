@@ -1,0 +1,27 @@
+<div class="shopping-cart">
+  <div class="title" style="font-weight: 700; font-size: large">
+    Thanh toán hoá đơn bàn 69
+  </div>
+  <div class="list-buy">
+    <div *ngFor="let item of listDetailLU">
+      <div class="item-buy" *ngIf="item.num > 0">
+        <div class="name-note">
+          <div class="id-i" style="display: none"></div>
+          <div class="name-i">{{ item.name }}</div>
+        </div>
+        <div class="item-number">
+          <div class="number" style="margin: 0 5px 0 5px">
+            {{ item.num }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bill">
+    <div class="bill-title">Tổng tiền:</div>
+    <div class="money">{{ total | moneyTransform }}đ</div>
+    <div class="qr-scan">
+      <img src="data:image/png;base64,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" alt="">
+    </div>
+  </div>
+</div>

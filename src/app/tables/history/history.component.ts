@@ -62,11 +62,10 @@ export class HistoryComponent implements OnInit {
           });
           let billInfor:BillInfor={
             id:item.id.toString(),
-            time:this.api.dateTransform(date.toString()),
+            time:this.api.dateTransform(date.toString()).split(" ")[1],
             staff:name,
             total:money,
           };
-          console.log(billInfor);
           this.bills.push(billInfor);
         }
       });

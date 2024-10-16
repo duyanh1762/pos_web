@@ -20,15 +20,19 @@
           <span *ngIf="i.num < 0">x {{ i.num * -1 }}</span>
         </div>
       </div>
-      <div class="btn" *ngIf="i.status === 'not_confirm'">
-        <button (click)="confirm(i)" >Xong</button>
+      <div class="btn" *ngIf="i.status === 'not_confirm' && i.name.indexOf('Huỷ') === -1" >
+        <button style=" background-color: #28a745;" (click)="confirm(i)" >Xong</button>
       </div>
-      <div class="btn" *ngIf="i.status === 'confirm'">
-        <button>Đã hoàn thành</button>
+      <div class="btn" *ngIf="i.status === 'not_confirm' && i.name.indexOf('Huỷ') != -1"  >
+        <button style=" background-color: #f24920;" (click)="confirm(i)" >Xong</button>
+      </div>
+      <div class="btn" *ngIf="i.status === 'confirm' && i.name.indexOf('Huỷ') === -1" >
+        <button  style=" background-color: #28a745;">Đã hoàn thành</button>
+      </div>
+      <div class="btn" *ngIf="i.status === 'confirm' && i.name.indexOf('Huỷ') != -1"  >
+        <button style=" background-color: #f24920;" >Đã huỷ</button>
       </div>
     </div>
-
-    <!-- Add more order cards here -->
 
   </div>
 </div>

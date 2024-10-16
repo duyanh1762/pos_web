@@ -27,6 +27,7 @@ import { ApiService } from './Service/api.service';
 import { LongClickDirective } from './Directives/long-click.directive';
 import { BaristaComponent } from './barista/barista.component';
 import { RoleGuard } from './Guard/RoleGuard/role.guard';
+import { PurchaseInforComponent } from './tables/purchase-infor/purchase-infor.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { RoleGuard } from './Guard/RoleGuard/role.guard';
     HistoryComponent,
     LongClickDirective,
     BaristaComponent,
+    PurchaseInforComponent,
   ],
   imports: [
     BrowserModule,

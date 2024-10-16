@@ -303,6 +303,10 @@ input {
     font-size: 12px;
     margin-top: 15px;
   }
+  .drinks{
+    max-height: 76vh;
+    overflow-y: auto;
+  }
   .drinks > div .img {
     width: 30%;
     height: 90%;

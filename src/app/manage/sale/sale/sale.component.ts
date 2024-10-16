@@ -68,7 +68,7 @@ export class SaleComponent implements OnInit {
       .toPromise()
       .then((res: any) => {
         res.forEach((s: Staff) => {
-          if (s.shopID === this.shop.id) {
+          if (s.shopID === this.shop.id && s.status === "Active") {
             let si = {
               id: s.id,
               name: s.name,

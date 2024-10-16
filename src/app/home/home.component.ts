@@ -4,6 +4,7 @@ import { ApiService } from '../Service/api.service';
 import { DataRequest } from '../Interface/data_request';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { StaffLoginComponent } from './staff-login/staff-login/staff-login.component';
+import { Staff } from '../Models/staff';
 
 @Component({
   selector: 'app-home',
@@ -33,8 +34,8 @@ export class HomeComponent implements OnInit {
       data:"",
     }
     this.api.staff(request).subscribe((response:any)=>{
-      response.forEach((staff:any)=>{
-        if(staff.shopID == shop.id){
+      response.forEach((staff:Staff)=>{
+        if(staff.shopID == shop.id && staff.status === "Active"){
           this.staffs.push(staff);
         }
       });
