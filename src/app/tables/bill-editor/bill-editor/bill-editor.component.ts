@@ -32,6 +32,18 @@ interface ItemOrder{
   status:string; // confirm | not_confirm
 }
 
+interface BillInfor{
+  id: number;
+  date:string;
+  table: string | null;
+  staffID: number;
+  shopID:number;
+  status:string;
+  policyID:number;
+  details:Array<DetailInfor>,
+  total:number
+}
+
 @Component({
   selector: 'app-bill-editor',
   templateUrl: './bill-editor.component.html',
@@ -235,9 +247,15 @@ export class BillEditorComponent implements OnInit {
     this.api.bill(request).subscribe((res)=>{});
     this.closed.emit(this.data);
     this.bsModalRef.hide();
+
+    let billInfor:BillInfor = {
+      ...this.data,
+      total:this.total,
+      details:this.listDetailLU,
+    }
     this.bsMS.show(PurchaseInforComponent,{
       initialState:{
-        data:this.data
+        data:billInfor
       }
     });
   }

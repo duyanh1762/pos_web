@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LoginReQuest } from '../Interface/login_request';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DataRequest } from '../Interface/data_request';
 import { Bill } from '../Models/bill';
 import { Item } from '../Models/item';
@@ -33,6 +33,17 @@ export class ApiService {
   }
   public group(request: DataRequest){
     return this.http.post(this.server + 'group', request);
+  }
+  public getQr(request:any){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    const options = {
+      headers: headers,
+      responseType: 'text' as 'json',
+    };
+    // return this.http.post(this.server + 'qr', request , options); // gui request co kieu du lieu la application/json , nhan response co kieu du lieu text
+    return this.http.post(this.server + 'qr/get', request , {responseType:'text'});
   }
   getCurrentDate(): string {
     const date = new Date();

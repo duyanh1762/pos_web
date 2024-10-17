@@ -1,4 +1,31 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { table } from 'console';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+import { ApiService } from 'src/app/Service/api.service';
+
+interface BillInfor{
+  id: number;
+  date:string;
+  table: string | null;
+  staffID: number;
+  shopID:number;
+  status:string;
+  policyID:number;
+  details:Array<DetailInfor>,
+  total:number
+}
+
+interface DetailInfor {
+  id: number;
+  itemID: number;
+  num: number;
+  billID: number;
+  policyID: number;
+  price: number;
+  name: string;
+  total: number;
+  update: boolean;
+}
 
 @Component({
   selector: 'app-purchase-infor',
@@ -6,15 +33,23 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./purchase-infor.component.css']
 })
 export class PurchaseInforComponent implements OnInit {
-  @Input() data:any;
+  @Input() data:BillInfor;
 
-  total:number = 0;
-  listDetailLU:Array<any> = [];
+  qrSource:string;
 
-  constructor() { }
+  constructor(private api:ApiService,private bsRef:BsModalRef) { }
 
   ngOnInit(): void {
-    console.log(this.data);
+    this.load();
   }
 
+  load(){
+    this.api.getQr({money:this.data.total,staff:this.data.staffID.toString(),table:this.data.table}).subscribe((res:any)=>{
+      this.qrSource = res;
+    });
+  }
+
+  close(){
+    this.bsRef.hide();
+  }
 }
