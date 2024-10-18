@@ -210,7 +210,7 @@ export class OrderComponent implements OnInit{
       if (i.itemID === item.itemID) {
         if (i.num <= 1) {
           i.num = 0;
-          this.changeStatus(item,"none");
+          this.changeStatus(item,"not_order");
         } else {
           i.num = i.num - 1;
         }
@@ -224,7 +224,7 @@ export class OrderComponent implements OnInit{
       i as CartItem;
       if (item.itemID === i.itemID) {
         i.num = 0;
-        this.changeStatus(item,"none");
+        this.changeStatus(item,"not_order");
       }
     });
 
