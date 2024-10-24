@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="header-container" *ngIf="data.type === 'create'">
+    Tạo phiếu chi
+  </div>
+  <div class="header-container" *ngIf="data.type === 'edit'">
+    Thông tin phiếu chi
+  </div>
+  <div class="form-container">
+    <form #form="ngForm" (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-input">
+        <label for="des">Ghi chú</label>
+        <input
+          name="des"
+          id="des"
+          placeholder="Nhập..."
+          [(ngModel)]="des"
+          required
+        />
+      </div>
+      <div class="form-input">
+        <label for="total">Số tiền</label>
+        <input
+          type="number"
+          name="total"
+          id="total"
+          placeholder="Nhập..."
+          [(ngModel)]="total"
+          required
+        />
+      </div>
+      <div class="form-input" *ngIf="data.type === 'edit'">
+        <label for="name">Ngày tạo</label>
+        <input
+          name="date"
+          id="date"
+          [(ngModel)]="date"
+          readonly
+        />
+      </div>
+      <button type="submit" [disabled]="form.invalid">Xác nhận</button>
+    </form>
+  </div>
+</div>

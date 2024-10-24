@@ -26,7 +26,7 @@ interface mItem {
   name: string;
   price: number;
   groupID: number;
-  status: string;
+  status: string; // order | not_order
 }
 
 interface ItemOrder{

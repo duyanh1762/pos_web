@@ -13,6 +13,9 @@ import { FormsModule } from '@angular/forms';
 import { ReportStaffComponent } from './report/report/report-staff/report-staff/report-staff.component';
 import { ReportBillComponent } from './report/report/report-bill/report-bill/report-bill.component';
 import { DetailComponent } from './sale/sale/detail/detail.component';
+import { IncomeComponent } from './income/income.component';
+import { ReceiptFormComponent } from './income/receipt-form/receipt-form.component';
+import { SpendFormComponent } from './income/spend-form/spend-form.component';
 
 let routes:Routes = [
   {path:"",component:ManageComponent},
@@ -20,9 +23,10 @@ let routes:Routes = [
   {path:"report",component:ReportComponent},
   {path:"report/staff",component:ReportStaffComponent},
   {path:'report/bill',component:ReportBillComponent},
+  {path:"income",component:IncomeComponent}
 ]
 @NgModule({
-  declarations: [ManageComponent,SaleComponent,MoneyTransformPipe, ReportComponent, ReportStaffComponent, ReportBillComponent, DetailComponent],
+  declarations: [ManageComponent,SaleComponent,MoneyTransformPipe, ReportComponent, ReportStaffComponent, ReportBillComponent, DetailComponent, IncomeComponent, ReceiptFormComponent, SpendFormComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

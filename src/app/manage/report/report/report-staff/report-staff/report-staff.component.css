@@ -151,7 +151,7 @@
 h3{
   font-weight: 600;
 }
-/* Responsive Styling */
+
 @media (max-width: 600px) {
   .time-content {
       flex-direction: column;

@@ -1,0 +1,65 @@
+<div class="content">
+  <div class="header">
+    <a routerLink="/manage" class="back-link"><i class="fas fa-home"></i> Trở về</a>
+  </div>
+
+  <div class="main-content">
+    <div class="title">
+      <div class="main-title">THU CHI TIỀN MẶT NGÀY {{ getDate() }}</div>
+    </div>
+
+    <div class="cash-flow">
+      <div class="cash-flow-item">
+        <div class="item-title">
+          <div class="cash-title">Doanh thu tiền mặt  (1)</div>
+          <div class="cash-amount">{{ revenue | moneyTransform}}đ</div>
+        </div>
+        <div class="item-subtitle">{{ shop.address }}</div>
+        <!-- <div class="item-controls">
+          <button class="btn income">+ Tạo Phiếu Thu Mới</button>
+        </div> -->
+      </div>
+
+      <div class="cash-flow-item">
+        <div class="item-title">
+          <div class="cash-title">Danh mục chi  (2)</div>
+          <div class="cash-amount">{{ spend | moneyTransform}}đ</div>
+        </div>
+        <div class="item-subtitle">{{ shop.address }}</div>
+        <div class="expense-list">
+          <table *ngIf="listSpend.length > 0">
+            <thead>
+              <tr>
+                <th>Ghi chú</th>
+                <th>Thời gian</th>
+                <th>Số tiền</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let s of listSpend">
+                <td>{{ s.des }}</td>
+                <td>{{ s.date.split(" ")[1] }}</td>
+                <td>{{ s.total | moneyTransform }}đ</td>
+                <td>
+                  <button class="btn btn-edit" (click)="editSpendForm(s)">Sửa phiếu</button>
+                  <button class="btn btn-delete" (click)="deleteSpend(s)">Xóa phiếu</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="item-controls">
+          <button class="btn expense" (click)="openSpendForm()">+ Tạo Phiếu Chi Mới</button>
+        </div>
+      </div>
+
+      <div class="total">
+        <span style="font-weight: 600;">Tổng kết (1) - (2)</span>
+        <span style="color: #28a745 ;" class="amount" *ngIf="(revenue - spend) > 0">+{{ (revenue - spend) | moneyTransform }}đ</span>
+        <span style="color: red ;" class="amount" *ngIf="(revenue - spend) < 0">{{ (revenue - spend) | moneyTransform }}đ</span>
+        <span  class="amount" *ngIf="(revenue - spend) === 0">{{ (revenue - spend) | moneyTransform }}đ</span>
+      </div>
+    </div>
+  </div>
+</div>

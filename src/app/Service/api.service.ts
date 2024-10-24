@@ -34,6 +34,9 @@ export class ApiService {
   public group(request: DataRequest){
     return this.http.post(this.server + 'group', request);
   }
+  public spend(request:any){
+    return this.http.post(this.server + 'spend',request);
+  }
   public getQr(request:any){
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -72,6 +75,21 @@ export class ApiService {
 
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
+  dateTransform(dateTime:string){
+    const date = new Date(dateTime);
+
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+
+    const formattedDate = `${day}-${month}-${year}`;
+    const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+    return `${formattedDate} ${formattedTime}`;
+  }
 
   async getNameItem(id: number):Promise<string> {
     let request: DataRequest = {
@@ -107,22 +125,6 @@ export class ApiService {
       });
     return price;
   }
-  dateTransform(dateTime:string){
-    const date = new Date(dateTime);
-
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    const seconds = date.getSeconds().toString().padStart(2, '0');
-
-    const formattedDate = `${day}-${month}-${year}`;
-    const formattedTime = `${hours}:${minutes}:${seconds}`;
-
-    return `${formattedDate} ${formattedTime}`;
-  }
-
   exportExcel(fileName:string,dataE:Array<any>,sheetName:string) {
     const worksheet: xlsx.WorkSheet = xlsx.utils.json_to_sheet(dataE);
     const workbook: xlsx.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: [sheetName] };
