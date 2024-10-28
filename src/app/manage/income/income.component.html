@@ -38,7 +38,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let s of listSpend">
-                <td>{{ s.des }}</td>
+                <td style="font-style: italic;">{{ s.des }}</td>
                 <td>{{ s.date.split(" ")[1] }}</td>
                 <td>{{ s.total | moneyTransform }}đ</td>
                 <td>

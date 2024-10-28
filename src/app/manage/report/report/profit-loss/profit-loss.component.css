@@ -1,0 +1,299 @@
+.content {
+  margin: 0 auto;
+  border-radius: 8px;
+  padding: 20px;
+  width: 90%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+}
+
+.time-content, .report-content {
+  width: 100%;
+}
+
+.time-content {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.time-content .date-picker-form{
+  margin-left: 20px;
+}
+.time-content .date-picker-button button ,.export button{
+  height: 40px;
+  width: 100px;
+  color: #fff;
+  background-color: #4CAF50;
+  border-radius: 5px;
+  text-decoration: none;
+  outline: none;
+  transition: background-color 0.2s;
+  margin-left: 20px;
+  margin-bottom: 16px;
+  border:none
+}
+.time-content .date-picker-button button:hover ,.export button:hover{
+  background-color: #198754;
+}
+.export{
+  text-align: center;
+}
+.export button{
+  margin-top: 30px;
+  font-size: 13px;
+}
+.date-picker {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.date-picker label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.btn-filter {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+.btn-filter:hover {
+  background-color: #0056b3;
+}
+
+.report-content {
+  width: 100%;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.report-header {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.back-link {
+  color: black;
+  text-decoration: none;
+  font-size: 1.2em;
+  font-weight: 400;
+}
+
+.date-indicator {
+  font-size: 14px;
+  color: #555;
+}
+
+.report-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.report-title h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.total {
+  font-weight: bold;
+}
+h3{
+  font-weight: 600;
+}
+
+.report-result{
+  width: 100%;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 8px;
+}
+.report-result .title .main-title{
+  font-weight:600;
+  font-size: 18px;
+}
+.cash-flow {
+  border-top: 2px solid #28a745;
+  padding-top: 20px;
+}
+
+.cash-flow-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.item-title {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.item-subtitle {
+  font-size: 14px;
+  color: #777;
+}
+
+.item-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.income {
+  background-color: #4CAF50;
+  color: white;
+}
+.income:hover{
+  background-color: #28a745;
+}
+.expense {
+  background-color: #dc3545;
+  color: white;
+}
+.expense:hover{
+  background-color: red;
+}
+.total {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  font-size: 18px;
+  border-top: 2px solid #e0e0e0;
+  margin-top: 10px;
+}
+.amount {
+  font-weight: bold;
+}
+.item-title{
+  display: flex;
+  justify-content: space-between;
+}
+.expense-list {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+}
+
+table {
+  width: 100%;
+  border-spacing: 0;
+}
+
+thead th {
+  text-align: left;
+  padding: 12px;
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+tbody td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.btn {
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 5px;
+}
+
+@media (max-width: 600px) {
+  .time-content {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .btn-filter {
+      margin-top: 10px;
+      width: 100%;
+  }
+
+  .report-title h2 {
+      font-size: 18px;
+  }
+  .report-header, .report-title {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .back-link, .date-indicator {
+      margin-bottom: 10px;
+  }
+  .cash-flow-item {
+    flex-direction: column;
+}
+
+.item-controls {
+    flex-direction: column;
+}
+table,
+thead,
+tbody,
+th,
+td,
+tr {
+  display: block;
+}
+
+thead tr {
+  display: none;
+}
+
+tbody td {
+  padding: 10px;
+  text-align: center;
+  position: relative;
+}
+
+tbody td::before {
+  content: attr(data-label);
+  position: absolute;
+  left: 0;
+  padding-left: 10px;
+  font-weight: bold;
+}
+
+tbody td:nth-child(1) {
+  background-color: #f2f2f2;
+  border-bottom: 1px solid #ddd;
+}
+.item-title,.total span,.cash-amount{
+  font-size: 14px;
+  font-weight: bold;
+}
+.main-content .title .main-title{
+  font-size: 14px;
+}
+}

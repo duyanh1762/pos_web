@@ -7,7 +7,6 @@ import { LoginGuard } from './Guard/LoginGuard/login.guard';
 import { TablesComponent } from './tables/tables.component';
 import { StaffGuard } from './Guard/StaffGuard/staff.guard';
 import { OrderComponent } from './tables/order/order/order.component';
-import { ManageComponent } from './manage/manage.component';
 import { LoadManageGuard } from './Guard/LoadManage/load-manage.guard';
 import { BaristaComponent } from './barista/barista.component';
 import { RoleGuard } from './Guard/RoleGuard/role.guard';

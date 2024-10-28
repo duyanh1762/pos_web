@@ -49,6 +49,8 @@ export class SpendFormComponent implements OnInit {
           alert("Đã có lỗi xảy ra , tạo mới thất bại !");
         }else{
           alert("Tạo phiếu chi thành công !");
+          let dateTranform = res.date.split(" ")[0].split("-")[2] + "-" + res.date.split(" ")[0].split("-")[1] + "-" + res.date.split(" ")[0].split("-")[0] + " " + res.date.split(" ")[1];
+          res.date = dateTranform;
           this.bsRef.hide();
           this.response.emit(res);
         }

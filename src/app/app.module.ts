@@ -52,7 +52,7 @@ import { PurchaseInforComponent } from './tables/purchase-infor/purchase-infor.c
     ModalModule.forRoot(),
     ManageModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [AuthGuard,LoginGuard,ApiService,StaffGuard,LoadManageGuard,RoleGuard],
   bootstrap: [AppComponent]

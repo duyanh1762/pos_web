@@ -102,6 +102,7 @@ export class IncomeComponent implements OnInit {
   deleteSpend(s:Spend){
     if(confirm("Bạn chắc chắn muốn xoá phiếu này ?")){
       s.status = "Not_Active";
+      s.date = s.date.split(" ")[0].split("-")[2] + "-" + s.date.split(" ")[0].split("-")[1] + "-" + s.date.split(" ")[0].split("-")[0] + " " + s.date.split(" ")[1];
       let request:DataRequest = {
         mode:"update",
         data:s

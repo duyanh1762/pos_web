@@ -233,4 +233,8 @@ export class SaleComponent implements OnInit {
       this.sortType = "up";
     }
   }
+  getDate():string{
+    let arrDate = this.api.getCurrentDate().split("-");
+    return arrDate[2]+"-"+arrDate[1]+"-"+arrDate[0];
+  }
 }
