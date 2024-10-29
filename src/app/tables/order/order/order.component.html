@@ -23,7 +23,7 @@
     </div>
     <div class="menu-choose">
       <div class="search">
-        <input type="text" placeholder="Tìm món..." />
+        <input #searchInput type="text" (keyup)="searchItem()" placeholder="Tìm món..." />
       </div>
       <div class="drinks">
         <div

@@ -7,6 +7,7 @@ import { Item } from 'src/app/Models/item';
 import { Shop } from 'src/app/Models/shop';
 import { Staff } from 'src/app/Models/staff';
 import { ApiService } from 'src/app/Service/api.service';
+
 interface BillInfor {
   id: number;
   date: string;
@@ -29,6 +30,7 @@ interface DetailItem{
   status:string, // value: isCount | notCount
   percent:number,
 }
+
 @Component({
   selector: 'app-report-bill',
   templateUrl: './report-bill.component.html',

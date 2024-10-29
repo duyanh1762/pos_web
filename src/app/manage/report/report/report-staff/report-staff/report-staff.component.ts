@@ -5,8 +5,6 @@ import { Item } from 'src/app/Models/item';
 import { Shop } from 'src/app/Models/shop';
 import { Staff } from 'src/app/Models/staff';
 import { ApiService } from 'src/app/Service/api.service';
-import * as XLSX from 'xlsx';
-import * as FileSaver from 'file-saver';
 
 interface StaffInfor {
   id: number;
@@ -95,7 +93,7 @@ export class ReportStaffComponent implements OnInit {
     this.bills.forEach((b: Bill) => {
       let billDate = new Date(b.date);
       if (this.startDate != null && this.endDate != null) {
-        if (billDate >= this.startDate && billDate <= this.endDate) {
+        if (billDate >= this.startDate && billDate <= this.endDate && b.status === "pay") {
           this.export = true;
           this.staffs.forEach(async (si: StaffInfor) => {
             if (si.id === b.staffID) {

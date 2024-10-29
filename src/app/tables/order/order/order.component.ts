@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DataRequest } from 'src/app/Interface/data_request';
 import { BillDetail } from 'src/app/Models/bill_detail';
 import { Item } from 'src/app/Models/item';
@@ -45,6 +45,7 @@ interface ItemOrder{
   styleUrls: ['./order.component.css'],
 })
 export class OrderComponent implements OnInit{
+  @ViewChild("searchInput",{read:ElementRef,static:true}) searchInput:ElementRef;
 
   public shop: Shop;
   public staff: Staff;
@@ -404,26 +405,12 @@ export class OrderComponent implements OnInit{
         this.menu.push(i);
       }
     });
-    this.cart.forEach((ci: CartItem) => {
-      this.menu.forEach((i: mItem) => {
-        if (ci.itemID === i.id && ci.num > 0) {
-          i.status = "order";
-        }
-      });
-    });
   }
 
   getAllMenu() {
     this.menu = [];
     this.menuLU.forEach((i:mItem)=>{
       this.menu.push(i);
-    });
-    this.cart.forEach((ci: CartItem) => {
-      this.menu.forEach((i: mItem) => {
-        if (ci.itemID === i.id && ci.num > 0) {
-          i.status = "order";
-        }
-      });
     });
   }
 
@@ -438,5 +425,18 @@ export class OrderComponent implements OnInit{
         }
       });
     });
+  }
+  searchItem(){
+    let searchValue:string = this.searchInput.nativeElement.value;
+    this.menu = [];
+    if(searchValue.length <= 0){
+      this.getAllMenu();
+    }else{
+      this.menuLU.forEach((i:mItem)=>{
+        if(this.api.removeAccents(i.name.toLowerCase()).indexOf(this.api.removeAccents(searchValue.toLowerCase())) != -1){
+          this.menu.push(i);
+        }
+      });
+    }
   }
 }

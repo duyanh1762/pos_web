@@ -170,4 +170,7 @@ export class ApiService {
   onOrderUpdate(callback: (data: any) => void) {
     this.socket.on('orderUpdate', callback); // Lắng nghe các cập nhật từ server
   }
+  removeAccents(str: string):string {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
 }
