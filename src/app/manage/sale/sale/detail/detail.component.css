@@ -26,7 +26,7 @@
   height: 60px;
   justify-content: space-between;
   box-sizing: border-box;
-  padding: 5px;
+  padding: 10px 0px 10px 0px;
   background-color:white;
   border-top:grey solid 1px;
 
@@ -60,11 +60,11 @@
   font-weight: 700;
   font-size: medium;
   color: #4dac61;
-  font-style:italic
+  /* font-style:italic */
 }
 .money{
   font-weight: 700;
-  font-style: italic;
+  /* font-style: italic; */
 }
 .menu-title,.menu-all{
   width:100%;
