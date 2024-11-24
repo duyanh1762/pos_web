@@ -1,0 +1,1 @@
+Storages_use : ["login-status","staff-infor","shop-infor","order_item"]
