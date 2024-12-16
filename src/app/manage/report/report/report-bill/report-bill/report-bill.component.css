@@ -296,6 +296,13 @@ thead .col1:hover,thead .col2:hover,thead .col3:hover,thead .cl2:hover,thead .cl
   cursor: pointer;
   color: gray;
 }
+.col6 button {
+  background-color:#4dac61;
+  color: white;
+}
+.col6 button:hover {
+  background-color: green;
+}
 /* Responsive Styling */
 @media (max-width: 600px) {
   .time-content {

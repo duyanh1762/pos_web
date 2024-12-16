@@ -221,6 +221,13 @@ select::after {
 select::-ms-expand {
   display: none;
 }
+.col6 button{
+  background-color: #4dac61;
+  color: white;
+}
+.col6 button:hover{
+  background-color: green;
+}
 @media (max-width: 600px) {
   .grid {
     flex-direction: column;

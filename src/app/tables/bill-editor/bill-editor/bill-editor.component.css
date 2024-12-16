@@ -89,15 +89,15 @@
   text-align: center;
 }
 .confirm button{
-  background-color: white;
+  background-color: #4dac61;
   border: #4dac61 solid 1px ;
   width: 80%;
   height: 30px;
   border-radius:4px;
   margin-top: 10px;
+  color: white;
 }
 .confirm button:hover{
   cursor: pointer;
-  background-color: #4dac61;
-  color: white;
+  background-color:green;
 }

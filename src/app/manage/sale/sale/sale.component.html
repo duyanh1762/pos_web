@@ -79,7 +79,7 @@
       <p><span class="right">{{ tableNum }}</span></p>
     </div>
     <div class="card">
-      <h3>LỊCH SỬ HOÁ ĐƠN NGÀY 19-07-2024</h3>
+      <h3>LỊCH SỬ HOÁ ĐƠN NGÀY {{ getDate() }}</h3>
       <div class="filter">
         <label for="status">Trạng thái:</label>
         <select  id="status" #selectStatus (change)="filter()">
@@ -109,12 +109,6 @@
             </tr>
           </thead>
           <tbody >
-            <!-- <tr *ngFor="let bill of bills">
-                  <td>97HC{{ bill.id }}</td>
-                  <td>{{ bill.time }}</td>
-                  <td>{{ bill.total }} VND</td>
-                  <td>{{ bill.staff }}</td>
-              </tr> -->
             <tr *ngFor="let b of billsLU">
               <td class="col1">{{ b.table }}</td>
               <td class="col2">{{ b.date}}</td>

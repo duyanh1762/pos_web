@@ -88,18 +88,18 @@
   text-align: center;
 }
 .qr-scan button{
-  background-color: white;
+  background-color: #4dac61;
   border: #4dac61 solid 1px ;
   width: 80%;
   height: 30px;
   border-radius:4px;
   margin-top: 10px;
   outline: none;
+  color: white;
 }
 .qr-scan button:hover{
   cursor: pointer;
-  background-color: #4dac61;
-  color: white;
+  background-color:green;
 }
 .qr-scan img{
   width: 300px;

@@ -26,6 +26,7 @@
 /* Form */
 .form-container {
   margin-bottom: 30px;
+  align-items: center;
 }
 
 .form-input {
@@ -47,7 +48,7 @@
 }
 
 button[type="submit"] {
-  background-color:#f39c12;
+  background-color:#4dac61;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -57,7 +58,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #e67e22;
+  background-color: green;
 }
 
 /* Item List */
@@ -91,7 +92,9 @@ button[type="submit"]:hover {
   color: #007bff;
   font-weight: bold;
 }
-
+.form-confirm{
+  text-align: center;
+}
 /* Responsive Layout */
 @media (max-width: 768px) {
   .item-container .item {

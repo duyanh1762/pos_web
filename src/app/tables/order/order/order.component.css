@@ -20,12 +20,15 @@ button {
   width: 26%;
   height: 96%;
   margin: 3% 0 0 3%;
+  overflow-y: auto;
+
 }
 .menu-choose {
   width: 36%;
   height: 96%;
   margin: 3%;
   margin-bottom: 0;
+  overflow-y: auto;
 }
 .menu-choose .search {
   width: 100%;
@@ -84,11 +87,12 @@ input {
   height: 30px;
   border: #4dac61 solid 1px;
   border-radius: 4px;
-  background-color: white;
+  background-color: #4dac61;
   margin-top: 5px;
+  color: white;
 }
 .drinks > div button:hover {
-  background-color: #4dac61;
+  background-color: green;
   cursor: pointer;
   color: white;
 }
@@ -186,15 +190,16 @@ input {
   padding-top: 20px;
 }
 .confirm button {
-  background-color: white;
+  background-color: #4dac61;
   border: #4dac61 solid 1px;
   width: 80%;
   height: 40px;
   border-radius: 8px;
+  color: white;
 }
 .confirm button:hover {
   cursor: pointer;
-  background-color: #4dac61;
+  background-color: green;
   color: white;
 }
 .fake-class {
@@ -281,7 +286,7 @@ input {
   height: calc(100vh - 70px);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
-.list-drinks-ipad {
+.list-drinks-mobile {
   display: none;
 }
 @media only screen and (max-width: 739px) {
@@ -328,7 +333,7 @@ input {
   .drinks > div {
     height: 100px;
   }
-  .list-drinks-ipad {
+  .list-drinks-mobile {
     background-color: white;
     box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
     width: 94%;
@@ -338,18 +343,18 @@ input {
     display: block;
     overflow-x: auto;
   }
-  .list-drinks-ipad .menu-title-ipad {
+  .list-drinks-mobile .menu-title-mobile {
     display: flex;
     justify-content: space-around;
     font-size: 12px;
     box-sizing: border-box;
     padding-top: 10px;
   }
-  .list-drinks-ipad .menu-title-ipad > div {
+  .list-drinks-mobile .menu-title-mobile > div {
     box-sizing: border-box;
     text-align: center;
   }
-  .list-drinks-ipad .menu-title-ipad > div:hover {
+  .list-drinks-mobile .menu-title-mobile > div:hover {
     cursor: pointer;
     color: #4dac61;
     text-decoration: underline;
@@ -370,7 +375,7 @@ input {
   .containers .list-drinks {
     display: none;
   }
-  .list-drinks-ipad {
+  .list-drinks-mobile {
     background-color: white;
     box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
     width: 94%;
@@ -380,18 +385,18 @@ input {
     display: block;
     overflow-x: auto;
   }
-  .list-drinks-ipad .menu-title-ipad {
+  .list-drinks-mobile .menu-title-mobile {
     display: flex;
     justify-content: space-around;
     font-size: 12px;
     box-sizing: border-box;
     padding-top: 10px;
   }
-  .list-drinks-ipad .menu-title-ipad > div {
+  .list-drinks-mobile .menu-title-mobile > div {
     box-sizing: border-box;
     text-align: center;
   }
-  .list-drinks-ipad .menu-title-ipad > div:hover {
+  .list-drinks-mobile .menu-title-mobile > div:hover {
     cursor: pointer;
     color: #4dac61;
     text-decoration: underline;

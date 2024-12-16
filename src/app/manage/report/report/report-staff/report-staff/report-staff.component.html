@@ -42,21 +42,19 @@
         <thead>
           <tr>
             <th>Tên </th>
-            <th>Bán điểm <sup>(1)</sup></th>
-            <th>Hóa đơn <sup>(2)</sup></th>
-            <th>Tổng <sup>(1)+(2)</sup></th>
+            <!-- <th>Bán điểm <sup>(1)</sup></th> -->
+            <th>Hóa đơn </th>
+            <th>Tổng </th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let s of staffs">
             <td class="cashier-name">{{ s.name }}</td>
-            <td class="sale-point">0đ</td>
             <td class="invoice">{{ s.total | moneyTransform }}đ</td>
             <td class="total">{{ s.total | moneyTransform }}đ</td>
           </tr>
           <tr>
             <td class="cashier-name">Tổng</td>
-            <td class="sale-point">0đ</td>
             <td class="invoice">{{ renuvalue | moneyTransform }}đ</td>
             <td class="total">{{ renuvalue | moneyTransform }}đ</td>
           </tr>
