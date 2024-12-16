@@ -7,6 +7,7 @@ import { Item } from '../Models/item';
 import * as xlsx from 'xlsx';
 import * as fs from 'file-saver';
 import { io } from 'socket.io-client';
+import { Staff } from '../Models/staff';
 @Injectable({
   providedIn: 'root',
 })
@@ -31,13 +32,13 @@ export class ApiService {
   public item(request: DataRequest) {
     return this.http.post(this.server + 'item', request);
   }
-  public group(request: DataRequest){
+  public group(request: DataRequest) {
     return this.http.post(this.server + 'group', request);
   }
-  public spend(request:any){
-    return this.http.post(this.server + 'spend',request);
+  public spend(request: any) {
+    return this.http.post(this.server + 'spend', request);
   }
-  public getQr(request:any){
+  public getQr(request: any) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
@@ -46,7 +47,9 @@ export class ApiService {
       responseType: 'text' as 'json',
     };
     // return this.http.post(this.server + 'qr', request , options); // gui request co kieu du lieu la application/json , nhan response co kieu du lieu text
-    return this.http.post(this.server + 'qr/get', request , {responseType:'text'});
+    return this.http.post(this.server + 'qr/get', request, {
+      responseType: 'text',
+    });
   }
   getCurrentDate(): string {
     const date = new Date();
@@ -75,7 +78,7 @@ export class ApiService {
 
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
-  dateTransform(dateTime:string){
+  dateTransform(dateTime: string) {
     const date = new Date(dateTime);
 
     const day = date.getDate().toString().padStart(2, '0');
@@ -91,7 +94,7 @@ export class ApiService {
     return `${formattedDate} ${formattedTime}`;
   }
 
-  async getNameItem(id: number):Promise<string> {
+  async getNameItem(id: number): Promise<string> {
     let request: DataRequest = {
       mode: 'get',
       data: '',
@@ -108,7 +111,7 @@ export class ApiService {
       });
     return name;
   }
-  async getPriceItem(id: number):Promise<number> {
+  async getPriceItem(id: number): Promise<number> {
     let request: DataRequest = {
       mode: 'get',
       data: '',
@@ -125,15 +128,42 @@ export class ApiService {
       });
     return price;
   }
-  exportExcel(fileName:string,dataE:Array<any>,sheetName:string) {
+
+  async getStaffName(idS: number): Promise<string> {
+    let name: string = '';
+    let request: DataRequest = {
+      mode: 'get',
+      data: '',
+    };
+    await this.staff(request)
+      .toPromise()
+      .then((res: any) => {
+        res.forEach((s: Staff) => {
+          if (s.id === idS) {
+            name = s.name;
+          }
+        });
+      });
+    return name;
+  }
+
+  exportExcel(fileName: string, dataE: Array<any>, sheetName: string) {
     const worksheet: xlsx.WorkSheet = xlsx.utils.json_to_sheet(dataE);
-    const workbook: xlsx.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: [sheetName] };
-    const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-    this.saveAsExcelFile(excelBuffer,fileName);
+    const workbook: xlsx.WorkBook = {
+      Sheets: { data: worksheet },
+      SheetNames: [sheetName],
+    };
+    const excelBuffer: any = xlsx.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+    this.saveAsExcelFile(excelBuffer, fileName);
   }
 
   private saveAsExcelFile(buffer: any, fileName: string): void {
-    const data: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const data: Blob = new Blob([buffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
     fs.saveAs(data, fileName + '_export_' + new Date().getTime() + '.xlsx');
   }
 
@@ -170,7 +200,7 @@ export class ApiService {
   onOrderUpdate(callback: (data: any) => void) {
     this.socket.on('orderUpdate', callback); // Lắng nghe các cập nhật từ server
   }
-  removeAccents(str: string):string {
+  removeAccents(str: string): string {
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   }
 }

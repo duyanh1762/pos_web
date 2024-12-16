@@ -73,7 +73,9 @@
             </table>
           </div>
         </div>
-
+        <div class="export">
+          <button *ngIf="export === true" (click)="exporSpendtReport()">Xuất mục chi</button>
+        </div>
         <div class="total">
           <span style="font-weight: 600;">Tổng kết (1) - (2)</span>
           <span style="color: #28a745 ;" class="amount" *ngIf="(revenue - spend) > 0">+{{ (revenue - spend) | moneyTransform }}đ</span>
@@ -81,9 +83,6 @@
           <span  class="amount" *ngIf="(revenue - spend) === 0">{{ (revenue - spend) | moneyTransform }}đ</span>
         </div>
       </div>
-    </div>
-    <div class="export">
-      <button *ngIf="export === true" >Xuất báo cáo</button>
     </div>
   </div>
 </div>

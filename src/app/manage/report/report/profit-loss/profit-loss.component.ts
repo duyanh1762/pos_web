@@ -6,6 +6,7 @@ import { BillDetail } from 'src/app/Models/bill_detail';
 import { Item } from 'src/app/Models/item';
 import { Shop } from 'src/app/Models/shop';
 import { Spend } from 'src/app/Models/spend';
+import { Staff } from 'src/app/Models/staff';
 import { ApiService } from 'src/app/Service/api.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class ProfitLossComponent implements OnInit {
   startDate:Date | null = null;
   endDate:Date | null = null;
   shop:Shop;
+  staff:Staff;
   revenue:number = 0;
   spend:number = 0;
   listSpend:Array<Spend> = [];
@@ -37,6 +39,7 @@ export class ProfitLossComponent implements OnInit {
       this.items = res;
     });
     this.shop = JSON.parse(localStorage.getItem("shop-infor") || "{}");
+    this.staff = JSON.parse(localStorage.getItem("staff-infor") || "{}");
   }
   onStartDateChange(event: any): void {
     if (event) {
@@ -87,9 +90,27 @@ export class ProfitLossComponent implements OnInit {
           }
         });
       });
+      if(this.listSpend.length > 0){
+        this.export = true;
+      }
     }else{
       alert("Hãy chọn khoảng thời gian bạn muốn xem báo cáo !")
     }
   }
-
+  exporSpendtReport(){
+    let start:string = this.api.dateTransform(this.startDate?.toString() || " ").split(" ")[0];
+    let end:string = this.api.dateTransform(this.endDate?.toString() || " ").split(" ")[0];
+    let nameFile : string  = "bao_cao_danh_muc_chi_"+start+"_"+end;
+    let exportSpend:Array<any> = this.listSpend.map((sp:Spend)=>{
+      return {
+        "Mã danh mục":sp.id,
+        "Ngày":sp.date.split(" ")[0],
+        "Thời gian":sp.date.split(" ")[1],
+        "Cửa hàng":this.shop.address,
+        "Mô tả":sp.des,
+        "Chi phí":sp.total.toString() + "đ",
+      }
+    });
+    this.api.exportExcel(nameFile,exportSpend,"data");
+  }
 }
