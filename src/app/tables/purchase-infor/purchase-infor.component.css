@@ -105,3 +105,7 @@
   width: 300px;
   height: 300px;
 }
+.note-i{
+  font-style: italic;
+  font-size: 12px;
+}

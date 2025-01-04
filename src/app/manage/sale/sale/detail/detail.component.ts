@@ -9,6 +9,7 @@ interface DetailInfor {
   policyID: number;
   price: number;
   name: string;
+  note:string,
   total: number;
 }
 @Component({

@@ -54,6 +54,8 @@
             <div class="name-note">
               <div class="id-i" style="display: none"></div>
               <div class="name-i">{{ i.name }}</div>
+              <div class="note-i" *ngIf="i.note.length === 0" (click)="addNote(i)">Ghi chú</div>
+              <div class="note-i" *ngIf="i.note.length > 0" (click)="addNote(i)">{{ i.note }}</div>
             </div>
             <div class="more">
               <div class="less" (click)="minus(i)">

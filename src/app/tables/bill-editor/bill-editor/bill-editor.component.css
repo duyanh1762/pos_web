@@ -101,3 +101,7 @@
   cursor: pointer;
   background-color:green;
 }
+.note-i{
+  font-style: italic;
+  font-size: 12px;
+}

@@ -20,6 +20,7 @@ interface DetailInfor {
   price: number;
   name: string;
   total: number;
+  note:string,
   update: boolean;
 }
 interface ItemOrder{
@@ -29,6 +30,7 @@ interface ItemOrder{
   billID: number;
   name:string;
   table:string | undefined;
+  note:string,
   status:string; // confirm | not_confirm
 }
 
@@ -177,6 +179,7 @@ export class BillEditorComponent implements OnInit {
               itemID: d.itemID,
               num: d.num,
               billID: this.data.id,
+              note:d.note,
               name:d.name+" ( Huỷ)",
               table:this.data.table?.toString(),
               status:"not_confirm"
@@ -211,6 +214,7 @@ export class BillEditorComponent implements OnInit {
                   num: n,
                   billID: this.data.id,
                   name: d.name,
+                  note:d.note,
                   table: this.data.table?.toString(),
                   status: "not_confirm"
                 };
@@ -222,6 +226,7 @@ export class BillEditorComponent implements OnInit {
                   num: n,
                   billID: this.data.id,
                   name: d.name + " (Huỷ)",
+                  note:d.note,
                   table: this.data.table?.toString(),
                   status: "not_confirm"
                 };

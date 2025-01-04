@@ -8,7 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Bill } from 'src/app/Models/bill';
 import { Staff } from 'src/app/Models/staff';
 import { Group } from 'src/app/Models/group';
-import { Renderer2 } from '@angular/core';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { NoteEditComponent } from '../note-edit/note-edit.component';
 
 interface CartItem {
   id: number;
@@ -17,6 +18,7 @@ interface CartItem {
   billID: number;
   policyID: number;
   name: string;
+  note:string
   price: number;
 }
 
@@ -36,6 +38,7 @@ interface ItemOrder{
   billID: number;
   name:string;
   table:string | undefined;
+  note:string;
   status:string; // confirm | not_confirm
 }
 
@@ -64,7 +67,7 @@ export class OrderComponent implements OnInit{
     private api: ApiService,
     private activeRoute: ActivatedRoute,
     private router: Router,
-    private renderer: Renderer2
+    private bs:BsModalService,
   ) {}
 
   ngOnInit(): void {
@@ -124,13 +127,14 @@ export class OrderComponent implements OnInit{
                   await this.api.getPriceItem(detail.itemID).then((data) => {
                     price = data;
                   });
-                  let cartItem = {
+                  let cartItem:CartItem = {
                     id: detail.id,
                     itemID: detail.itemID,
                     num: detail.num,
                     billID: detail.billID,
                     policyID: this.shop.policyID,
                     name: name,
+                    note:detail.note,
                     price: price,
                   };
                   this.menu.forEach((i:mItem)=>{
@@ -152,7 +156,6 @@ export class OrderComponent implements OnInit{
   }
 
   addCart(item: mItem) {
-    let shop: Shop = JSON.parse(localStorage.getItem('shop-infor') || '{}');
     this.menuLU.forEach((iLU: mItem) => {
       if (item.id === iLU.id) {
         iLU.status = "order";
@@ -173,6 +176,7 @@ export class OrderComponent implements OnInit{
       billID: 1,
       policyID: this.shop.policyID,
       name: item.name,
+      note:"",
       price: item.price,
     };
     for (let i = 0; i < this.cart.length; i++) {
@@ -213,6 +217,7 @@ export class OrderComponent implements OnInit{
       if (i.itemID === item.itemID) {
         if (i.num <= 1) {
           i.num = 0;
+          i.note = "";
           this.changeStatus(item,"not_order");
         } else {
           i.num = i.num - 1;
@@ -227,6 +232,7 @@ export class OrderComponent implements OnInit{
       i as CartItem;
       if (item.itemID === i.itemID) {
         i.num = 0;
+        i.note = "";
         this.changeStatus(item,"not_order");
       }
     });
@@ -265,6 +271,7 @@ export class OrderComponent implements OnInit{
                   itemID: i.itemID,
                   num: i.num,
                   billID: response.id,
+                  note:i.note,
                   policyID: this.shop.policyID,
                 };
                 this.api
@@ -277,6 +284,7 @@ export class OrderComponent implements OnInit{
                       billID: response.id,
                       name:i.name,
                       table:response.table,
+                      note:i.note,
                       status:"not_confirm"
                     };
                     this.api.sendOrder(newOrder);
@@ -308,6 +316,7 @@ export class OrderComponent implements OnInit{
             num: i.num,
             billID: this.tableData.id,
             name:i.name + " (Huỷ)",
+            note:i.note,
             table:this.tableData.table?.toString(),
             status:"not_confirm"
           };
@@ -322,6 +331,7 @@ export class OrderComponent implements OnInit{
               id: 0,
               itemID: i.itemID,
               num: i.num,
+              note:i.note,
               billID: this.tableData.id,
               policyID: i.policyID,
             };
@@ -334,6 +344,7 @@ export class OrderComponent implements OnInit{
                   num: i.num,
                   billID: this.tableData.id,
                   name:i.name,
+                  note:i.note,
                   table:this.tableData.table?.toString(),
                   status:"not_confirm"
                 };
@@ -347,6 +358,7 @@ export class OrderComponent implements OnInit{
               itemID: i.itemID,
               num: i.num,
               billID: i.billID,
+              note:i.note,
               policyID: i.policyID,
             };
             this.api
@@ -358,6 +370,7 @@ export class OrderComponent implements OnInit{
               itemID: i.itemID,
               num: i.num,
               billID: i.billID,
+              note:i.note,
               policyID: i.policyID,
             };
             this.api
@@ -374,6 +387,7 @@ export class OrderComponent implements OnInit{
                   num: n,
                   billID: this.tableData.id,
                   name:i.name,
+                  note:i.note,
                   table:this.tableData.table?.toString(),
                   status:"not_confirm"
                 };
@@ -385,6 +399,7 @@ export class OrderComponent implements OnInit{
                   num: n,
                   billID: this.tableData.id,
                   name:i.name + " (Huỷ)",
+                  note:i.note,
                   table:this.tableData.table?.toString(),
                   status:"not_confirm"
                 };
@@ -440,5 +455,19 @@ export class OrderComponent implements OnInit{
         }
       });
     }
+  }
+
+  addNote(ci:CartItem){
+    this.bs.show(NoteEditComponent,{
+      initialState:{
+        data:ci
+      }
+    }).content?.noteEvent.subscribe((res:any)=>{
+      this.cart.forEach((i:CartItem)=>{
+        if(i.itemID === ci.itemID){
+          i.note = res;
+        }
+      });
+    });
   }
 }

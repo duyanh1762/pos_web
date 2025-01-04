@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="header-container" >
+    Ghi chú
+  </div>
+  <div class="form-container">
+    <form #form="ngForm" (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-input">
+        <input
+          name="note"
+          id="note"
+          placeholder="Nhập..."
+          [(ngModel)]="note"
+          required
+        />
+      </div>
+      <div class="submit">
+        <button type="submit" [disabled]="form.invalid">Xác nhận</button>
+      </div>
+    </form>
+  </div>
+</div>

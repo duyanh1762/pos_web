@@ -3,5 +3,6 @@ export class BillDetail{
   itemID: number;
   num: number;
   billID:number;
+  note:string
   policyID:number;
 }

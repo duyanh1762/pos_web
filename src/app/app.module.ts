@@ -28,6 +28,7 @@ import { LongClickDirective } from './Directives/long-click.directive';
 import { BaristaComponent } from './barista/barista.component';
 import { RoleGuard } from './Guard/RoleGuard/role.guard';
 import { PurchaseInforComponent } from './tables/purchase-infor/purchase-infor.component';
+import { NoteEditComponent } from './tables/order/note-edit/note-edit.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { PurchaseInforComponent } from './tables/purchase-infor/purchase-infor.c
     LongClickDirective,
     BaristaComponent,
     PurchaseInforComponent,
+    NoteEditComponent,
   ],
   imports: [
     BrowserModule,

@@ -83,4 +83,8 @@
   text-decoration: underline;
   cursor: pointer;
 }
+.note-i{
+  font-style: italic;
+  font-size: 12px;
+}
 

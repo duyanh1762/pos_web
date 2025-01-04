@@ -24,6 +24,7 @@ interface DetailInfor {
   price: number;
   name: string;
   total: number;
+  note:string,
   update: boolean;
 }
 
