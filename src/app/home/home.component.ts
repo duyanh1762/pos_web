@@ -24,6 +24,8 @@ export class HomeComponent implements OnInit {
   public logout(){
     localStorage.removeItem("login-status");
     localStorage.removeItem("shop-infor");
+    localStorage.removeItem("staff-infor");
+    localStorage.removeItem("order_item");
     this.router.navigate(["/login"]);
   }
 

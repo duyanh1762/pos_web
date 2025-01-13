@@ -93,7 +93,11 @@
 .item {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 8px;
+  /* margin-bottom: 8px; */
+}
+.note{
+  font-size: 12px;
+  font-style: italic;
 }
 @media (max-width: 768px) {
   .order-cards {

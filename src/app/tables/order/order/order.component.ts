@@ -36,6 +36,7 @@ interface ItemOrder{
   itemID:number;
   num: number,
   billID: number;
+  shopID:number,
   name:string;
   table:string | undefined;
   note:string;
@@ -283,6 +284,7 @@ export class OrderComponent implements OnInit{
                       num: i.num,
                       billID: response.id,
                       name:i.name,
+                      shopID:this.shop.id,
                       table:response.table,
                       note:i.note,
                       status:"not_confirm"
@@ -317,6 +319,7 @@ export class OrderComponent implements OnInit{
             billID: this.tableData.id,
             name:i.name + " (Huỷ)",
             note:i.note,
+            shopID:this.shop.id,
             table:this.tableData.table?.toString(),
             status:"not_confirm"
           };
@@ -345,6 +348,7 @@ export class OrderComponent implements OnInit{
                   billID: this.tableData.id,
                   name:i.name,
                   note:i.note,
+                  shopID:this.shop.id,
                   table:this.tableData.table?.toString(),
                   status:"not_confirm"
                 };
@@ -388,6 +392,7 @@ export class OrderComponent implements OnInit{
                   billID: this.tableData.id,
                   name:i.name,
                   note:i.note,
+                  shopID:this.shop.id,
                   table:this.tableData.table?.toString(),
                   status:"not_confirm"
                 };
@@ -400,6 +405,7 @@ export class OrderComponent implements OnInit{
                   billID: this.tableData.id,
                   name:i.name + " (Huỷ)",
                   note:i.note,
+                  shopID:this.shop.id,
                   table:this.tableData.table?.toString(),
                   status:"not_confirm"
                 };

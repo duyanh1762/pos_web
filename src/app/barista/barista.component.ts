@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../Service/api.service';
-interface ItemOrder{
-  id: number,
-  itemID:number,
-  num: number,
-  billID: number,
-  name:string,
-  table:string,
-  status:string; // confirm | not_confirm
+interface ItemOrder {
+  id: number;
+  itemID: number;
+  num: number;
+  billID: number;
+  name: string;
+  table: string;
+  shopID: number;
+  note: string;
+  status: string; // confirm | not_confirm
 }
 @Component({
   selector: 'app-barista',
@@ -16,8 +18,8 @@ interface ItemOrder{
 })
 export class BaristaComponent implements OnInit {
   ws: WebSocket;
-  itemsOrder:Array<ItemOrder> = [];
-  itemsOrderLU : Array<ItemOrder> = [];
+  itemsOrder: Array<ItemOrder> = [];
+  itemsOrderLU: Array<ItemOrder> = [];
 
   constructor(private api: ApiService) {}
 
@@ -25,23 +27,51 @@ export class BaristaComponent implements OnInit {
     this.loadWS();
   }
 
-  loadWS(){
-    if(localStorage.getItem("order_item")){
-      this.itemsOrderLU = JSON.parse(localStorage.getItem("order_item") || "[]");
-      this.api.onOrderUpdate((data:ItemOrder)=>{
-        this.itemsOrderLU.push(data);
-        localStorage.setItem("order_item",JSON.stringify(this.itemsOrderLU));
-        this.itemsOrder = this.itemsOrderLU.filter((i:ItemOrder)=>{
-          return i.status === "not_confirm";
-        });
+  loadWS() {
+    let shopID: number = JSON.parse(
+      localStorage.getItem('shop-infor') || '{}'
+    ).id;
+    if (localStorage.getItem('order_item')) {
+      this.itemsOrderLU = JSON.parse(
+        localStorage.getItem('order_item') || '[]'
+      );
+      this.api.onOrderUpdate((data: ItemOrder) => {
+        let checked: boolean = true;
+        if (data.shopID === shopID) {
+          this.itemsOrderLU.forEach((i: ItemOrder) => {
+            if (i.id === data.id && i.name != data.name && i.status ==="not_confirm") {
+              let index: number = this.itemsOrderLU.indexOf(i);
+              let newNum: number = i.num - Math.abs(data.num);
+              if (newNum <= 0) {
+                this.itemsOrderLU[index].name = data.name;
+                checked = false;
+              } else {
+                this.itemsOrderLU[index].num = newNum;
+                checked = false;
+              }
+            } else if (i.id === data.id && i.name === data.name && i.status ==="not_confirm") {
+              let index: number = this.itemsOrderLU.indexOf(i);
+              let newNum: number = i.num + data.num;
+              this.itemsOrderLU[index].num = newNum;
+              checked = false;
+            }
+          });
+          if (checked === true) {
+            this.itemsOrderLU.push(data);
+          }
+          localStorage.setItem('order_item', JSON.stringify(this.itemsOrderLU));
+          this.itemsOrder = this.itemsOrderLU.filter((i: ItemOrder) => {
+            return i.status === 'not_confirm';
+          });
+        }
       });
-    }else{
-      localStorage.setItem("order_item",JSON.stringify([]));
+    } else {
+      localStorage.setItem('order_item', JSON.stringify([]));
     }
   }
 
-  testWS(){
-   // Kết nối WebSocket
+  testWS() {
+    // Kết nối WebSocket
     this.ws = new WebSocket('ws://localhost:56001');
 
     // Lắng nghe tin nhắn từ server (đơn hàng từ thu ngân)
@@ -76,27 +106,26 @@ export class BaristaComponent implements OnInit {
     };
   }
 
-  confirm(item:ItemOrder){
-    this.itemsOrderLU.forEach((i:ItemOrder)=>{
-      if(item.id === i.id){
-        i.status = "confirm";
+  confirm(item: ItemOrder) {
+    this.itemsOrderLU.forEach((i: ItemOrder) => {
+      if (item.id === i.id) {
+        i.status = 'confirm';
       }
     });
-    localStorage.setItem("order_item",JSON.stringify(this.itemsOrderLU));
-    this.itemsOrder = this.itemsOrderLU.filter((i:ItemOrder)=>{
-      return i.status === "not_confirm";
+    localStorage.setItem('order_item', JSON.stringify(this.itemsOrderLU));
+    this.itemsOrder = this.itemsOrderLU.filter((i: ItemOrder) => {
+      return i.status === 'not_confirm';
     });
-    console.log(localStorage.getItem("order_item"))
   }
 
-  getItems(type:string){
+  getItems(type: string) {
     this.itemsOrder = [];
-    this.itemsOrder = this.itemsOrderLU.filter((item:ItemOrder)=>{
+    this.itemsOrder = this.itemsOrderLU.filter((item: ItemOrder) => {
       return item.status === type;
     });
   }
 
-  resetStorage(){
-    localStorage.removeItem("order_item");
+  resetStorage() {
+    localStorage.removeItem('order_item');
   }
 }
