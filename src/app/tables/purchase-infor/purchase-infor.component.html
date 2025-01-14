@@ -22,7 +22,7 @@
     <div class="bill-title">Tổng tiền:</div>
     <div class="money">{{ data.total| moneyTransform }}đ</div>
     <div class="qr-scan">
-      <img [src]="qrSource" >
+      <img [src]="vietQrURL" >
       <button (click)="close()">Xong</button>
     </div>
   </div>

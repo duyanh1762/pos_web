@@ -5,4 +5,6 @@ export class Shop {
   address: string;
   policyID:number;
   number_table:number;
+  bankID:string;
+  account_no:string;
 }

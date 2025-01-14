@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DateRange } from '@angular/material/datepicker';
 import { DataRequest } from 'src/app/Interface/data_request';
-import { Bill } from 'src/app/Models/bill';
 import { BillDetail } from 'src/app/Models/bill_detail';
 import { Item } from 'src/app/Models/item';
 import { Shop } from 'src/app/Models/shop';

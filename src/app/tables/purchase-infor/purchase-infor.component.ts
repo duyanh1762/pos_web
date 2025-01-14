@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { table } from 'console';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { Shop } from 'src/app/Models/shop';
 import { ApiService } from 'src/app/Service/api.service';
 
 interface BillInfor{
@@ -35,8 +36,9 @@ interface DetailInfor {
 })
 export class PurchaseInforComponent implements OnInit {
   @Input() data:BillInfor;
-
+  shop:Shop;
   qrSource:string;
+  vietQrURL:string;
 
   constructor(private api:ApiService,private bsRef:BsModalRef) { }
 
@@ -45,9 +47,11 @@ export class PurchaseInforComponent implements OnInit {
   }
 
   load(){
+    this.shop = JSON.parse(localStorage.getItem("shop-infor") || "{}");
     this.api.getQr({money:this.data.total,staff:this.data.staffID.toString(),table:this.data.table}).subscribe((res:any)=>{
       this.qrSource = res;
     });
+    this.vietQrURL=`https://img.vietqr.io/image/${this.shop.bankID}-${this.shop.account_no}-compact2.jpg?amount=${this.data.total}&addInfo=thanh%20toan%20ban%20${this.data.table}%20id%20${this.data.id}`;
   }
 
   close(){
