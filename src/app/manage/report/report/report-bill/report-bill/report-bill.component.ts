@@ -277,7 +277,7 @@ export class ReportBillComponent implements OnInit {
       let exportItems = this.detailItems.map((di:DetailItem)=>{
         return {
           "Mã món":di.itemID,
-          "Mã chính sách":di.policyID,
+          "Mã chính sách":this.shop.policyID,
           "Tên món":di.name,
           "Số lượng":di.num,
           "Tổng tiền":di.total.toString() + "đ",

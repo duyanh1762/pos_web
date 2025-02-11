@@ -24,7 +24,7 @@ interface CartItem {
 
 interface mItem {
   id: number;
-  policyID: number;
+  policyID: number[];
   name: string;
   price: number;
   groupID: number;
@@ -93,16 +93,19 @@ export class OrderComponent implements OnInit{
       .item(request)
       .toPromise()
       .then((items: any) => {
+        console.log(items);
         items.forEach((item: any) => {
           item as Item;
           let mItem: mItem = {
             ...item,
             status: 'not_order',
           };
-          if (mItem.policyID === this.shop.policyID) {
-            this.menu.push(mItem);
-            this.menuLU.push(mItem);
-          }
+          mItem.policyID.forEach((pID:number)=>{
+            if (pID === this.shop.policyID) {
+              this.menu.push(mItem);
+              this.menuLU.push(mItem);
+            }
+          });
         });
       });
     this.activeRoute.paramMap.subscribe((data) => {
