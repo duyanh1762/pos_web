@@ -67,6 +67,7 @@ export class BaristaComponent implements OnInit {
       });
     } else {
       localStorage.setItem('order_item', JSON.stringify([]));
+      this.loadWS();
     }
   }
 

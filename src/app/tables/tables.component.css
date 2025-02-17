@@ -23,7 +23,7 @@ body, html {
   border-radius: 6px;
 }
 .header input {
-  width: 80%;
+  width: 75%;
   height: 70%;
   text-align: center;
   outline: none;
@@ -33,6 +33,15 @@ body, html {
 }
 .header-btn {
   background-color: #f24920;
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  height: 70%;
+}
+.navigation-btn{
+  background-color: #76b852;
   border: none;
   padding: 10px 20px;
   color: white;
@@ -57,9 +66,10 @@ body, html {
   overflow: hidden;
   white-space: nowrap;
 }
-.header-text:hover{
+.header-text:hover, .navigation-btn:hover{
   cursor: pointer;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  background-color: #519f61;
 }
 .grid {
   display: flex;

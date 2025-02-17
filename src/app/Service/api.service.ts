@@ -12,6 +12,7 @@ import { Staff } from '../Models/staff';
   providedIn: 'root',
 })
 export class ApiService {
+  public nav_open:boolean = false;
   server: string = 'http://localhost:3000/';
   constructor(private http: HttpClient) {
     // this.connect();
@@ -191,14 +192,14 @@ export class ApiService {
   //   this.socket.send(data);
   // }
 
-  private socket = io('http://localhost:3000'); // URL của WebSocket server (NestJS)
+  private socket = io('http://localhost:3000');
 
   sendOrder(order: any) {
-    this.socket.emit('ws_order', order); // Gửi thông điệp lên server
+    this.socket.emit('ws_order', order);
   }
 
   onOrderUpdate(callback: (data: any) => void) {
-    this.socket.on('orderUpdate', callback); // Lắng nghe các cập nhật từ server
+    this.socket.on('orderUpdate', callback);
   }
   removeAccents(str: string): string {
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');

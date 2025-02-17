@@ -1,1 +1,22 @@
+<div #navigation  class="navigation" *ngIf="api.nav_open === true">
+  <div class="menu-header" (click)="closeNav()">
+    <i class="fa-solid fa-bars" title="Đóng"></i>
+  </div>
+  <div class="menu-section icon-green">
+    <i class="fa-solid fa-table" title="Bàn" (click)="navigateTo('/tables')"></i>
+  </div>
+  <div class="menu-section icon-green">
+    <i class="fa fa-coffee" title="Bán hàng" (click)="navigateTo('/manage/sale')"></i>
+  </div>
+  <div class="menu-section icon-orange">
+    <i class="fa-solid fa-dollar-sign" title="Thu chi" (click)="navigateTo('/manage/income')"></i>
+  </div>
+  <div class="menu-section icon-red" >
+    <i class="fa fa-archive" title="Hàng hoá"></i>
+  </div>
+  <div class="menu-section icon-blue">
+    <i class="fa fa-bar-chart" title="Báo cáo" (click)="navigateTo('/manage/report')"></i>
+  </div>
+</div>
+
 <router-outlet></router-outlet>

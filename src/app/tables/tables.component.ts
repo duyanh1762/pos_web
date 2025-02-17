@@ -95,4 +95,7 @@ export class TablesComponent implements OnInit {
       }
     });
   }
+  openNav(){
+    this.api.nav_open = true;
+  }
 }

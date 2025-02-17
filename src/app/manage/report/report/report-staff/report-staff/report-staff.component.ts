@@ -72,7 +72,7 @@ export class ReportStaffComponent implements OnInit {
       .toPromise()
       .then((res: any) => {
         res.forEach((s: Staff) => {
-          if (this.shop.id === s.shopID) {
+          if (this.shop.id === s.shopID && s.status === "Active") {
             let si = {
               id: s.id,
               shopID: s.shopID,

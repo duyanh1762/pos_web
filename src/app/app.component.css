@@ -1,0 +1,77 @@
+.navigation {
+  width: 80px;
+  height: 100vh;
+  background-color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-shadow: 1px 1px 7px 3px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  display: flex; /* Thay đổi: Dùng flexbox để sắp xếp các mục */
+  flex-direction: column; /* Xếp các phần tử theo chiều dọc */
+  align-items: center; /* Căn giữa nội dung theo chiều ngang */
+  padding-top: 20px; /* Khoảng cách từ trên xuống */
+  box-sizing: border-box;
+}
+
+.menu-header {
+  align-items: center;
+  width: 100%; /* Đảm bảo phần header chiếm đủ chiều ngang */
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e2e2;
+  box-sizing: border-box;
+  text-align: center; /* Căn giữa icon trong header */
+}
+
+.menu-header i {
+  font-size: 30px;
+  color:#519f61;
+}
+
+.menu-header:hover {
+  cursor: pointer;
+  color: green; /* Đổi màu khi hover */
+}
+
+.menu-section {
+  width: 60px;
+  height: 60px;
+  margin-top: 40px; /* Khoảng cách giữa các mục */
+  font-size: 30px; /* Kích thước biểu tượng */
+  text-align: center; /* Căn giữa icon */
+  transition: color 0.3s ease; /* Hiệu ứng khi hover */
+  background-color: #e5e5e5;
+  border-radius: 50%;
+}
+
+.menu-section:hover {
+  cursor: pointer;
+  background-color: #dfdfdf;
+  color: blue;
+}
+.menu-section i{
+  margin-top: 24%;
+}
+.icon-orange{
+  color: #ff9800;
+}
+.icon-red{
+  color: #f44336;
+}
+.icon-green{
+  color: #4caf50;
+}
+.icon-blue{
+  color: #2196f3;
+}
+/* Responsive cải thiện */
+@media (max-height: 600px) {
+  .navigation {
+    height: auto; /* Chiều cao tự điều chỉnh nếu màn hình quá nhỏ */
+  }
+
+  .menu-section {
+    margin-top: 10px; /* Giảm khoảng cách giữa các mục */
+  }
+}
+

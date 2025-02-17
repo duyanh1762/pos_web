@@ -12,18 +12,34 @@ import { BaristaComponent } from './barista/barista.component';
 import { RoleGuard } from './Guard/RoleGuard/role.guard';
 
 const routes: Routes = [
-  {path:"",component:HomeComponent,canActivate:[AuthGuard]},
-  {path:"login",component:LoginComponent,canActivate:[LoginGuard]},
-  {path:"tables",component:TablesComponent,canActivate:[AuthGuard,StaffGuard,RoleGuard]},
-  {path:"tables/order/:table",component:OrderComponent,canActivate:[AuthGuard,StaffGuard,RoleGuard]},
-  {path:"manage",loadChildren: ()=>import("./manage/manage.module").then((m)=> m.ManageModule),canLoad:[LoadManageGuard]},
-  {path:"barista",component:BaristaComponent,canActivate:[AuthGuard,StaffGuard]},
-  {path:"**",redirectTo:"",pathMatch:"full"},
-
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
+  {
+    path: 'tables',
+    component: TablesComponent,
+    canActivate: [AuthGuard, StaffGuard, RoleGuard],
+  },
+  {
+    path: 'tables/order/:table',
+    component: OrderComponent,
+    canActivate: [AuthGuard, StaffGuard, RoleGuard],
+  },
+  {
+    path: 'barista',
+    component: BaristaComponent,
+    canActivate: [AuthGuard, StaffGuard],
+  },
+  {
+    path: 'manage',
+    loadChildren: () =>
+      import('./manage/manage.module').then((m) => m.ManageModule),
+    canLoad: [LoadManageGuard],
+  },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
