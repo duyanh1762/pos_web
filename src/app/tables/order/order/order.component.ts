@@ -61,8 +61,7 @@ export class OrderComponent implements OnInit{
   public type: string = 'new';
   public tableData: Bill;
   public groups: Array<Group> = [];
-
-  // ws: WebSocket;
+  table:number;
 
   constructor(
     private api: ApiService,
@@ -110,6 +109,7 @@ export class OrderComponent implements OnInit{
       });
     this.activeRoute.paramMap.subscribe((data) => {
       let t = data.get('table');
+      this.table = Number(t);
       this.api.bill(request).subscribe((res: any) => {
         res.forEach((bill: Bill) => {
           if (
@@ -478,5 +478,8 @@ export class OrderComponent implements OnInit{
         }
       });
     });
+  }
+  back(){
+    this.router.navigate(["/tables"]);
   }
 }

@@ -14,6 +14,7 @@ import { Staff } from '../Models/staff';
 export class HomeComponent implements OnInit {
   public staffs:Array<any> = [];
   constructor(private router:Router , private api:ApiService,private bsService: BsModalService) {
+    this.api.nav_open = false;
   }
 
   ngOnInit(): void {

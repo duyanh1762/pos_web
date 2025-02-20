@@ -8,6 +8,7 @@ import * as xlsx from 'xlsx';
 import * as fs from 'file-saver';
 import { io } from 'socket.io-client';
 import { Staff } from '../Models/staff';
+import { IeBill } from '../Models/ie_bill';
 @Injectable({
   providedIn: 'root',
 })
@@ -39,6 +40,15 @@ export class ApiService {
   public spend(request: any) {
     return this.http.post(this.server + 'spend', request);
   }
+  public goods(request:DataRequest){
+    return this.http.post(this.server + "goods",request);
+  }
+  public ieBill(request:DataRequest){
+    return this.http.post(this.server + "ie-bill",request);
+  }
+  public ieDetail(request:DataRequest){
+    return this.http.post(this.server + "ie-detail",request);
+  }
   public getQr(request: any) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -62,9 +72,17 @@ export class ApiService {
   }
   billDate(bill: Bill): string {
     const date = new Date(bill.date);
-    const day = String(date.getUTCDate()).padStart(2, '0');
-    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-    const year = date.getUTCFullYear();
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+
+    return `${year}-${month}-${day}`;
+  }
+  ieDate(ie: IeBill): string {
+    const date = new Date(ie.createAt);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
 
     return `${year}-${month}-${day}`;
   }

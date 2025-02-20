@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   constructor(public api:ApiService, private router:Router){}
-
   title = 'pos_web';
 
   closeNav(){

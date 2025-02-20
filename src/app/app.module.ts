@@ -29,6 +29,7 @@ import { BaristaComponent } from './barista/barista.component';
 import { RoleGuard } from './Guard/RoleGuard/role.guard';
 import { PurchaseInforComponent } from './tables/purchase-infor/purchase-infor.component';
 import { NoteEditComponent } from './tables/order/note-edit/note-edit.component';
+import { OrderGoodsComponent } from './order-goods/order-goods.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { NoteEditComponent } from './tables/order/note-edit/note-edit.component'
     BaristaComponent,
     PurchaseInforComponent,
     NoteEditComponent,
+    OrderGoodsComponent,
   ],
   imports: [
     BrowserModule,

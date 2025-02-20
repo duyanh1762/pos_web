@@ -1,0 +1,54 @@
+<body>
+  <div class="containers">
+    <div class="menu-choose">
+      <div class="search">
+        <input #searchInput type="text" placeholder="Tìm mặt hàng..." (keyup)="search()"/>
+      </div>
+      <div class="drinks">
+        <div *ngFor="let g of goods">
+          <div class="img">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGu5lrEOHtlaMOCuHDVzgoAcx-8y8hbLksKw&s"
+            />
+          </div>
+          <div class="infor">
+            <div class="id" style="display: none">{{ g.id }}</div>
+            <div class="name">{{ g.name }}</div>
+            <div class="price">{{ g.price | moneyTransform }}đ/{{ g.unit }}</div>
+            <div class="button">
+              <button *ngIf="g.isChoose === false" (click)="addCart(g)">Thêm</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="shopping-cart">
+      <div class="title" style="font-weight: 700; font-size: 24px">
+        Đơn hàng {{ date }}
+      </div>
+      <div class="list-buy">
+        <div class="item-buy" *ngFor="let c of cart">
+          <div class="item" *ngIf="c.num > 0">
+            <div class="name-note">
+              <div class="id-i" style="display: none"></div>
+              <div class="name-i">{{ c.name }}</div>
+            </div>
+            <div class="more">
+              <input type="number" [(ngModel)]="c.num" min="1" (change)="getTotal()"/>
+              <div class="unit"> {{c.unit }}</div>
+              <bUtton (click)="delete(c)">x</bUtton>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bill">
+        <div class="bill-title">Tổng tiền:</div>
+        <div class="money">{{ total | moneyTransform }}đ</div>
+        <div class="confirm">
+          <button (click)="save()">Lưu</button>
+          <button (click)="back()" style="margin-top: 10px;">Trở về</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

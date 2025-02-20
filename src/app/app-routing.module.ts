@@ -10,6 +10,7 @@ import { OrderComponent } from './tables/order/order/order.component';
 import { LoadManageGuard } from './Guard/LoadManage/load-manage.guard';
 import { BaristaComponent } from './barista/barista.component';
 import { RoleGuard } from './Guard/RoleGuard/role.guard';
+import { OrderGoodsComponent } from './order-goods/order-goods.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -28,6 +29,11 @@ const routes: Routes = [
     path: 'barista',
     component: BaristaComponent,
     canActivate: [AuthGuard, StaffGuard],
+  },
+  {
+    path:"goods",
+    component:OrderGoodsComponent,
+    canActivate:[AuthGuard,StaffGuard,RoleGuard]
   },
   {
     path: 'manage',

@@ -13,7 +13,9 @@ export class LoginComponent implements OnInit {
   public shopName:string = "";
   public password:string = "";
 
-  constructor(private api:ApiService,private router:Router) { }
+  constructor(private api:ApiService,private router:Router) {
+    this.api.nav_open = false;
+   }
 
   ngOnInit(): void {
   }

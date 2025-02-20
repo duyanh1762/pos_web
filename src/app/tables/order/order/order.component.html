@@ -46,7 +46,7 @@
     </div>
     <div class="shopping-cart">
       <div class="title" style="font-weight: 700; font-size: 24px">
-        Đơn hàng
+        Hoá đơn bàn {{ table }}
       </div>
       <div class="list-buy">
         <div class="item-buy" *ngFor="let i of cart">
@@ -82,6 +82,9 @@
         </div>
         <div class="confirm" *ngIf="type == 'edit'" (click)="saveEdit()">
           <button>Lưu</button>
+        </div>
+        <div class="confirm" >
+          <button (click)="back()">Trở về</button>
         </div>
       </div>
     </div>
