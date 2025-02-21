@@ -77,7 +77,6 @@ export class OrderGoodsComponent implements OnInit {
         let ie: IeBill;
         for (ie of res) {
           let ieDate: string = this.api.ieDate(ie);
-          console.log(ieDate);
           if (
             ieDate === this.api.getCurrentDate() &&
             ie.shopID === this.shop.id &&

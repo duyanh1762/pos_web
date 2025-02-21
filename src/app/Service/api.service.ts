@@ -9,11 +9,12 @@ import * as fs from 'file-saver';
 import { io } from 'socket.io-client';
 import { Staff } from '../Models/staff';
 import { IeBill } from '../Models/ie_bill';
+import { Goods } from '../Models/goods';
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  public nav_open:boolean = false;
+  public nav_open: boolean = false;
   server: string = 'http://localhost:3000/';
   constructor(private http: HttpClient) {
     // this.connect();
@@ -40,14 +41,14 @@ export class ApiService {
   public spend(request: any) {
     return this.http.post(this.server + 'spend', request);
   }
-  public goods(request:DataRequest){
-    return this.http.post(this.server + "goods",request);
+  public goods(request: DataRequest) {
+    return this.http.post(this.server + 'goods', request);
   }
-  public ieBill(request:DataRequest){
-    return this.http.post(this.server + "ie-bill",request);
+  public ieBill(request: DataRequest) {
+    return this.http.post(this.server + 'ie-bill', request);
   }
-  public ieDetail(request:DataRequest){
-    return this.http.post(this.server + "ie-detail",request);
+  public ieDetail(request: DataRequest) {
+    return this.http.post(this.server + 'ie-detail', request);
   }
   public getQr(request: any) {
     const headers = new HttpHeaders({
@@ -221,5 +222,33 @@ export class ApiService {
   }
   removeAccents(str: string): string {
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
+  getNameGoods(gID: number, goods: Array<Goods>): string {
+    let n: string = '';
+    goods.forEach((g: Goods) => {
+      if (g.id === gID) {
+        n = g.name;
+      }
+    });
+    return n;
+  }
+  getPriceGoods(gID: number, goods: Array<Goods>): number {
+    let p: number = 0;
+    goods.forEach((g: Goods) => {
+      if (g.id === gID) {
+        p = g.price;
+      }
+    });
+    return p;
+  }
+  getUnitGoods(gID: number, goods: Array<Goods>): string {
+    let u: string = '';
+    goods.forEach((g: Goods) => {
+      if (g.id === gID) {
+        u = g.unit;
+      }
+    });
+    return u;
   }
 }

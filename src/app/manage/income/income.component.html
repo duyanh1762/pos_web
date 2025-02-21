@@ -22,7 +22,39 @@
 
       <div class="cash-flow-item">
         <div class="item-title">
-          <div class="cash-title">Danh mục chi  (2)</div>
+          <div class="cash-title">Nhập hàng (2)</div>
+          <div class="cash-amount">{{ goodsValue | moneyTransform}}đ</div>
+        </div>
+        <div class="item-subtitle">{{ shop.address }}</div>
+        <div class="expense-list">
+          <table *ngIf="ieBills.length > 0">
+            <thead>
+              <tr>
+                <th>Thời gian</th>
+                <th>Số tiền</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ie of ieBills">
+                <td >{{ie.createAt}}</td>
+                <td>{{ ie.total | moneyTransform }}đ</td>
+                <td style="font-style: italic;" *ngIf="ie.status === 'confirm'">Đã xác nhận</td>
+                <td style="font-style: italic;" *ngIf="ie.status != 'confirm'">Chờ xác nhận</td>
+                <td>
+                  <button class="btn btn-edit" (click)="updateGoodsOrder(ie)">Sửa phiếu</button>
+                  <button class="btn btn-delete" (click)="showDetail(ie.id)">Xem phiếu</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="cash-flow-item">
+        <div class="item-title">
+          <div class="cash-title">Danh mục chi  (3)</div>
           <div class="cash-amount">{{ spend | moneyTransform}}đ</div>
         </div>
         <div class="item-subtitle">{{ shop.address }}</div>
@@ -30,17 +62,17 @@
           <table *ngIf="listSpend.length > 0">
             <thead>
               <tr>
-                <th>Ghi chú</th>
                 <th>Thời gian</th>
                 <th>Số tiền</th>
+                <th>Ghi chú</th>
                 <th>Hành động</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let s of listSpend">
-                <td style="font-style: italic;">{{ s.des }}</td>
-                <td>{{ s.date.split(" ")[1] }}</td>
+                <td>{{s.date.split(" ")[1]  }}</td>
                 <td>{{ s.total | moneyTransform }}đ</td>
+                <td style="font-style: italic;">{{ s.des }}</td>
                 <td>
                   <button class="btn btn-edit" (click)="editSpendForm(s)">Sửa phiếu</button>
                   <button class="btn btn-delete" (click)="deleteSpend(s)">Xóa phiếu</button>
@@ -55,10 +87,10 @@
       </div>
 
       <div class="total">
-        <span style="font-weight: 600;">Tổng kết (1) - (2)</span>
-        <span style="color: #28a745 ;" class="amount" *ngIf="(revenue - spend) > 0">+{{ (revenue - spend) | moneyTransform }}đ</span>
-        <span style="color: red ;" class="amount" *ngIf="(revenue - spend) < 0">{{ (revenue - spend) | moneyTransform }}đ</span>
-        <span  class="amount" *ngIf="(revenue - spend) === 0">{{ (revenue - spend) | moneyTransform }}đ</span>
+        <span style="font-weight: 600;">Tổng kết (1) - (2) - (3)</span>
+        <span style="color: #28a745 ;" class="amount" *ngIf="(revenue - goodsValue - spend) > 0">+{{ (revenue - goodsValue - spend) | moneyTransform }}đ</span>
+        <span style="color: red ;" class="amount" *ngIf="(revenue - goodsValue - spend) < 0">{{ (revenue - goodsValue - spend) | moneyTransform }}đ</span>
+        <span  class="amount" *ngIf="(revenue - goodsValue - spend) === 0">{{ (revenue - goodsValue - spend) | moneyTransform }}đ</span>
       </div>
     </div>
   </div>

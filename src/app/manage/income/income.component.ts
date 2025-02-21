@@ -9,6 +9,23 @@ import { Bill } from 'src/app/Models/bill';
 import { Item } from 'src/app/Models/item';
 import { BillDetail } from 'src/app/Models/bill_detail';
 import { DataRequest } from 'src/app/Interface/data_request';
+import { Goods } from 'src/app/Models/goods';
+import { IeBill } from 'src/app/Models/ie_bill';
+import { IeDetail } from 'src/app/Models/ie_detail';
+import { toArray } from 'rxjs';
+import { ReceiptFormComponent } from './receipt-form/receipt-form.component';
+import { Router } from '@angular/router';
+
+interface IeInfor {
+  id: number;
+  createAt:string;
+  confirmAt:string;
+  staffID: number;
+  shopID:number;
+  status:string;
+  type:string; // import || export
+  total:number;
+}
 
 @Component({
   selector: 'app-income',
@@ -22,8 +39,13 @@ export class IncomeComponent implements OnInit {
   spend:number = 0;
   listSpend:Array<Spend> = [];
   items:Array<Item> = [];
+  ieBills:Array<IeInfor> = [];
+  goodsValue:number = 0;
+  goods:Array<Goods> =[]
+  staffs:Array<Staff> = [];
 
-  constructor(private api:ApiService , private bsMS: BsModalService) { }
+
+  constructor(private api:ApiService , private bsMS: BsModalService,private router:Router) { }
 
   ngOnInit(): void {
     this.load();
@@ -38,6 +60,12 @@ export class IncomeComponent implements OnInit {
     };
     await this.api.item(request).toPromise().then((res:any)=>{
       this.items = res;
+    });
+    await this.api.staff(request).toPromise().then((res:any)=>{
+      this.staffs = res;
+    });
+    await this.api.goods(request).toPromise().then((res:any)=>{
+      this.goods = res;
     });
     await this.api.spend(request).toPromise().then((res:any)=>{
       res.forEach((s:Spend)=>{
@@ -61,6 +89,33 @@ export class IncomeComponent implements OnInit {
               })
              });
           });
+        }
+      }
+    });
+    await this.api.ieBill({mode:"get-by-shop",data:this.shop.id}).toPromise().then(async (res:any)=>{
+      let ie:IeBill;
+      for(ie of res){
+        let ieDate:string = this.api.ieDate(ie);
+        if (
+          ieDate === this.api.getCurrentDate() &&
+          ie.shopID === this.shop.id &&
+          ie.type === 'export' &&
+          ie.status != "delete"
+        ){
+          let total:number = 0;
+          await this.api.ieDetail({mode:"get",data:ie.id}).toPromise().then((res:any)=>{
+            res.forEach((ied:IeDetail)=>{
+              this.goods.forEach((g:Goods)=>{
+                if(ied.itemID === g.id){
+                  total = total + ied.num * g.price;
+                }
+              });
+            });
+          });
+          ie.createAt = this.api.dateTransform(ie.createAt).split(" ")[1];
+          this.ieBills.push({...ie,total});
+          this.goodsValue = this.goodsValue + total;
+          console.log(this.ieBills)
         }
       }
     });
@@ -127,5 +182,33 @@ export class IncomeComponent implements OnInit {
   public getDate():string{
     let dateArr = this.api.getCurrentDate().split("-");
     return dateArr[2]+"-"+dateArr[1]+"-"+dateArr[0];
+  }
+  showDetail(id:number){
+    let userCreate:string = "";
+    let ieB = this.ieBills.find((ie:IeInfor)=>{
+      return ie.id === id;
+    });
+    this.staffs.forEach((s:Staff)=>{
+      if(ieB?.staffID === s.id){
+        userCreate = s.name;
+      }
+    });
+    this.bsMS.show(ReceiptFormComponent,{
+      initialState:{
+        data:{
+          goods:this.goods,
+          id:id,
+          date:this.getDate(),
+          staff:userCreate
+        }
+      }
+    });
+  }
+  updateGoodsOrder(ie:IeInfor){
+    if(ie.status != "not_confirm"){
+      alert("Hoá đơn đã xác nhận , không thể chỉnh sửa !");
+    }else{
+      this.router.navigate(["/goods"]);
+    }
   }
 }
