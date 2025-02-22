@@ -1,15 +1,22 @@
 <div class="content">
   <div class="report-header">
-    <a routerLink="/manage/report" class="back-link"><i class="fas fa-home"></i> Trở về</a>
+    <a routerLink="/manage/report" class="back-link"
+      ><i class="fas fa-home"></i> Trở về</a
+    >
   </div>
   <div class="time-content">
     <div class="report-title">
-      <h3>CHỌN THỜI GIAN: </h3>
+      <h3>CHỌN THỜI GIAN:</h3>
     </div>
     <div class="date-picker-form">
-      <mat-form-field appearance="fill" >
+      <mat-form-field appearance="fill">
         <mat-label>Ngày bắt đầu</mat-label>
-        <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate" (dateChange)="onStartDateChange($event.value)"/>
+        <input
+          matInput
+          [matDatepicker]="startPicker"
+          [(ngModel)]="startDate"
+          (dateChange)="onStartDateChange($event.value)"
+        />
         <mat-datepicker-toggle
           matSuffix
           [for]="startPicker"
@@ -18,19 +25,25 @@
       </mat-form-field>
     </div>
     <div class="date-picker-form">
-      <mat-form-field appearance="fill" >
+      <mat-form-field appearance="fill">
         <mat-label>Ngày kết thúc</mat-label>
-        <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate" (dateChange)="onEndDateChange($event.value)" />
+        <input
+          matInput
+          [matDatepicker]="endPicker"
+          [(ngModel)]="endDate"
+          (dateChange)="onEndDateChange($event.value)"
+        />
         <mat-datepicker-toggle
           matSuffix
           [for]="endPicker"
         ></mat-datepicker-toggle>
         <mat-datepicker #endPicker></mat-datepicker>
       </mat-form-field>
-
     </div>
     <div class="date-picker-button">
-      <button  class="date-picker-button" (click)="confirmdDate()">Xác nhận</button>
+      <button class="date-picker-button" (click)="confirmdDate()">
+        Xác nhận
+      </button>
     </div>
   </div>
   <div class="report-content">
@@ -42,7 +55,7 @@
       <div class="cash-flow">
         <div class="cash-flow-item">
           <div class="item-title">
-            <div class="cash-title">Doanh thu tiền mặt  (1)</div>
+            <div class="cash-title">Doanh thu tiền mặt (1)</div>
             <div class="cash-amount">{{ revenue | moneyTransform }}đ</div>
           </div>
           <div class="item-subtitle">{{ shop.address }}</div>
@@ -50,37 +63,91 @@
 
         <div class="cash-flow-item">
           <div class="item-title">
-            <div class="cash-title">Danh mục chi  (2)</div>
+            <div class="cash-title">Nhập hàng (2)</div>
+            <div class="cash-amount">{{ goodsValue | moneyTransform }}đ</div>
+          </div>
+          <div class="item-subtitle">{{ shop.address }}</div>
+          <div class="expense-list">
+            <table *ngIf="ieBills.length > 0">
+              <thead>
+                <tr>
+                  <th>Ngày nhận</th>
+                  <th>Số tiền</th>
+                  <th>Ngày tạo</th>
+                  <th>Trạng thái</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let ie of ieBills">
+                  <td>{{ ie.confirmAt }}</td>
+                  <td>{{ ie.total | moneyTransform }}đ</td>
+                  <td>{{ ie.createAt }}</td>
+                  <td
+                    style="font-style: italic"
+                    *ngIf="ie.status === 'confirm'"
+                  >
+                    Đã xác nhận
+                  </td>
+                  <td style="font-style: italic" *ngIf="ie.status != 'confirm'">
+                    Chờ xác nhận
+                  </td>
+                  <td>
+                    <!-- <button class="btn btn-edit" (click)="updateGoodsOrder(ie)">Sửa phiếu</button> -->
+                    <button class="btn btn-delete" (click)="showDetail(ie.id)">
+                      Xem phiếu
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="cash-flow-item">
+          <div class="item-title">
+            <div class="cash-title">Danh mục chi (3)</div>
             <div class="cash-amount">{{ spend | moneyTransform }}đ</div>
           </div>
           <div class="item-subtitle">{{ shop.address }}</div>
           <div class="expense-list" *ngIf="listSpend.length > 0">
-            <table >
+            <table>
               <thead>
                 <tr>
-                  <th>Ghi chú</th>
                   <th>Thời gian</th>
                   <th>Số tiền</th>
+                  <th>Ghi chú</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let s of listSpend">
-                  <td style="font-style: italic;">{{ s.des }}</td>
                   <td>{{ s.date }}</td>
-                  <td>{{ s.total | moneyTransform }}đ</td>
+                  <td>{{ s.total | moneyTransform  }}đ</td>
+                  <td style="font-style: italic">{{ s.des}}</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
         <div class="export">
-          <button *ngIf="export === true" (click)="exporSpendtReport()">Xuất mục chi</button>
+          <button *ngIf="export === true" (click)="exporSpendtReport()">
+            Xuất mục chi
+          </button>
         </div>
         <div class="total">
-          <span style="font-weight: 600;">Tổng kết (1) - (2)</span>
-          <span style="color: #28a745 ;" class="amount" *ngIf="(revenue - spend) > 0">+{{ (revenue - spend) | moneyTransform }}đ</span>
-          <span style="color: red ;" class="amount" *ngIf="(revenue - spend) < 0">{{ (revenue - spend) | moneyTransform }}đ</span>
-          <span  class="amount" *ngIf="(revenue - spend) === 0">{{ (revenue - spend) | moneyTransform }}đ</span>
+          <span style="font-weight: 600">Tổng kết (1) - (2) - (3)</span>
+          <span
+            style="color: #28a745"
+            class="amount"
+            *ngIf="revenue - spend - goodsValue > 0"
+            >+{{ revenue - spend - goodsValue | moneyTransform }}đ</span
+          >
+          <span style="color: red" class="amount" *ngIf="revenue - spend - goodsValue < 0"
+            >{{ revenue - spend - goodsValue | moneyTransform }}đ</span
+          >
+          <span class="amount" *ngIf="revenue - spend - goodsValue === 0"
+            >{{ revenue - spend - goodsValue | moneyTransform }}đ</span
+          >
         </div>
       </div>
     </div>

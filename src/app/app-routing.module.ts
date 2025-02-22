@@ -10,7 +10,9 @@ import { OrderComponent } from './tables/order/order/order.component';
 import { LoadManageGuard } from './Guard/LoadManage/load-manage.guard';
 import { BaristaComponent } from './barista/barista.component';
 import { RoleGuard } from './Guard/RoleGuard/role.guard';
-import { OrderGoodsComponent } from './order-goods/order-goods.component';
+import { OrderGoodsComponent } from './goods/order-goods/order-goods.component';
+import { BacklogGoodsComponent } from './goods/backlog-goods/backlog-goods.component';
+import { GoodsComponent } from './goods/goods.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -32,7 +34,17 @@ const routes: Routes = [
   },
   {
     path:"goods",
+    component:GoodsComponent,
+    canActivate:[AuthGuard,StaffGuard,RoleGuard]
+  },
+  {
+    path:"goods/order",
     component:OrderGoodsComponent,
+    canActivate:[AuthGuard,StaffGuard,RoleGuard]
+  },
+  {
+    path:"goods/backlog",
+    component:BacklogGoodsComponent,
     canActivate:[AuthGuard,StaffGuard,RoleGuard]
   },
   {

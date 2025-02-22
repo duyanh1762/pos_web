@@ -1,0 +1,57 @@
+<div class="content">
+  <div class="report-header">
+    <a routerLink="/goods" class="back-link"
+      ><i class="fas fa-home"></i> Trở về</a
+    >
+  </div>
+  <div class="report-content">
+    <div class="report-title">
+      <h3>ĐƠN HÀNG TỒN ĐỌNG</h3>
+    </div>
+
+    <div class="report-result">
+      <div class="cash-flow">
+
+        <div class="cash-flow-item">
+          <div class="expense-list">
+            <table *ngIf="ieBills.length > 0">
+              <thead>
+                <tr>
+                  <th>Ngày tạo</th>
+                  <th>Số tiền</th>
+                  <th>Trạng thái</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let ie of ieBills">
+                  <td>{{ ie.createAt }}</td>
+                  <td>{{ ie.total | moneyTransform }}đ</td>
+                  <td
+                    style="font-style: italic"
+                    *ngIf="ie.status === 'confirm'"
+                  >
+                    Đã xác nhận
+                  </td>
+                  <td style="font-style: italic" *ngIf="ie.status != 'confirm'">
+                    Chờ xác nhận
+                  </td>
+                  <td>
+                    <!-- <button class="btn btn-edit" (click)="updateGoodsOrder(ie)">Sửa phiếu</button> -->
+                    <button class="btn btn-delete" (click)="showDetail(ie.id)">
+                      Xem phiếu
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="item-title">
+          <div class="cash-title">Tổng</div>
+          <div class="cash-amount">{{ goodsValue | moneyTransform }}đ</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

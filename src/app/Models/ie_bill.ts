@@ -5,5 +5,5 @@ export class IeBill {
   staffID: number;
   shopID:number;
   status:string;
-  type:string; // import || export
+  type:string; // import || export || delete
 }

@@ -14,8 +14,11 @@ import { Goods } from '../Models/goods';
   providedIn: 'root',
 })
 export class ApiService {
+
   public nav_open: boolean = false;
   server: string = 'http://localhost:3000/';
+  public role:string = "";
+
   constructor(private http: HttpClient) {
     // this.connect();
   }
@@ -79,7 +82,15 @@ export class ApiService {
 
     return `${year}-${month}-${day}`;
   }
-  ieDate(ie: IeBill): string {
+  ieConfirmDate(ie: IeBill): string {
+    const date = new Date(ie.confirmAt);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+
+    return `${year}-${month}-${day}`;
+  }
+  ieCreateDate(ie: IeBill): string {
     const date = new Date(ie.createAt);
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -109,6 +120,22 @@ export class ApiService {
     const seconds = date.getSeconds().toString().padStart(2, '0');
 
     const formattedDate = `${day}-${month}-${year}`;
+    const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+    return `${formattedDate} ${formattedTime}`;
+  }
+
+  dateGMT(dateTime:string){
+    const date = new Date(dateTime);
+
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+
+    const formattedDate = `${year}-${month}-${day}`;
     const formattedTime = `${hours}:${minutes}:${seconds}`;
 
     return `${formattedDate} ${formattedTime}`;

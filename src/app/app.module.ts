@@ -29,7 +29,9 @@ import { BaristaComponent } from './barista/barista.component';
 import { RoleGuard } from './Guard/RoleGuard/role.guard';
 import { PurchaseInforComponent } from './tables/purchase-infor/purchase-infor.component';
 import { NoteEditComponent } from './tables/order/note-edit/note-edit.component';
-import { OrderGoodsComponent } from './order-goods/order-goods.component';
+import { OrderGoodsComponent } from './goods/order-goods/order-goods.component';
+import { GoodsComponent } from './goods/goods.component';
+import { BacklogGoodsComponent } from './goods/backlog-goods/backlog-goods.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,8 @@ import { OrderGoodsComponent } from './order-goods/order-goods.component';
     PurchaseInforComponent,
     NoteEditComponent,
     OrderGoodsComponent,
+    GoodsComponent,
+    BacklogGoodsComponent,
   ],
   imports: [
     BrowserModule,

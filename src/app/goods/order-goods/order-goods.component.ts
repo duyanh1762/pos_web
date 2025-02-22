@@ -1,12 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ApiService } from '../Service/api.service';
-import { Goods } from '../Models/goods';
-import { DataRequest } from '../Interface/data_request';
-import { Shop } from '../Models/shop';
-import { Staff } from '../Models/staff';
-import { IeBill } from '../Models/ie_bill';
-import { IeDetail } from '../Models/ie_detail';
+// import { ApiService } from '../Service/api.service';
 import { Router } from '@angular/router';
+import { DataRequest } from 'src/app/Interface/data_request';
+import { Goods } from 'src/app/Models/goods';
+import { IeBill } from 'src/app/Models/ie_bill';
+import { IeDetail } from 'src/app/Models/ie_detail';
+import { Shop } from 'src/app/Models/shop';
+import { Staff } from 'src/app/Models/staff';
+import { ApiService } from 'src/app/Service/api.service';
 
 interface IeDetailInfor {
   id: number;
@@ -76,7 +77,7 @@ export class OrderGoodsComponent implements OnInit {
       .then(async (res: any) => {
         let ie: IeBill;
         for (ie of res) {
-          let ieDate: string = this.api.ieDate(ie);
+          let ieDate: string = this.api.ieCreateDate(ie);
           if (
             ieDate === this.api.getCurrentDate() &&
             ie.shopID === this.shop.id &&
@@ -283,6 +284,6 @@ export class OrderGoodsComponent implements OnInit {
     }
   }
   back(){
-    this.router.navigate(["/tables"]);
+    this.router.navigate(["/goods"]);
   }
 }

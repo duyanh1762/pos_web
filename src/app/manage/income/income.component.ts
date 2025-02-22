@@ -95,12 +95,12 @@ export class IncomeComponent implements OnInit {
     await this.api.ieBill({mode:"get-by-shop",data:this.shop.id}).toPromise().then(async (res:any)=>{
       let ie:IeBill;
       for(ie of res){
-        let ieDate:string = this.api.ieDate(ie);
+        let ieDate:string = this.api.ieConfirmDate(ie);
         if (
           ieDate === this.api.getCurrentDate() &&
           ie.shopID === this.shop.id &&
           ie.type === 'export' &&
-          ie.status != "delete"
+          ie.status === "confirm"
         ){
           let total:number = 0;
           await this.api.ieDetail({mode:"get",data:ie.id}).toPromise().then((res:any)=>{
@@ -112,10 +112,10 @@ export class IncomeComponent implements OnInit {
               });
             });
           });
-          ie.createAt = this.api.dateTransform(ie.createAt).split(" ")[1];
+          ie.createAt = this.api.dateTransform(ie.createAt);
+          ie.confirmAt = this.api.dateTransform(ie.confirmAt);
           this.ieBills.push({...ie,total});
           this.goodsValue = this.goodsValue + total;
-          console.log(this.ieBills)
         }
       }
     });

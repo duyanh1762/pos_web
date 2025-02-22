@@ -32,18 +32,20 @@
               <tr>
                 <th>Thời gian</th>
                 <th>Số tiền</th>
+                <th>Ngày tạo</th>
                 <th>Trạng thái</th>
                 <th>Hành động</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let ie of ieBills">
-                <td >{{ie.createAt}}</td>
+                <td >{{ie.confirmAt .split(" ")[1]}}</td>
                 <td>{{ ie.total | moneyTransform }}đ</td>
+                <td>{{ ie.createAt }} </td>
                 <td style="font-style: italic;" *ngIf="ie.status === 'confirm'">Đã xác nhận</td>
                 <td style="font-style: italic;" *ngIf="ie.status != 'confirm'">Chờ xác nhận</td>
                 <td>
-                  <button class="btn btn-edit" (click)="updateGoodsOrder(ie)">Sửa phiếu</button>
+                  <!-- <button class="btn btn-edit" (click)="updateGoodsOrder(ie)">Sửa phiếu</button> -->
                   <button class="btn btn-delete" (click)="showDetail(ie.id)">Xem phiếu</button>
                 </td>
               </tr>

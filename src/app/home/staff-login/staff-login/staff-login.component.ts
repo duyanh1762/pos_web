@@ -43,6 +43,7 @@ export class StaffLoginComponent implements OnInit {
     if (this.password === staffG.password) {
       this.bsModelRef.hide();
       localStorage.setItem("staff-infor",JSON.stringify(staffG));
+      this.api.role = staffG.role;
       if(staffG.role === "thu_ngan" || staffG.role === "quan_ly"){
         this.router.navigate(["/tables"]);
       }else{
