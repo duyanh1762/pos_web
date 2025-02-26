@@ -80,7 +80,6 @@ export class OrderGoodsComponent implements OnInit {
           let ieDate: string = this.api.ieCreateDate(ie);
           if (
             ieDate === this.api.getCurrentDate() &&
-            ie.shopID === this.shop.id &&
             ie.status === 'not_confirm' &&
             ie.type === 'export'
           ) {

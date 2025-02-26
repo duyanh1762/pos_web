@@ -98,7 +98,6 @@ export class IncomeComponent implements OnInit {
         let ieDate:string = this.api.ieConfirmDate(ie);
         if (
           ieDate === this.api.getCurrentDate() &&
-          ie.shopID === this.shop.id &&
           ie.type === 'export' &&
           ie.status === "confirm"
         ){

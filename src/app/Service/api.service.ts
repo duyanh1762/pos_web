@@ -10,6 +10,7 @@ import { io } from 'socket.io-client';
 import { Staff } from '../Models/staff';
 import { IeBill } from '../Models/ie_bill';
 import { Goods } from '../Models/goods';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
@@ -19,8 +20,11 @@ export class ApiService {
   server: string = 'http://localhost:3000/';
   public role:string = "";
 
-  constructor(private http: HttpClient) {
-    // this.connect();
+  constructor(private http: HttpClient,private router:Router) {
+    let staff:Staff = JSON.parse(localStorage.getItem("staff-infor") || '{}');
+    if(staff.role != "" || staff.role != undefined || staff.role != null){
+      this.role = staff.role;
+    }
   }
 
   public login(request: LoginReQuest) {
