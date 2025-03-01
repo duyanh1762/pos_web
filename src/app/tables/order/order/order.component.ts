@@ -85,7 +85,7 @@ export class OrderComponent implements OnInit{
       .toPromise()
       .then((res: any) => {
         this.groups = res.filter((g:Group)=>{
-          return g.name.indexOf("_ff") === -1;
+          return g.type === "item";
         });
       });
     await this.api
