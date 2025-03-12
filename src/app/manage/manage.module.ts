@@ -17,7 +17,6 @@ import { IncomeComponent } from './income/income.component';
 import { ReceiptFormComponent } from './income/receipt-form/receipt-form.component';
 import { SpendFormComponent } from './income/spend-form/spend-form.component';
 import { ProfitLossComponent } from './report/report/profit-loss/profit-loss.component';
-import { LoadManageGuard } from '../Guard/LoadManage/load-manage.guard';
 
 let routes:Routes = [
   {path:"",component:ManageComponent},

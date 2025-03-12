@@ -16,22 +16,22 @@ import { OrderComponent } from './tables/order/order/order.component';
 import { BillEditorComponent } from './tables/bill-editor/bill-editor/bill-editor.component';
 import { InforComponent } from './tables/infor/infor.component';
 import { HistoryComponent } from './tables/history/history.component';
-
-import { AuthGuard } from './Guard/AuthGuard/auth.guard';
-import { LoginGuard } from './Guard/LoginGuard/login.guard';
-import { StaffGuard } from './Guard/StaffGuard/staff.guard';
-import { LoadManageGuard } from './Guard/LoadManage/load-manage.guard';
-
-import { ApiService } from './Service/api.service';
-
-import { LongClickDirective } from './Directives/long-click.directive';
 import { BaristaComponent } from './barista/barista.component';
-import { RoleGuard } from './Guard/RoleGuard/role.guard';
 import { PurchaseInforComponent } from './tables/purchase-infor/purchase-infor.component';
 import { NoteEditComponent } from './tables/order/note-edit/note-edit.component';
 import { OrderGoodsComponent } from './goods/order-goods/order-goods.component';
 import { GoodsComponent } from './goods/goods.component';
 import { BacklogGoodsComponent } from './goods/backlog-goods/backlog-goods.component';
+
+import { AuthGuard } from './Guard/AuthGuard/auth.guard';
+import { LoginGuard } from './Guard/LoginGuard/login.guard';
+import { StaffGuard } from './Guard/StaffGuard/staff.guard';
+import { LoadManageGuard } from './Guard/LoadManage/load-manage.guard';
+import { RoleGuard } from './Guard/RoleGuard/role.guard';
+
+import { ApiService } from './Service/api.service';
+
+import { LongClickDirective } from './Directives/long-click.directive';
 
 @NgModule({
   declarations: [
