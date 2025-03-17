@@ -18,8 +18,8 @@
       appLongClick
       (longClick)="openHistory(table)"
     >
-      <a routerLink="/tables/order/{{ table.table }}" *ngIf="table.bill === null">{{ table.table }}</a>
-      <a *ngIf="table.bill != null">{{ table.table }}</a>
+      <a routerLink="/tables/order/{{ table.table }}" *ngIf="table.bill === null">Bàn {{ table.table }}</a>
+      <a *ngIf="table.bill != null">Bàn {{ table.table }}</a>
     </div>
   </div>
 </div>

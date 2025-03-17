@@ -82,14 +82,15 @@ body, html {
   width: 100px;
   height: 100px;
   background-color: white;
-  border-radius: 50%;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 5px;
-  font-size: 12px;
+  font-size: 14px;
   cursor: pointer;
   border: 1px gray solid;
+  margin:10px 10px 10px 10px;
 }
 .seat:hover{
   background-color:  #e5e5e5;

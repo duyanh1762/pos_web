@@ -124,7 +124,7 @@ button {
   box-sizing: border-box;
   padding: 5px;
   background-color: white;
-  border-top: grey solid 1px;
+  border-top: #ddd solid 1px;
   /* border-bottom:grey solid 1px; */
 }
 .name-note {
@@ -139,6 +139,7 @@ button {
   height: 30px;
   outline: none;
   border: #4dac61 solid 1px;
+  padding-left: 8px;
 }
 .more button {
   width: 40px;
@@ -300,4 +301,7 @@ button {
   padding-left: 10px;
   font-size: 16px;
   font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

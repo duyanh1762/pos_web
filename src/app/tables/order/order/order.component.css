@@ -125,7 +125,7 @@ input {
   box-sizing: border-box;
   padding: 5px;
   background-color: white;
-  border-top: grey solid 1px;
+  border-top: #ddd solid 1px;
   /* border-bottom:grey solid 1px; */
 }
 .name-note {
