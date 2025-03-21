@@ -3,6 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataRequest } from 'src/app/Interface/data_request';
 import { Goods } from 'src/app/Models/goods';
+import { Group } from 'src/app/Models/group';
 import { IeBill } from 'src/app/Models/ie_bill';
 import { IeDetail } from 'src/app/Models/ie_detail';
 import { Shop } from 'src/app/Models/shop';
@@ -36,6 +37,7 @@ interface GoodsInfor {
 })
 export class OrderGoodsComponent implements OnInit {
   @ViewChild("searchInput",{read:ElementRef,static:true}) searchInput:ElementRef;
+  @ViewChild("groupSelect",{read:ElementRef,static:true}) groupSelect:ElementRef;
 
   date: String;
   shop: Shop;
@@ -46,6 +48,7 @@ export class OrderGoodsComponent implements OnInit {
   total: number = 0;
   type: string = 'create'; //edit || create
   ieB:IeBill;
+  groups:Array<Group> = [];
 
   constructor(private api: ApiService,private router:Router) {}
 
@@ -62,6 +65,13 @@ export class OrderGoodsComponent implements OnInit {
       mode: 'get',
       data: '',
     };
+    await this.api.group(request).toPromise().then((res:any)=>{
+      res.forEach((g:Group)=>{
+        if(g.type === "warehouse"){
+          this.groups.push(g);
+        }
+      });
+    });
     await this.api
       .goods(request)
       .toPromise()
@@ -280,6 +290,17 @@ export class OrderGoodsComponent implements OnInit {
         alert("Cập nhật thành công !")
         this.router.navigate(["/tables"]);
       }
+    }
+  }
+  filterSelect(){
+    this.goods = [];
+    let grID:number = Number(this.groupSelect.nativeElement.value);
+    if(grID === 0){
+      this.goods = this.goodsLU;
+    }else{
+      this.goods = this.goodsLU.filter((g:GoodsInfor)=>{
+        return g.groupID === grID;
+      });
     }
   }
   back(){

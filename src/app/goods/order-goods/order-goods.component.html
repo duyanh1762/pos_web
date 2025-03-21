@@ -4,6 +4,12 @@
       <div class="search">
         <input #searchInput type="text" placeholder="Tìm mặt hàng..." (keyup)="search()"/>
       </div>
+      <div class="search">
+        <select #groupSelect name="group" id="group" (change)="filterSelect()">
+          <option value="0">Tất cả</option>
+          <option *ngFor="let g of groups" [value]="g.id">{{ g.name }}</option>
+        </select>
+      </div>
       <div class="drinks">
         <div *ngFor="let g of goods">
           <div class="img">
