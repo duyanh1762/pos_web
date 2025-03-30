@@ -78,9 +78,9 @@
       <h3>SỐ BÀN ĐANG PHỤC VỤ</h3>
       <p><span class="right">{{ tableNum }}</span></p>
     </div>
-    <div class="card">
+    <div class="card" style="min-width: 90%">
       <h3>LỊCH SỬ HOÁ ĐƠN NGÀY {{ getDate() }}</h3>
-      <div class="filter">
+      <div class="filter" *ngIf="billsLU.length > 0;else historyNotice">
         <label for="status">Trạng thái:</label>
         <select  id="status" #selectStatus (change)="filter()">
           <option value="all"  >Tất cả</option>
@@ -96,7 +96,7 @@
         <label for="status">Số bàn:</label>
         <input type="text" placeholder="Nhập số bàn..." #tableN (change)="filter()">
       </div>
-      <div class="bills">
+      <div class="bills" *ngIf="billsLU.length > 0">
         <table>
           <thead >
             <tr>
@@ -123,5 +123,41 @@
         </table>
       </div>
     </div>
+    <div class="card" *ngIf="unpaidBills.length > 0">
+      <h3>HOÁ ĐƠN TỒN ĐỌNG</h3>
+      <div class="bills">
+        <table>
+          <thead >
+            <tr>
+              <th class="col1" (click)="sortUnpaid('table')">Số bàn <i class="fa-solid fa-sort"></i></th>
+              <th class="col2" (click)="sortUnpaid('date')">Thời gian <i class="fa-solid fa-sort"></i></th>
+              <th class="col3" (click)="sortUnpaid('total')">Tổng <i class="fa-solid fa-sort"></i></th>
+              <th class="col4" >Nhân sự</th>
+              <th class="col5">Trạng thái</th>
+              <th class="col6">Hành động</th>
+            </tr>
+          </thead>
+          <tbody >
+            <tr *ngFor="let b of unpaidBills">
+              <td class="col1">{{ b.table }}</td>
+              <td class="col2">{{ apiDate(b.date)}}</td>
+              <td class="col3">{{ b.total | moneyTransform }}đ</td>
+              <td class="col4">{{ b.nameStaff }}</td>
+              <td class="col5" *ngIf="b.status === 'not_pay'">Chưa thanh toán</td>
+              <td class="col5" *ngIf="b.status === 'pay'">Đã thanh toán</td>
+              <td class="col5" *ngIf="b.status === 'delete'">Đã huỷ</td>
+              <td class="col6" >
+                <button (click)="showDetails(b.id)">Xem</button>
+                <button (click)="confirmUnpaid(b)">Thanh toán</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
+
+<ng-template #historyNotice>
+  <p style="font-size: 14px;font-style: italic;text-align: center;">Chưa có hoá đơn trong ngày hôm nay !</p>
+</ng-template>

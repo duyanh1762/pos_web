@@ -125,22 +125,19 @@
 
 .report-table {
   width: 100%;
+  margin-top: 20px;
   border-collapse: collapse;
-  text-align: center;
 }
 
 .report-table th,
 .report-table td {
-  width: 33.33%;
-  text-align: center;
-  border: 1px solid #ddd;
-  padding: 8px;
-  box-sizing: border-box;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
 }
 
-.report-table th {
+/* .report-table th {
   background-color: #f9f9f9;
-}
+} */
 
 .cashier-name {
   color: #ff5722;

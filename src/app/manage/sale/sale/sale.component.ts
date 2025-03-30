@@ -48,6 +48,7 @@ export class SaleComponent implements OnInit {
   public tableNum: number = 0;
   public bills: Array<BillInfor> = [];
   public billsLU: Array<BillInfor> = [];
+  public unpaidBills:Array<BillInfor> = [];
   public lastFilter: Array<BillInfor> = [];
   public sortType :string = "up"; // up | down
 
@@ -133,6 +134,29 @@ export class SaleComponent implements OnInit {
               this.unpaid = this.unpaid + b.total;
               this.tableNum = this.tableNum + 1;
             }
+          }else if(i.shopID === this.shop.id && this.api.getCurrentDate() != this.api.billDate(i) && i.status === "not_pay"){
+            let n:string = "";
+            let t:number = 0;
+            await this.api.details({mode:"get",data:i.id}).toPromise().then((res:any)=>{
+              res.forEach((d:BillDetail)=>{
+                items.forEach((i:Item)=>{
+                  if(d.itemID === i.id){
+                    t = t + d.num * i.price;
+                  }
+                });
+              });
+            });
+            this.staffs.forEach((s:any)=>{
+              if(s.id === i.staffID){
+                n = s.name;
+              }
+            });
+            let uBill:BillInfor = {
+              ...i,
+              nameStaff:n,
+              total:t
+            };
+            this.unpaidBills.push(uBill);
           }
         });
       });
@@ -233,8 +257,84 @@ export class SaleComponent implements OnInit {
       this.sortType = "up";
     }
   }
+  sortUnpaid(data:string){
+    if(this.sortType === "up"){
+      if(data === "table" || data === "total"){
+        for(let i = 0;i < this.unpaidBills.length;i++){
+          for(let j = i + 1; j< this.unpaidBills.length;j++){
+            if(Number(this.unpaidBills[i][data]) > Number(this.unpaidBills[j][data])){
+              let temp = this.unpaidBills[i];
+              this.unpaidBills[i]=this.unpaidBills[j];
+              this.unpaidBills[j]=temp;
+            }
+          }
+        }
+      }else{
+        for(let i = 0;i < this.unpaidBills.length;i++){
+          for(let j = i + 1; j< this.unpaidBills.length;j++){
+            let eI = new Date(`${this.unpaidBills[i].date}`);
+            let eJ = new Date(`${this.unpaidBills[j].date}`);
+            if(eI > eJ){
+              let temp = this.unpaidBills[i];
+              this.unpaidBills[i] = this.unpaidBills[j];
+              this.unpaidBills[j] = temp;
+            }
+          }
+        }
+      }
+      this.sortType = "down";
+    }else{
+      if(data === "table" || data === "total"){
+        for(let i = 0;i<this.unpaidBills.length;i++){
+          for(let j = i + 1;j<this.unpaidBills.length;j++){
+            if(Number(this.unpaidBills[i][data]) < Number(this.unpaidBills[j][data])){
+              let temp = this.unpaidBills[i];
+              this.unpaidBills[i] = this.unpaidBills[j];
+              this.unpaidBills[j] = temp;
+            }
+          }
+        }
+      }else{
+        for(let i = 0;i < this.unpaidBills.length;i++){
+          for(let j = i + 1; j< this.unpaidBills.length;j++){
+            let eI = new Date(`${this.unpaidBills[i].date}`);
+            let eJ = new Date(`${this.unpaidBills[j].date}`);
+            if(eI < eJ){
+              let temp = this.unpaidBills[i];
+              this.unpaidBills[i] = this.unpaidBills[j];
+              this.unpaidBills[j] = temp;
+            }
+          }
+        }
+      }
+      this.sortType = "up";
+    }
+  }
   getDate():string{
     let arrDate = this.api.getCurrentDate().split("-");
     return arrDate[2]+"-"+arrDate[1]+"-"+arrDate[0];
+  }
+  apiDate(data:string){
+    return this.api.dateTransform(data);
+  }
+  confirmUnpaid(b:BillInfor){
+    let updateBill:Bill = {
+      id:b.id,
+      date:b.date,
+      table: b.table,
+      staffID: b.staffID,
+      shopID:b.shopID,
+      status:"pay",
+      policyID:b.policyID
+    };
+    this.api.bill({mode:"update",data:updateBill}).subscribe((res:any)=>{
+      if(res.affected === 1){
+        alert("Thanh toán thành công !");
+        let index:number = this.unpaidBills.indexOf(b);
+        this.unpaidBills.splice(index,1);
+      }else{
+        alert("Có lỗi xảy ra !");
+      }
+    });
   }
 }

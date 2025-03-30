@@ -86,35 +86,39 @@ export class ReportStaffComponent implements OnInit {
       });
   }
   confirmDate() {
-    this.staffs.forEach((si:StaffInfor)=>{
-      si.total = 0;
-    });
-    this.renuvalue = 0;
-    this.bills.forEach((b: Bill) => {
-      let billDate = new Date(b.date);
-      if (this.startDate != null && this.endDate != null) {
-        if (billDate >= this.startDate && billDate <= this.endDate && b.status === "pay") {
-          this.export = true;
-          this.staffs.forEach(async (si: StaffInfor) => {
-            if (si.id === b.staffID) {
-              await this.api
-                .details({ mode: 'get', data: Number(b.id) })
-                .toPromise()
-                .then((res: any) => {
-                  res.forEach((bd: BillDetail) => {
-                    this.items.forEach((i: Item) => {
-                      if (bd.itemID === i.id) {
-                        si.total = si.total + bd.num * i.price;
-                        this.renuvalue = this.renuvalue + bd.num * i.price
-                      }
+    if(this.startDate != null && this.endDate != null){
+      this.staffs.forEach((si:StaffInfor)=>{
+        si.total = 0;
+      });
+      this.renuvalue = 0;
+      this.bills.forEach((b: Bill) => {
+        let billDate = new Date(b.date);
+        if (this.startDate != null && this.endDate != null) {
+          if (billDate >= this.startDate && billDate <= this.endDate && b.status === "pay") {
+            this.export = true;
+            this.staffs.forEach(async (si: StaffInfor) => {
+              if (si.id === b.staffID) {
+                await this.api
+                  .details({ mode: 'get', data: Number(b.id) })
+                  .toPromise()
+                  .then((res: any) => {
+                    res.forEach((bd: BillDetail) => {
+                      this.items.forEach((i: Item) => {
+                        if (bd.itemID === i.id) {
+                          si.total = si.total + bd.num * i.price;
+                          this.renuvalue = this.renuvalue + bd.num * i.price
+                        }
+                      });
                     });
                   });
-                });
-            }
-          });
+              }
+            });
+          }
         }
-      }
-    });
+      });
+    }else{
+      alert("Hãy chọn khoảng thời gian bạn muốn xem báo cáo !");
+    }
   }
 
   exportStaff(){

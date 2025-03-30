@@ -49,7 +49,7 @@
   <div class="report-content">
     <div class="card">
       <h3>KẾT QUẢ BÁO CÁO HOÁ ĐƠN BÁN HÀNG</h3>
-      <div class="filter">
+      <div class="filter" *ngIf="billsLU.length > 0;else notice">
         <label for="status">Trạng thái:</label>
         <select id="status" #selectStatus (change)="filter()">
           <option value="all">Tất cả</option>
@@ -72,7 +72,7 @@
           (change)="filter()"
         />
       </div>
-      <div class="bills">
+      <div class="bills" *ngIf="billsLU.length > 0">
         <table>
           <thead>
             <tr>
@@ -106,7 +106,7 @@
   <div class="report-content">
     <div class="card">
       <h3>SỐ LƯỢNG MÓN BÁN</h3>
-      <div class="bills">
+      <div class="bills" *ngIf="detailItems.length > 0;else notice">
         <table>
           <thead>
             <tr>
@@ -132,3 +132,7 @@
     </div>
   </div>
 </div>
+
+<ng-template #notice>
+  <p style="font-size: 14px;font-style: italic;text-align: center;">Không có báo cáo trong khoảng thời gian này !</p>
+</ng-template>

@@ -239,7 +239,7 @@ export class OrderGoodsComponent implements OnInit {
               }
             });
             alert("Lưu thành công!");
-            this.router.navigate(["/tables"]);
+            this.router.navigate(["/goods"]);
           }else{
             alert("Đã có lỗi ra, hãy thử lại!");
           }
@@ -255,7 +255,7 @@ export class OrderGoodsComponent implements OnInit {
           this.api.ieBill({mode:"update",data:this.ieB}).subscribe((res:any)=>{
             if(res.affected === 1){
               alert("Huỷ thành công !");
-              this.router.navigate(["/tables"])
+              this.router.navigate(["/goods"])
             }
           });
         }
@@ -288,7 +288,7 @@ export class OrderGoodsComponent implements OnInit {
           }
         });
         alert("Cập nhật thành công !")
-        this.router.navigate(["/tables"]);
+        this.router.navigate(["/goods"]);
       }
     }
   }

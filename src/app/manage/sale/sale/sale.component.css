@@ -228,6 +228,10 @@ select::-ms-expand {
 .col6 button:hover{
   background-color: green;
 }
+.col6 button{
+  font-size: 12px;
+  width: 100px;
+}
 @media (max-width: 600px) {
   .grid {
     flex-direction: column;
