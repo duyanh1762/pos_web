@@ -102,8 +102,10 @@
               </tbody>
             </table>
           </div>
+          <div class="action" *ngIf="ieBills.length > 0">
+            <button (click)="showGoods()">Chi tiết hàng hoá nhập</button>
+          </div>
         </div>
-
         <div class="cash-flow-item">
           <div class="item-title">
             <div class="cash-title">Danh mục chi (3)</div>

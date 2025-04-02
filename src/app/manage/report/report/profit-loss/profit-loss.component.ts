@@ -12,6 +12,7 @@ import { Shop } from 'src/app/Models/shop';
 import { Spend } from 'src/app/Models/spend';
 import { Staff } from 'src/app/Models/staff';
 import { ApiService } from 'src/app/Service/api.service';
+import { DetailGoodsComponent } from './detail-goods/detail-goods.component';
 
 interface IeInfor {
   id: number;
@@ -232,6 +233,16 @@ export class ProfitLossComponent implements OnInit {
           staff: userCreate,
         },
       },
+    });
+  }
+  showGoods(){
+    this.bsService.show(DetailGoodsComponent,{
+      initialState:{
+        data:{
+          goods:this.goods,
+          ieBills:this.ieBills,
+        }
+      }
     });
   }
 }

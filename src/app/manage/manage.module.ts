@@ -17,6 +17,7 @@ import { IncomeComponent } from './income/income.component';
 import { ReceiptFormComponent } from './income/receipt-form/receipt-form.component';
 import { SpendFormComponent } from './income/spend-form/spend-form.component';
 import { ProfitLossComponent } from './report/report/profit-loss/profit-loss.component';
+import { DetailGoodsComponent } from './report/report/profit-loss/detail-goods/detail-goods.component';
 
 let routes:Routes = [
   {path:"",component:ManageComponent},
@@ -28,7 +29,7 @@ let routes:Routes = [
   {path:"income",component:IncomeComponent}
 ]
 @NgModule({
-  declarations: [ManageComponent,SaleComponent,MoneyTransformPipe, ReportComponent, ReportStaffComponent, ReportBillComponent, DetailComponent, IncomeComponent, ReceiptFormComponent, SpendFormComponent, ProfitLossComponent],
+  declarations: [ManageComponent,SaleComponent,MoneyTransformPipe, ReportComponent, ReportStaffComponent, ReportBillComponent, DetailComponent, IncomeComponent, ReceiptFormComponent, SpendFormComponent, ProfitLossComponent, DetailGoodsComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
