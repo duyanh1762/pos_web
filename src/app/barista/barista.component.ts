@@ -53,6 +53,7 @@ export class BaristaComponent implements OnInit {
               let index: number = this.itemsOrderLU.indexOf(i);
               let newNum: number = i.num + data.num;
               this.itemsOrderLU[index].num = newNum;
+              // this.itemsOrderLU.push(data);
               checked = false;
             }
           });

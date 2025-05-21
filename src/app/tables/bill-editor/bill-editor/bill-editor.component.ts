@@ -10,6 +10,7 @@ import { BillDetail } from 'src/app/Models/bill_detail';
 import { Item } from 'src/app/Models/item';
 import { ApiService } from 'src/app/Service/api.service';
 import { PurchaseInforComponent } from '../../purchase-infor/purchase-infor.component';
+import { Shop } from 'src/app/Models/shop';
 
 interface DetailInfor {
   id: number;
@@ -20,30 +21,30 @@ interface DetailInfor {
   price: number;
   name: string;
   total: number;
-  note:string,
+  note: string;
   update: boolean;
 }
-interface ItemOrder{
+interface ItemOrder {
   id: number;
-  itemID:number;
-  num: number,
+  itemID: number;
+  num: number;
   billID: number;
-  name:string;
-  table:string | undefined;
-  note:string,
-  status:string; // confirm | not_confirm
+  name: string;
+  table: string | undefined;
+  note: string;
+  status: string; // confirm | not_confirm
 }
 
-interface BillInfor{
+interface BillInfor {
   id: number;
-  date:string;
+  date: string;
   table: string | null;
   staffID: number;
-  shopID:number;
-  status:string;
-  policyID:number;
-  details:Array<DetailInfor>,
-  total:number
+  shopID: number;
+  status: string;
+  policyID: number;
+  details: Array<DetailInfor>;
+  total: number;
 }
 
 @Component({
@@ -55,9 +56,10 @@ export class BillEditorComponent implements OnInit {
   @Input() data: Bill;
   @Output() closed = new EventEmitter();
 
+  shop:Shop;
   listDetail: Array<BillDetail>;
   listDetailLU: Array<DetailInfor | BillDetail | any>;
-  dataCompare:Array<DetailInfor> = [];
+  dataCompare: Array<DetailInfor> = [];
   total: number = 0;
 
   constructor(
@@ -73,6 +75,7 @@ export class BillEditorComponent implements OnInit {
   }
 
   async load() {
+    this.shop = JSON.parse(localStorage.getItem('shop-infor') || '{}');
     let request = {
       mode: 'get',
       data: Number(this.data.id),
@@ -147,11 +150,39 @@ export class BillEditorComponent implements OnInit {
   save() {
     let queueDetail: Array<BillDetail> = [];
     for (let i = 0; i < this.listDetail.length; i++) {
-      for (let i = 0; i < this.listDetailLU.length; i++) {
+      for (let j = 0; j < this.listDetailLU.length; j++) {
         if (
-          this.listDetail[i].id === this.listDetailLU[i].id &&
-          this.listDetailLU[i].update === true
+          this.listDetail[i].id === this.listDetailLU[j].id &&
+          this.listDetailLU[j].update === true
         ) {
+          let numChange: number = this.listDetailLU[j].num - this.listDetail[i].num;
+          if (numChange > 0) {
+            let newOrder:any = {
+              id: this.listDetail[i].id,
+              itemID: this.listDetail[i].itemID,
+              num:numChange,
+              billID: this.listDetail[i].id,
+              name: this.listDetailLU[j].name,
+              note: this.listDetail[i].note,
+              shopID: this.shop.id,
+              table: this.data.table?.toString(),
+              status: 'not_confirm',
+            };
+            this.api.sendOrder(newOrder);
+          } else if (numChange < 0) {
+            let newOrder:any= {
+              id: this.listDetail[i].id,
+              itemID: this.listDetail[i].itemID,
+              num: numChange,
+              billID: this.listDetail[i].id,
+              name: this.listDetailLU[j].name + ' (Huỷ)',
+              note: this.listDetail[i].note,
+              shopID: this.shop.id,
+              table: this.data.table?.toString(),
+              status: 'not_confirm',
+            };
+            this.api.sendOrder(newOrder);
+          }
           this.listDetail[i].num = this.listDetailLU[i].num;
           this.listDetailLU[i].update = false;
           queueDetail.push(this.listDetail[i]);
@@ -168,25 +199,27 @@ export class BillEditorComponent implements OnInit {
         }
       });
       if (checkNum === false) {
-        if(confirm("Bạn có chắc chắn muốn huỷ hoá đơn này ?")){
-          this.data.status="delete";
-          this.api.bill({mode:"update",data:this.data}).subscribe((res)=>{});
+        if (confirm('Bạn có chắc chắn muốn huỷ hoá đơn này ?')) {
+          this.data.status = 'delete';
+          this.api
+            .bill({ mode: 'update', data: this.data })
+            .subscribe((res) => {});
           this.closed.emit(this.data);
           this.bsModalRef.hide();
-          this.dataCompare.forEach((d:DetailInfor)=>{
-            let newOrder:ItemOrder = {
+          this.dataCompare.forEach((d: DetailInfor) => {
+            let newOrder: ItemOrder = {
               id: d.id,
               itemID: d.itemID,
               num: d.num,
               billID: this.data.id,
-              note:d.note,
-              name:d.name+" ( Huỷ)",
-              table:this.data.table?.toString(),
-              status:"not_confirm"
+              note: d.note,
+              name: d.name + ' ( Huỷ)',
+              table: this.data.table?.toString(),
+              status: 'not_confirm',
             };
             this.api.sendOrder(newOrder);
           });
-        }else{
+        } else {
           this.bsModalRef.hide();
         }
       } else {
@@ -196,39 +229,39 @@ export class BillEditorComponent implements OnInit {
               mode: 'update',
               data: queueDetail[i],
             };
-            this.api.details(request).subscribe((rs)=>{});
+            this.api.details(request).subscribe((rs) => {});
           } else {
             let request: DataRequest = {
               mode: 'delete',
               data: queueDetail[i],
             };
-            this.api.details(request).subscribe((rs)=>{});
+            this.api.details(request).subscribe((rs) => {});
           }
-          this.dataCompare.forEach((d:DetailInfor)=>{
-            if(d.id === queueDetail[i].id){
-              let n:number = queueDetail[i].num - d.num;
-              if(n > 0){
-                let newOrder:ItemOrder = {
+          this.dataCompare.forEach((d: DetailInfor) => {
+            if (d.id === queueDetail[i].id) {
+              let n: number = queueDetail[i].num - d.num;
+              if (n > 0) {
+                let newOrder: ItemOrder = {
                   id: d.id,
                   itemID: d.itemID,
                   num: n,
                   billID: this.data.id,
                   name: d.name,
-                  note:d.note,
+                  note: d.note,
                   table: this.data.table?.toString(),
-                  status: "not_confirm"
+                  status: 'not_confirm',
                 };
                 this.api.sendOrder(newOrder);
-              }else if(n < 0){
-                let newOrder:ItemOrder = {
+              } else if (n < 0) {
+                let newOrder: ItemOrder = {
                   id: d.id,
                   itemID: d.itemID,
                   num: n,
                   billID: this.data.id,
-                  name: d.name + " (Huỷ)",
-                  note:d.note,
+                  name: d.name + ' (Huỷ)',
+                  note: d.note,
                   table: this.data.table?.toString(),
-                  status: "not_confirm"
+                  status: 'not_confirm',
                 };
                 this.api.sendOrder(newOrder);
               }
@@ -243,25 +276,25 @@ export class BillEditorComponent implements OnInit {
     this.router.navigate(['/tables/order/' + table]);
     this.bsModalRef.hide();
   }
-  purchase(){
-    this.data.status = "pay";
+  purchase() {
+    this.data.status = 'pay';
     let request = {
-      mode:"update",
+      mode: 'update',
       data: this.data,
-    }
-    this.api.bill(request).subscribe((res)=>{});
+    };
+    this.api.bill(request).subscribe((res) => {});
     this.closed.emit(this.data);
     this.bsModalRef.hide();
 
-    let billInfor:BillInfor = {
+    let billInfor: BillInfor = {
       ...this.data,
-      total:this.total,
-      details:this.listDetailLU,
-    }
-    this.bsMS.show(PurchaseInforComponent,{
-      initialState:{
-        data:billInfor
-      }
+      total: this.total,
+      details: this.listDetailLU,
+    };
+    this.bsMS.show(PurchaseInforComponent, {
+      initialState: {
+        data: billInfor,
+      },
     });
   }
 }
