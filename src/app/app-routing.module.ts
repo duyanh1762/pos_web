@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
-import { AuthGuard } from './Guard/AuthGuard/auth.guard';
-import { LoginGuard } from './Guard/LoginGuard/login.guard';
-import { TablesComponent } from './tables/tables.component';
-import { StaffGuard } from './Guard/StaffGuard/staff.guard';
-import { OrderComponent } from './tables/order/order/order.component';
-import { LoadManageGuard } from './Guard/LoadManage/load-manage.guard';
-import { BaristaComponent } from './barista/barista.component';
-import { RoleGuard } from './Guard/RoleGuard/role.guard';
-import { OrderGoodsComponent } from './goods/order-goods/order-goods.component';
-import { BacklogGoodsComponent } from './goods/backlog-goods/backlog-goods.component';
-import { GoodsComponent } from './goods/goods.component';
+import { HomeComponent } from './features/home/home.component';
+import { LoginComponent } from './features/login/login.component';
+import { AuthGuard } from './core/Guard/AuthGuard/auth.guard';
+import { LoginGuard } from './core/Guard/LoginGuard/login.guard';
+import { TablesComponent } from './features/tables/tables.component';
+import { StaffGuard } from './core/Guard/StaffGuard/staff.guard';
+import { OrderComponent } from './features/tables/order/order/order.component';
+import { LoadManageGuard } from './core/Guard/LoadManage/load-manage.guard';
+import { BaristaComponent } from './features/barista/barista.component';
+import { RoleGuard } from './core/Guard/RoleGuard/role.guard';
+import { OrderGoodsComponent } from './features/goods/order-goods/order-goods.component';
+import { BacklogGoodsComponent } from './features/goods/backlog-goods/backlog-goods.component';
+import { GoodsComponent } from './features/goods/goods.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -50,7 +50,7 @@ const routes: Routes = [
   {
     path: 'manage',
     loadChildren: () =>
-      import('./manage/manage.module').then((m) => m.ManageModule),
+      import('./features/manage/manage.module').then((m) => m.ManageModule),
     canLoad: [LoadManageGuard],
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },

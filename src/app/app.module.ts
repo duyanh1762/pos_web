@@ -4,34 +4,31 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { ManageModule } from './manage/manage.module';
+import { ManageModule } from './features/manage/manage.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { StaffLoginComponent } from './home/staff-login/staff-login/staff-login.component';
-import { TablesComponent } from './tables/tables.component';
-import { OrderComponent } from './tables/order/order/order.component';
-import { BillEditorComponent } from './tables/bill-editor/bill-editor/bill-editor.component';
-import { InforComponent } from './tables/infor/infor.component';
-import { HistoryComponent } from './tables/history/history.component';
-import { BaristaComponent } from './barista/barista.component';
-import { PurchaseInforComponent } from './tables/purchase-infor/purchase-infor.component';
-import { NoteEditComponent } from './tables/order/note-edit/note-edit.component';
-import { OrderGoodsComponent } from './goods/order-goods/order-goods.component';
-import { GoodsComponent } from './goods/goods.component';
-import { BacklogGoodsComponent } from './goods/backlog-goods/backlog-goods.component';
-
-import { AuthGuard } from './Guard/AuthGuard/auth.guard';
-import { LoginGuard } from './Guard/LoginGuard/login.guard';
-import { StaffGuard } from './Guard/StaffGuard/staff.guard';
-import { LoadManageGuard } from './Guard/LoadManage/load-manage.guard';
-import { RoleGuard } from './Guard/RoleGuard/role.guard';
-
-import { ApiService } from './Service/api.service';
-
-import { LongClickDirective } from './Directives/long-click.directive';
+import { LoginComponent } from './features/login/login.component';
+import { HomeComponent } from './features/home/home.component';
+import { StaffLoginComponent } from './features/home/staff-login/staff-login/staff-login.component';
+import { TablesComponent } from './features/tables/tables.component';
+import { OrderComponent } from './features/tables/order/order/order.component';
+import { BillEditorComponent } from './features/tables/bill-editor/bill-editor/bill-editor.component';
+import { InforComponent } from './features/tables/infor/infor.component';
+import { HistoryComponent } from './features/tables/history/history.component';
+import { LongClickDirective } from './shared/Directives/long-click.directive';
+import { BaristaComponent } from './features/barista/barista.component';
+import { PurchaseInforComponent } from './features/tables/purchase-infor/purchase-infor.component';
+import { NoteEditComponent } from './features/tables/order/note-edit/note-edit.component';
+import { OrderGoodsComponent } from './features/goods/order-goods/order-goods.component';
+import { GoodsComponent } from './features/goods/goods.component';
+import { BacklogGoodsComponent } from './features/goods/backlog-goods/backlog-goods.component';
+import { AuthGuard } from './core/Guard/AuthGuard/auth.guard';
+import { LoginGuard } from './core/Guard/LoginGuard/login.guard';
+import { ApiService } from './core/Service/api.service';
+import { StaffGuard } from './core/Guard/StaffGuard/staff.guard';
+import { LoadManageGuard } from './core/Guard/LoadManage/load-manage.guard';
+import { RoleGuard } from './core/Guard/RoleGuard/role.guard';
 
 @NgModule({
   declarations: [

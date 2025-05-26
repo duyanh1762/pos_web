@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ApiService } from './Service/api.service';
 import { Router } from '@angular/router';
+import { ApiService } from './core/Service/api.service';
 
 @Component({
   selector: 'app-root',
