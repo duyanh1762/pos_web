@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ManageModule } from './features/manage/manage.module';
@@ -29,6 +29,7 @@ import { ApiService } from './core/Service/api.service';
 import { StaffGuard } from './core/Guard/StaffGuard/staff.guard';
 import { LoadManageGuard } from './core/Guard/LoadManage/load-manage.guard';
 import { RoleGuard } from './core/Guard/RoleGuard/role.guard';
+import { AuthInterceptor } from './core/Interceptor/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,7 @@ import { RoleGuard } from './core/Guard/RoleGuard/role.guard';
     BrowserAnimationsModule,
     FormsModule,
   ],
-  providers: [AuthGuard,LoginGuard,ApiService,StaffGuard,LoadManageGuard,RoleGuard],
+  providers: [AuthGuard,LoginGuard,ApiService,StaffGuard,LoadManageGuard,RoleGuard,{provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
